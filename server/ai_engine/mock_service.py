@@ -17,24 +17,18 @@ class MockAIService:
         and returns a fake AI response.
         """
         print(f" [MockAI] Thinking about: '{text}'...")
-        
-        # Simulate "Thinking" time (Latency)
         await asyncio.sleep(1.5)
         
-        # Simple keyword matching to fake intelligence
         text_lower = text.lower()
         
-        response = "9-1-1, I'm here. Can you tell me your location?"
-        
         if "fire" in text_lower:
-            response = "I understand there is a fire. Are you in a safe place right now?"
+            return "I understand there is a fire. Are you in a safe place right now?"
         elif "hurt" in text_lower or "blood" in text_lower:
-            response = "I am sending medical help. Apply pressure to the wound if possible."
+            return "I am sending medical help. Apply pressure to the wound if possible."
         elif "hello" in text_lower or "hi" in text_lower:
-            response = "9-1-1, what is your emergency?"
+            return "9-1-1, what is your emergency?"
             
-        print(f" [MockAI] Responded: '{response}'")
-        return response
+        return "9-1-1, I'm here. Can you tell me your location?"
 
     async def detect_emotion(self, text: str):
         """
@@ -42,3 +36,10 @@ class MockAIService:
         """
         emotions = ["Neutral", "Panic", "Fear", "Calm"]
         return random.choice(emotions)
+
+    async def detect_location(self, text: str):
+        """
+        Extracts location coordinates.
+        For Mock, we'll return None now (demo over).
+        """
+        return None

@@ -1,6 +1,9 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
+
+const DispatchMap = dynamic(() => import('@/components/Map'), { ssr: false });
 
 // Types for our chat messages
 interface Message {
@@ -17,6 +20,7 @@ export default function Dashboard() {
   const [inputText, setInputText] = useState('');
   const [isConnected, setIsConnected] = useState(false);
   const [currentEmotion, setCurrentEmotion] = useState('Neutral');
+  const [mapLocation, setMapLocation] = useState<[number, number] | undefined>(undefined);
   const wsRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
@@ -38,6 +42,7 @@ export default function Dashboard() {
       if (data.event === 'ai_response') {
         addLog('ai', data.text, data.emotion);
         if (data.emotion) setCurrentEmotion(data.emotion);
+        if (data.location) setMapLocation(data.location); // Update map if location found
       }
     };
 
@@ -96,8 +101,8 @@ export default function Dashboard() {
             {messages.map((msg, idx) => (
               <div key={idx} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
                 <div className={`max-w-[90%] rounded-lg p-3 text-sm ${msg.role === 'user' ? 'bg-blue-600 text-white' :
-                    msg.role === 'system' ? 'bg-slate-800 text-slate-400 italic text-xs' :
-                      'bg-slate-800 text-slate-200 border border-slate-700'
+                  msg.role === 'system' ? 'bg-slate-800 text-slate-400 italic text-xs' :
+                    'bg-slate-800 text-slate-200 border border-slate-700'
                   }`}>
                   {msg.content}
                 </div>
@@ -163,17 +168,9 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Map Placeholder */}
+          {/* Map Interface */}
           <div className="flex-1 bg-slate-900 rounded-xl border border-slate-800 overflow-hidden relative group">
-            {/* We will replace this with Leaflet later */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-500">
-              <svg className="w-16 h-16 mb-4 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0121 18.382V7.618a1 1 0 01-1.447-.894L15 7m0 13V7" /></svg>
-              <span className="text-sm font-medium uppercase tracking-widest opacity-50">Map Module Inactive</span>
-              <p className="text-xs mt-2 opacity-40">Leaflet.js integration scheduled for Phase 2</p>
-            </div>
-
-            {/* Grid overlay for aesthetic */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
+            <DispatchMap />
           </div>
 
         </div>
