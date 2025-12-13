@@ -37,13 +37,15 @@ FYP MAIN PROJECT/
 
 ---
 
+---
+
 ## ⚡ How to Run the Project
 You need **two terminal windows** open at the same time.
 
 **Terminal 1: The Backend (Python)**
 ```bash
-cd "FYP MAIN PROJECT/server"
-python -m uvicorn main:app --reload --port 8000
+cd "FYP MAIN PROJECT"
+python -m uvicorn server.main:app --reload --port 8000
 ```
 *   *Verification:* Open `http://localhost:8000/` and see `{"status": "online"}`.
 
@@ -53,6 +55,13 @@ cd "FYP MAIN PROJECT/client"
 npm run dev -- -p 3000
 ```
 *   *Verification:* Open `http://localhost:3000/`. You should see the black Dashboard.
+
+## 🛠 Useful Commands
+**Test the Database & Map Logic:**
+```bash
+python test_db.py
+```
+*(Runs a simulation to verify data is saving to `calls.db`)*
 
 ---
 

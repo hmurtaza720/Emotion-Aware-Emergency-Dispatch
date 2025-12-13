@@ -7,6 +7,8 @@ __pycache__/
 *.py[cod]
 venv/
 .env
+.env.local
+.env.*
 
 # Node / Next.js
 node_modules/

@@ -1,7 +1,9 @@
 import asyncio
 import random
 
-class MockAIService:
+from .base import AIService
+
+class MockAIService(AIService):
     """
     A Fake AI Brain for development on non-GPU laptops.
     Simulates the behavior of the real Mistral model + Whisper + TTS.
@@ -32,14 +34,22 @@ class MockAIService:
 
     async def detect_emotion(self, text: str):
         """
-        Randomly returns an emotion tag for UI testing.
+        Returns an emotion tag based on keywords.
         """
+        text_lower = text.lower()
+        if "fire" in text_lower or "help" in text_lower or "blood" in text_lower:
+            return "Fear"
+        if "calm" in text_lower:
+            return "Calm"
+            
         emotions = ["Neutral", "Panic", "Fear", "Calm"]
         return random.choice(emotions)
 
     async def detect_location(self, text: str):
         """
         Extracts location coordinates.
-        For Mock, we'll return None now (demo over).
+        For Mock, if 'fire' is mentioned, we pretend we found it.
         """
+        if "fire" in text.lower():
+             return [37.8199, -122.4783] # Golden Gate Bridge
         return None
