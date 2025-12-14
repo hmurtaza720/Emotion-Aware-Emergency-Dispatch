@@ -1,75 +1,60 @@
-# DispatchAI Team Onboarding Guide 🚀
+# 🚀 DispatchAI Team Onboarding
 
-## Welcome aboard!
-This guide explains how we are building the **Emotion-Aware Emergency Dispatch System (FYP)**. 
-We are building a local, open-source version of 911 DispatchAI using **Mistral-7B**, **Whisper**, and **Mozilla TTS**.
-
----
-
-## 🏗 The "Hybrid" Strategy (Read This First!)
-Our biggest constraint is **Hardware**. The AI models (Mistral) need a GPU, but our laptops are CPU-only.
-To solve this, we split development into two modes:
-
-### 1. Laptop Mode (Current Phase) 💻
-*   **What we do:** Build the UI (Dashboard), Server Logic, Database, and Maps.
-*   **The AI:** We use a **"Mock AI"**. It's a fake script that *pretends* to clearly understand "Fire" or "Injury" so we can test the frontend without crashing our laptops.
-*   **Files:** `server/ai_engine/mock_service.py`
-
-### 2. GPU Mode (The "Brain Transplant") 🖥
-*   **What we do:** We move the code to the High-Spec PC (Friend's House).
-*   **The AI:** We replace `MockAIService` with `RealAIService` which loads the 15GB Mistral Model.
-*   **Files:** `server/ai_engine/real_service.py` (To be created)
+## Welcome to the Team! 👋
+We are building an **AI 911 Operator** using a "Hybrid Architecture".
+This allows us to use state-of-the-art AI models (that usually cost $2000 in hardware) for **FREE** using Google Colab.
 
 ---
 
-## 📂 Project Structure
-```text
-FYP MAIN PROJECT/
-├── client/                 # The Frontend (Next.js 14)
-│   ├── src/app/page.tsx    # The Main Dashboard UI
-│   └── ...
-├── server/                 # The Backend (Python FastAPI)
-│   ├── main.py             # Connects Frontend <-> Backend
-│   ├── ai_engine/          
-│   │   └── mock_service.py # The "Fake Brain" (Logic lives here for now)
-│   └── ...
-```
+## 🏗 The Architecture
+We don't run everything on one machine. We split it up:
+
+| Component | Runs On | Tech Stack | Role |
+| :--- | :--- | :--- | :--- |
+| **Frontend** | 💻 Laptop (Local) | Next.js (React) | The "Phone" interface & "Dashboard" map. |
+| **Backend** | 💻 Laptop (Local) | FastAPI (Python) | Relays messages between Phone and Dashboard. |
+| **AI Brain** | ☁️ Google Colab | Python (GPU) | Runs Whisper, Mistral, and OpenSMILE. |
 
 ---
 
----
+## ⚡ How to Run the Project (Daily Workflow)
 
-## ⚡ How to Run the Project
-You need **two terminal windows** open at the same time.
+You need to start **3 things** to make the system work.
 
-**Terminal 1: The Backend (Python)**
+### Step 1: Start the Local Backend 🐍
+This is the bridge that connects everything.
 ```bash
-cd "FYP MAIN PROJECT"
-python -m uvicorn server.main:app --reload --port 8000
+cd "FYP MAIN PROJECT/server"
+python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
-*   *Verification:* Open `http://localhost:8000/` and see `{"status": "online"}`.
+*   *Check:* Open `http://localhost:8000` -> "Status: Online"
 
-**Terminal 2: The Frontend (Next.js)**
+### Step 2: Start the Local Frontend ⚛️
+This is the visual interface.
 ```bash
 cd "FYP MAIN PROJECT/client"
-npm run dev -- -p 3000
+npm run dev -- -p 3000 -H 0.0.0.0
 ```
-*   *Verification:* Open `http://localhost:3000/`. You should see the black Dashboard.
+*   *Check:* Open `http://localhost:3000` -> You should see the Dashboard.
 
-## 🛠 Useful Commands
-**Test the Database & Map Logic:**
-```bash
-python test_db.py
-```
-*(Runs a simulation to verify data is saving to `calls.db`)*
+### Step 3: Wake up the Brain 🧠
+1.  Go to **Google Colab** and upload `DispatchAI_Colab_Server.ipynb`.
+2.  **Runtime -> Run All**.
+3.  Wait for the logs to say: **"🔗 CONNECT TO THIS URL: https://..."**
+4.  Copy that URL.
+5.  Go to your Laptop: `http://localhost:3000/phone`.
+6.  Click **Settings (Gear Icon)** and paste the URL.
+
+**🎉 You are now connected!**
 
 ---
 
-## 🧪 How to Test functions
-Since we are in **Laptop Mode**, use these keywords in the chat to trigger specific behaviors:
+## 🧪 Testing Checklist
+1.  **Call 911:** Open the Phone page and click Call.
+2.  **Speak:** Say "Help, there is a fire!" (Speak for ~7 seconds).
+3.  **Watch:**
+    *   The Phone should speak back.
+    *   The **Dashboard (`/live`)** should update the Map and Transcript instantly.
 
-1.  **"Hello"** -> AI asks for emergency.
-2.  **"Fire"** -> AI gives fire safety instructions.
-3.  **"Hurt" or "Blood"** -> AI gives medical instructions.
-
-*(Note: The Emotion Gauge changes randomly for testing purposes right now)*
+---
+*Questions? Ask the Lead Developer.*

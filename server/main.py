@@ -87,6 +87,20 @@ async def websocket_endpoint(websocket: WebSocket):
             if message_data.get("event") == "get_db":
                 continue
 
+            # HANDLE COLAB HYBRID UPDATES
+            if message_data.get("event") == "colab_update":
+                # Remap fields for Dashboard
+                dashboard_payload = {
+                    "event": "ai_response",
+                    "user_text": message_data.get("transcript", ""),
+                    "text": message_data.get("ai_response", ""),
+                    "emotion": message_data.get("emotion", "Neutral"),
+                    "location": None # Colab doesn't do location yet
+                }
+                print(f" [Server] Broadcasting Colab Update: {dashboard_payload['emotion']}")
+                await manager.broadcast(json.dumps(dashboard_payload))
+                continue
+
             if not user_input:
                 continue
                 

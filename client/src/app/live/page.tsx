@@ -383,8 +383,17 @@ const Page = () => {
                         // 4. Update Emotions (Format correctly as object array with INTENSITY 0-100)
                         let newEmotions = currentCall.emotions || [];
                         if (message.emotion) {
-                            // Ensure 0-100 scale for UI progress bars
-                            newEmotions = [{ emotion: message.emotion, intensity: 85 }];
+                            // Map the emotion to an intensity (Mock logic for variety)
+                            // "Panic" -> High Intensity, "Calm" -> Low Intensity
+                            let intensity = 0.5;
+                            if (message.emotion === "Panic" || message.emotion === "Fear") intensity = 0.9;
+                            if (message.emotion === "Calm" || message.emotion === "Neutral") intensity = 0.2;
+
+                            // We push TWO emotions because TranscriptPanel expects [0] and [1]
+                            newEmotions = [
+                                { emotion: message.emotion, intensity: intensity },
+                                { emotion: "Confidence", intensity: 1.0 - intensity } // Dummy secondary emotion
+                            ];
                         }
 
                         // 5. Update Location
