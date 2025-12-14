@@ -1,4 +1,4 @@
-# 🚔 dispatchAI (EAEDS)
+# 🚔 (EAEDS)
 **Emotion-Aware Emergency Dispatch System** | *Hybrid Cloud Edition*
 
 > *Status: OPERATIONAL* | *Architecture: Hybrid (Local + Colab GPU)*
