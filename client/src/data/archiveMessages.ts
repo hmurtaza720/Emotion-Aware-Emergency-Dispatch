@@ -1,0 +1,5008 @@
+import { Call } from "@/app/archive/page";
+
+export const ARCHIVE_MESSAGES: Record<string, Call> = {
+    "archived_1": {
+        "id": "archived_1",
+        "title": "FIREARM EMERGENCY",
+        "severity": "CRITICAL",
+        "time": "10:10:30 PM",
+        "location_name": "West High School",
+        "location_coords": {
+            "lat": 37.7749,
+            "lng": -122.4194
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "I'm at West High School. There's a guy with a gun."
+            },
+            {
+                "role": "assistant",
+                "content": "Which high school?"
+            },
+            {
+                "role": "user",
+                "content": "West High."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we have the police dispatched. Can you give me a description?"
+            },
+            {
+                "role": "user",
+                "content": "I don't know. The guy is just running through the halls."
+            },
+            {
+                "role": "assistant",
+                "content": "Can someone give me a description of the person?"
+            },
+            {
+                "role": "user",
+                "content": "I don't know. Can anybody give a description?"
+            },
+            {
+                "role": "assistant",
+                "content": "Do we know where in the building? Is he white, black, Hispanic?"
+            },
+            {
+                "role": "user",
+                "content": "I don't know."
+            },
+            {
+                "role": "assistant",
+                "content": "Can you go somewhere where you're safe?"
+            },
+            {
+                "role": "user",
+                "content": "I'm going around with a bunch of people."
+            },
+            {
+                "role": "user",
+                "content": "Oh, God."
+            },
+            {
+                "role": "assistant",
+                "content": "Can you tell me if there's been any shots fired?"
+            },
+            {
+                "role": "user",
+                "content": "No, we'll just stay here until police arrive."
+            },
+            {
+                "role": "assistant",
+                "content": "They are getting dispatched, okay?"
+            },
+            {
+                "role": "assistant",
+                "content": "Are you in a secure location, locked in a room?"
+            },
+            {
+                "role": "user",
+                "content": "I'm locked in a room."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay."
+            },
+            {
+                "role": "user",
+                "content": "Oh, my God."
+            },
+            {
+                "role": "assistant",
+                "content": "Where in the building are you?"
+            },
+            {
+                "role": "user",
+                "content": "Third floor."
+            },
+            {
+                "role": "assistant",
+                "content": "What floor?"
+            },
+            {
+                "role": "user",
+                "content": "Third."
+            },
+            {
+                "role": "user",
+                "content": "Oh my goodness."
+            },
+            {
+                "role": "user",
+                "content": "Oh, my goodness."
+            },
+            {
+                "role": "assistant",
+                "content": "Have you heard any shots or seen anything that can help us?"
+            },
+            {
+                "role": "user",
+                "content": "No."
+            },
+            {
+                "role": "user",
+                "content": "People are just shouting in the room."
+            },
+            {
+                "role": "user",
+                "content": "And I heard on the announcements."
+            },
+            {
+                "role": "assistant",
+                "content": "What room number are you in?"
+            },
+            {
+                "role": "user",
+                "content": "I don't know."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we've got many officers being dispatched."
+            },
+            {
+                "role": "user",
+                "content": "I don't see them here yet."
+            },
+            {
+                "role": "assistant",
+                "content": "What is your name?"
+            },
+            {
+                "role": "user",
+                "content": "Ben."
+            },
+            {
+                "role": "user",
+                "content": "I haven't heard any shots or anything."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, now what room number are you in?"
+            },
+            {
+                "role": "user",
+                "content": "I don't know. It's quiet."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, I need you to stay in a safe location."
+            },
+            {
+                "role": "user",
+                "content": "We're huddled in the corner."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you know who the person with the gun is? Any kind of description?"
+            },
+            {
+                "role": "user",
+                "content": "No, we just heard people say get in the room and I just called 911."
+            },
+            {
+                "role": "user",
+                "content": "Here, somebody wants to talk."
+            },
+            {
+                "role": "user",
+                "content": "What?"
+            },
+            {
+                "role": "user",
+                "content": "What?"
+            },
+            {
+                "role": "assistant",
+                "content": "Who is that?"
+            },
+            {
+                "role": "user",
+                "content": "Somebody ran in and then walked out."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you know who this someone is?"
+            },
+            {
+                "role": "user",
+                "content": "Um, I was in the classroom and he pulled out a gun. There was one shot fired at my teacher."
+            },
+            {
+                "role": "assistant",
+                "content": "Do we know if anyone's been shot?"
+            },
+            {
+                "role": "user",
+                "content": "I don't know. I ran out of the classroom and tried to find another room."
+            },
+            {
+                "role": "assistant",
+                "content": "What room is the person with the gun in? We have several officers pulling up now."
+            },
+            {
+                "role": "user",
+                "content": "He went into the third-floor computer lab."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you know if anyone's been hurt?"
+            },
+            {
+                "role": "user",
+                "content": "I do not know. I ran out of the class."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you know the name of the suspect?"
+            },
+            {
+                "role": "assistant",
+                "content": "What room are you in and how many people are with you?"
+            },
+            {
+                "role": "user",
+                "content": "I'm in room 309 and there are about 22 people in here."
+            },
+            {
+                "role": "assistant",
+                "content": "22 students in room 309, correct?"
+            },
+            {
+                "role": "user",
+                "content": "Correct."
+            },
+            {
+                "role": "assistant",
+                "content": "And no one in there is hurt? Does anyone in there need an ambulance?"
+            },
+            {
+                "role": "user",
+                "content": "No, nobody in my room."
+            },
+            {
+                "role": "assistant",
+                "content": "What is your name?"
+            },
+            {
+                "role": "user",
+                "content": "Andrew, you're doing a great job."
+            },
+            {
+                "role": "assistant",
+                "content": "Is this your cell phone that you're calling from?"
+            },
+            {
+                "role": "user",
+                "content": "No, somebody else gave me the phone."
+            },
+            {
+                "role": "assistant",
+                "content": "I want you to keep everybody in the room with you. Nobody leaves until an officer comes and talks to you and lets you know that it's safe, okay?"
+            },
+            {
+                "role": "user",
+                "content": "Okay, we are on lockdown right now, so I believe we are safe."
+            },
+            {
+                "role": "assistant",
+                "content": "Are any cops there at the school yet?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, we have several officers in the building now."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, excellent."
+            },
+            {
+                "role": "assistant",
+                "content": "I can stay on the phone with you until we have an officer with you. Would you like to talk to my teacher?"
+            },
+            {
+                "role": "user",
+                "content": "Okay, that's fine. I can talk to your teacher."
+            },
+            {
+                "role": "user",
+                "content": "Hello?"
+            },
+            {
+                "role": "assistant",
+                "content": "Hello, this is the 911 operator with Hamilton County. What is your name?"
+            },
+            {
+                "role": "user",
+                "content": "Joel."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, Joel, we have several officers in the building."
+            },
+            {
+                "role": "user",
+                "content": "Okay."
+            },
+            {
+                "role": "assistant",
+                "content": "It looks like the scene is secure, but we're going to ask you to keep everybody there until someone comes to get you, okay?"
+            },
+            {
+                "role": "user",
+                "content": "Absolutely."
+            },
+            {
+                "role": "assistant",
+                "content": "And no one in your class is injured, correct?"
+            },
+            {
+                "role": "user",
+                "content": "Correct."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay. Just keep everybody in your room and keep the doors locked."
+            },
+            {
+                "role": "user",
+                "content": "Yes."
+            },
+            {
+                "role": "assistant",
+                "content": "I do believe that they have the shooter contained."
+            },
+            {
+                "role": "assistant",
+                "content": "It looks like everything is okay for now, okay? Just keep everybody in your class."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you have any other information? Anything else that you might know that might help them?"
+            },
+            {
+                "role": "user",
+                "content": "I believe the shooter has been taken into custody, but I'm not 100% sure."
+            },
+            {
+                "role": "user",
+                "content": "Okay, I don't know anything else."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay. We know that several other teachers have already followed lockdown procedure."
+            },
+            {
+                "role": "user",
+                "content": "Yes, we have gotten several calls."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we'll just keep everybody in your class there until someone comes to get you and follow your procedure, okay?"
+            },
+            {
+                "role": "user",
+                "content": "Okay, thank you."
+            },
+            {
+                "role": "assistant",
+                "content": "You're welcome. Bye-bye."
+            },
+            {
+                "role": "assistant",
+                "content": "I'm going to let them know what's going on there, okay? You're doing a good job."
+            },
+            {
+                "role": "user",
+                "content": "Okay, thank you."
+            },
+            {
+                "role": "assistant",
+                "content": "Cincinnati was transferred. 3091 West North Bend Road, LaSalle High School, got a shooter."
+            },
+            {
+                "role": "assistant",
+                "content": "Hey, young man."
+            },
+            {
+                "role": "user",
+                "content": "Hey."
+            },
+            {
+                "role": "assistant",
+                "content": "Where in the building are you?"
+            },
+            {
+                "role": "user",
+                "content": "Ma'am, I'm on the third floor. I just took the phone away from a student who I think witnessed what just took place."
+            },
+            {
+                "role": "assistant",
+                "content": "Where is the shooter in the building?"
+            },
+            {
+                "role": "user",
+                "content": "The shooter was in room 316, which would be at the west side of the building on the third floor."
+            },
+            {
+                "role": "assistant",
+                "content": "Does he still have a weapon?"
+            },
+            {
+                "role": "user",
+                "content": "I can't tell you that. I heard students screaming and came out to see what was going on."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you still hear shots being fired?"
+            },
+            {
+                "role": "user",
+                "content": "No, he shot one time. I did not hear any other shots."
+            },
+            {
+                "role": "user",
+                "content": "The young man with me believes that the shooter shot himself."
+            },
+            {
+                "role": "assistant",
+                "content": "We got a report the person with the gun is a student. Is that correct?"
+            },
+            {
+                "role": "user",
+                "content": "That's my understanding, yes."
+            },
+            {
+                "role": "assistant",
+                "content": "And we also have a report that he may have shot himself. Is that correct?"
+            },
+            {
+                "role": "user",
+                "content": "That's what I'm understanding, yes."
+            },
+            {
+                "role": "assistant",
+                "content": "Did he fire the weapon at anyone else?"
+            },
+            {
+                "role": "user",
+                "content": "He did not fire the weapon at anyone else. Everybody just ran. The student with me said the shooter was shaking when he came into the room, then went into one corner and pulled the weapon."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay. The police are in the building. They're making their way up to the third floor. Is it room 316, right?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, it's room 316."
+            },
+            {
+                "role": "assistant",
+                "content": "What's nearby in relation to this classroom?"
+            },
+            {
+                "role": "user",
+                "content": "There are three classrooms there. They are all computer labs. There's a bathroom and a room that holds all the computer components."
+            },
+            {
+                "role": "assistant",
+                "content": "I will stay on the phone as long as you need me to."
+            },
+            {
+                "role": "user",
+                "content": "Okay."
+            },
+            {
+                "role": "assistant",
+                "content": "It looks like the scene's been secured. You're doing a great job staying calm."
+            },
+            {
+                "role": "user",
+                "content": "Thank you."
+            },
+            {
+                "role": "assistant",
+                "content": "Have you made a broadcast throughout the building for everyone to remain in their rooms?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, we have."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay. If you can, make sure everyone stays in place until directed otherwise."
+            },
+            {
+                "role": "user",
+                "content": "Okay, will do."
+            },
+            {
+                "role": "assistant",
+                "content": "You're doing a great job. Thanks for your help."
+            },
+            {
+                "role": "user",
+                "content": "Thank you."
+            },
+            {
+                "role": "assistant",
+                "content": "Stay safe."
+            },
+            {
+                "role": "user",
+                "content": "Thank you."
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Anxiety",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Fear",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_2": {
+        "id": "archived_2",
+        "title": "FIREARM EMERGENCY",
+        "severity": "CRITICAL",
+        "time": "11:9:31 PM",
+        "location_name": "Sheridan, 10th and Sheridan",
+        "location_coords": {
+            "lat": 37.7849,
+            "lng": -122.40939999999999
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Somebody just broke into my vehicle, man."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, I need to know where you're at. What's the address?"
+            },
+            {
+                "role": "user",
+                "content": "I'm on Sheridan, 10th and Sheridan. The guys who did it just sped off."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, where are you right now?"
+            },
+            {
+                "role": "user",
+                "content": "Right now I'm at home, trying to recover because I got hit with some glass shards."
+            },
+            {
+                "role": "assistant",
+                "content": "I need to send an officer to take a report. Are you going to wait there?"
+            },
+            {
+                "role": "user",
+                "content": "Yeah."
+            },
+            {
+                "role": "assistant",
+                "content": "Tell me where exactly you are so I can send an officer out."
+            },
+            {
+                "role": "user",
+                "content": "I'm at 29th and Harlan."
+            },
+            {
+                "role": "assistant",
+                "content": "Is that in Denver or Lakewood?"
+            },
+            {
+                "role": "user",
+                "content": "It's in Lakewood."
+            },
+            {
+                "role": "assistant",
+                "content": "Did this happen in Denver or Lakewood, do you know?"
+            },
+            {
+                "role": "user",
+                "content": "It happened on Sheridan, 10th and Sheridan."
+            },
+            {
+                "role": "assistant",
+                "content": "Was it on the east or west side of Sheridan? That's the border between Denver and Lakewood."
+            },
+            {
+                "role": "user",
+                "content": "I was going northbound on Sheridan, so it must be Denver."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we need you to be in Denver so we can send an officer out. Can you come back into Denver?"
+            },
+            {
+                "role": "user",
+                "content": "Yeah, I can come back."
+            },
+            {
+                "role": "assistant",
+                "content": "Are you going to start coming back right now?"
+            },
+            {
+                "role": "user",
+                "content": "Yeah, I'm coming back right now. Can you stay on the phone with me?"
+            },
+            {
+                "role": "assistant",
+                "content": "Yes, I'll stay on the phone with you. Just tell me when you're on the east side of Sheridan so we can send an officer. What's your phone number?"
+            },
+            {
+                "role": "user",
+                "content": "720-494-1993."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, tell me what happened."
+            },
+            {
+                "role": "user",
+                "content": "We were driving to my brother's house and a red Jeep pulled up next to us. We passed them at the red light, and they threw a bottle through my windshield."
+            },
+            {
+                "role": "assistant",
+                "content": "Did you get a look at their license plate?"
+            },
+            {
+                "role": "user",
+                "content": "I caught part of it, 936 WU, but I couldn't get the rest. They were speeding and throwing more bottles."
+            },
+            {
+                "role": "assistant",
+                "content": "Were they throwing anything else besides bottles?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, they were also throwing bottle rockets."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, just keep driving safely. Tell me when you are back in Denver."
+            },
+            {
+                "role": "user",
+                "content": "I will. I'm just crossing 38th now."
+            },
+            {
+                "role": "assistant",
+                "content": "Alright. What kind of vehicle are you in?"
+            },
+            {
+                "role": "user",
+                "content": "I'm driving a white Dodge Charger."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you need an ambulance?"
+            },
+            {
+                "role": "user",
+                "content": "No, I thought I was bleeding, but it's just my energy drink. I don't need an ambulance."
+            },
+            {
+                "role": "assistant",
+                "content": "Alright, stay on the phone with me."
+            },
+            {
+                "role": "user",
+                "content": "This is a rental car, but they threw big beer bottles, 40s."
+            },
+            {
+                "role": "assistant",
+                "content": "How long ago did this happen?"
+            },
+            {
+                "role": "user",
+                "content": "Just a minute before I called you."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, and you said it was a red Jeep, going northbound, license plate 936 WU or something similar?"
+            },
+            {
+                "role": "user",
+                "content": "Yes. They had weapons too; one pulled out a gun."
+            },
+            {
+                "role": "assistant",
+                "content": "What kind of gun did you see?"
+            },
+            {
+                "role": "user",
+                "content": "It was a black handgun."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you know them at all?"
+            },
+            {
+                "role": "user",
+                "content": "No, I don't know why they did this."
+            },
+            {
+                "role": "assistant",
+                "content": "Can you describe them for me? What race were they?"
+            },
+            {
+                "role": "user",
+                "content": "They were Hispanic, and there were four of them."
+            },
+            {
+                "role": "assistant",
+                "content": "Can you describe what they were wearing?"
+            },
+            {
+                "role": "user",
+                "content": "One was wearing red. They all got out and started throwing more things and one pulled out a weapon."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you think they were drunk or on drugs?"
+            },
+            {
+                "role": "user",
+                "content": "They seemed drunk, they were throwing beer bottles."
+            },
+            {
+                "role": "assistant",
+                "content": "Have you guys been drinking or taking any drugs tonight?"
+            },
+            {
+                "role": "user",
+                "content": "No, sir."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, just wait right there at 29th and Sheridan. Are you on the east side of Sheridan?"
+            },
+            {
+                "role": "user",
+                "content": "Yes."
+            },
+            {
+                "role": "assistant",
+                "content": "Turn your hazard lights on so they can find you easier."
+            },
+            {
+                "role": "user",
+                "content": "Alright."
+            },
+            {
+                "role": "user",
+                "content": "Hey, this is Rand's friend. Are you guys coming to help us?"
+            },
+            {
+                "role": "assistant",
+                "content": "Yes, we're sending an officer. Can you put Rand back on?"
+            },
+            {
+                "role": "user",
+                "content": "Alright."
+            },
+            {
+                "role": "user",
+                "content": "Hello? They're back! They're shooting!"
+            },
+            {
+                "role": "assistant",
+                "content": "Can you get away from them?"
+            },
+            {
+                "role": "user",
+                "content": "We can't! My friend got shot!"
+            },
+            {
+                "role": "assistant",
+                "content": "I need you to get away. Where are you now?"
+            },
+            {
+                "role": "user",
+                "content": "We're still at 29th and Sheridan. My brother got shot!"
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we're getting help out there. Are the attackers still there?"
+            },
+            {
+                "role": "user",
+                "content": "No, they drove off east on 29th."
+            },
+            {
+                "role": "assistant",
+                "content": "Is your brother conscious?"
+            },
+            {
+                "role": "user",
+                "content": "He's 25. He's awake but in bad shape. Please hurry!"
+            },
+            {
+                "role": "assistant",
+                "content": "Is he breathing?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, but he's bleeding a lot!"
+            },
+            {
+                "role": "assistant",
+                "content": "We've got officers on the way. Stay with me. Is he still awake?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, he's awake. The officers are here now!"
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we'll get an ambulance out there as well. Hang tight and stay safe."
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Anxiety",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Fear",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_3": {
+        "id": "archived_3",
+        "title": "VEHICLE EMERGENCY",
+        "severity": "MODERATE",
+        "time": "10:8:32 PM",
+        "location_name": "I-4?",
+        "location_coords": {
+            "lat": 37.794900000000005,
+            "lng": -122.3994
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Are you looking, Jenny, do you have a group out on I-4?"
+            },
+            {
+                "role": "assistant",
+                "content": "Can you repeat that? Are you saying there's a group on I-4?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, we have a few people here just east of the D line. Is the person in the white minivan you?"
+            },
+            {
+                "role": "user",
+                "content": "I have a guy here who says he's being harassed by a police officer."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay. Can you describe what's happening?"
+            },
+            {
+                "role": "user",
+                "content": "The guy is yelling and says the officer is giving him a hard time and harassing him."
+            },
+            {
+                "role": "assistant",
+                "content": "Is the officer still there?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, he's yelling at the officer and they're fighting."
+            },
+            {
+                "role": "assistant",
+                "content": "Alright, we'll send help. Please stay on the line."
+            },
+            {
+                "role": "user",
+                "content": "If you are there, 9-1-1, is you still that?"
+            },
+            {
+                "role": "assistant",
+                "content": "Yes, I'm here. What's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "I'm being assaulted by an officer on I-4. Please call my wife. I'm being assaulted and dragged out of my car."
+            },
+            {
+                "role": "assistant",
+                "content": "I need you to stay calm. We have several units on the way. Can I have your name, sir?"
+            },
+            {
+                "role": "user",
+                "content": "This is ridiculous. I'm being assaulted. He's yelling at me and grabbing me."
+            },
+            {
+                "role": "assistant",
+                "content": "Sir, I understand. Please stay on the line. Help is on the way."
+            },
+            {
+                "role": "user",
+                "content": "Get Channel 2, Channel 5, Fox 35, all of them down here. This is crazy. This is insane."
+            },
+            {
+                "role": "assistant",
+                "content": "Sir, can you please give me your name?"
+            },
+            {
+                "role": "user",
+                "content": "No, I'm going to hold the phone as long as I can."
+            },
+            {
+                "role": "assistant",
+                "content": "Sir, we need to know your name."
+            },
+            {
+                "role": "user",
+                "content": "Dude, I'm not even fighting you. I'm not fighting you!"
+            },
+            {
+                "role": "assistant",
+                "content": "Sir, listen to the officer. Stay calm."
+            },
+            {
+                "role": "user",
+                "content": "What do you want to ask?"
+            },
+            {
+                "role": "assistant",
+                "content": "Please stay calm and cooperate with the officer. We have several units on the way."
+            },
+            {
+                "role": "user",
+                "content": "Get off of me! Get off of me!"
+            },
+            {
+                "role": "assistant",
+                "content": "Sir, are you still there? Hello?"
+            },
+            {
+                "role": "user",
+                "content": "Just look."
+            },
+            {
+                "role": "assistant",
+                "content": "Hello? Are you still there?"
+            },
+            {
+                "role": "user",
+                "content": "Yeah, I am."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, I think the call might have disconnected."
+            },
+            {
+                "role": "user",
+                "content": "I think he just laid the phone down really far."
+            },
+            {
+                "role": "assistant",
+                "content": "Alright, we have multiple units on the way. Can you provide his phone number or any other information?"
+            },
+            {
+                "role": "user",
+                "content": "His name is Kevin Allen. I don't have his phone number."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we'll handle it from here. Thank you for calling."
+            },
+            {
+                "role": "user",
+                "content": "Alright, thank you. Bye-bye."
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Confusion",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Calm",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_4": {
+        "id": "archived_4",
+        "title": "STABBING INCIDENT",
+        "severity": "CRITICAL",
+        "time": "11:7:33 PM",
+        "location_name": "foot or in a vehicle?",
+        "location_coords": {
+            "lat": 37.8049,
+            "lng": -122.3894
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Oh, my God."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, and what's going on?"
+            },
+            {
+                "role": "user",
+                "content": "He stabbed me with something."
+            },
+            {
+                "role": "assistant",
+                "content": "Did he leave on foot or in a vehicle?"
+            },
+            {
+                "role": "user",
+                "content": "Oh, my God."
+            },
+            {
+                "role": "assistant",
+                "content": "Where are you located?"
+            },
+            {
+                "role": "user",
+                "content": "550 Southwest 7th Street."
+            },
+            {
+                "role": "assistant",
+                "content": "It's okay. Help is on the way. I'm going to keep you on the line, okay?"
+            },
+            {
+                "role": "user",
+                "content": "Oh, he would beat me with that, did it?"
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, they're on the way. It's only going to take a minute. Can you go out of the room?"
+            },
+            {
+                "role": "assistant",
+                "content": "You say he's wearing a gray sweatshirt?"
+            },
+            {
+                "role": "user",
+                "content": "No, it's a gray tank top, like a wife beater."
+            },
+            {
+                "role": "assistant",
+                "content": "What color pants?"
+            },
+            {
+                "role": "user",
+                "content": "I don't know. He just left."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, he's wearing a gray tank top. What color pants?"
+            },
+            {
+                "role": "user",
+                "content": "I'm not sure. Oh, God!"
+            },
+            {
+                "role": "assistant",
+                "content": "Is there anyone else outside or any vehicles?"
+            },
+            {
+                "role": "user",
+                "content": "There's a white Pontiac Grand Prix sitting outside."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, stay on the line with me. Help is almost there."
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Anxiety",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Fear",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_5": {
+        "id": "archived_5",
+        "title": "DISTURBANCE COMPLAINT",
+        "severity": "LOW",
+        "time": "10:6:34 PM",
+        "location_name": "the McDonald's on U",
+        "location_coords": {
+            "lat": 37.8149,
+            "lng": -122.37939999999999
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Police."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, where do you need the police?"
+            },
+            {
+                "role": "user",
+                "content": "I'm at the McDonald's on U.S. 1 by the bridge."
+            },
+            {
+                "role": "assistant",
+                "content": "What's going on there?"
+            },
+            {
+                "role": "user",
+                "content": "I ordered a 10-piece chicken nuggets with a small fries, and they told me they didn\u2019t have any chicken nuggets. I asked for a McDouble and small fries instead, but she told me I can\u2019t pick anything else off the menu because she can't refund my order or give me all my money back."
+            },
+            {
+                "role": "assistant",
+                "content": "Is there a manager there?"
+            },
+            {
+                "role": "user",
+                "content": "She said she is the manager and that she can't refund my money or give me what I ordered."
+            },
+            {
+                "role": "assistant",
+                "content": "What's your name?"
+            },
+            {
+                "role": "user",
+                "content": "Latrice Goodman."
+            },
+            {
+                "role": "assistant",
+                "content": "All right, Latrice. I'll send an officer out to you."
+            },
+            {
+                "role": "user",
+                "content": "Okay, thank you."
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Confusion",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Calm",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_6": {
+        "id": "archived_6",
+        "title": "FIREARM EMERGENCY",
+        "severity": "CRITICAL",
+        "time": "11:5:35 PM",
+        "location_name": "is the address of the emergency?",
+        "location_coords": {
+            "lat": 37.8249,
+            "lng": -122.3694
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Hi, you need to get the police."
+            },
+            {
+                "role": "assistant",
+                "content": "What is the address of the emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Just ran over and they said that the young boy just shot his mom."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you know the address?"
+            },
+            {
+                "role": "user",
+                "content": "I'm going to get my cordless phone. Hold on."
+            },
+            {
+                "role": "assistant",
+                "content": "Alright. Just stay with me on the line."
+            },
+            {
+                "role": "user",
+                "content": "We've had the police here before."
+            },
+            {
+                "role": "assistant",
+                "content": "Alright. Is anyone hurt?"
+            },
+            {
+                "role": "user",
+                "content": "The kid said that the youngest kid shot his mom."
+            },
+            {
+                "role": "assistant",
+                "content": "Is the shooter still there?"
+            },
+            {
+                "role": "user",
+                "content": "I'm not sure. The boy who was shot is in my front yard."
+            },
+            {
+                "role": "assistant",
+                "content": "How old is the boy?"
+            },
+            {
+                "role": "user",
+                "content": "I think he's young, probably a teenager."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you know if the mother is alright?"
+            },
+            {
+                "role": "user",
+                "content": "I don't know. I just heard the kids say he just shot our mom."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, I have officers on the way. Stay on the line with me."
+            },
+            {
+                "role": "user",
+                "content": "My husband is hearing a different story now, saying maybe the mom shot the kids."
+            },
+            {
+                "role": "assistant",
+                "content": "Is the mother still outside?"
+            },
+            {
+                "role": "user",
+                "content": "No, we're inside. We don't know who has the gun."
+            },
+            {
+                "role": "assistant",
+                "content": "Can you see anyone outside?"
+            },
+            {
+                "role": "user",
+                "content": "I can't see from here. We're staying inside."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you know the family involved?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, there's four children and a mom."
+            },
+            {
+                "role": "assistant",
+                "content": "And do you know the ages of the children?"
+            },
+            {
+                "role": "user",
+                "content": "Ranging in age from 11 to 17."
+            },
+            {
+                "role": "assistant",
+                "content": "Are they all boys, or a mix of boys and girls?"
+            },
+            {
+                "role": "user",
+                "content": "Two girls and two boys."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you see any police in the area now?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, I see a couple of units and a helicopter."
+            },
+            {
+                "role": "assistant",
+                "content": "Stay inside until the police make contact with you."
+            },
+            {
+                "role": "user",
+                "content": "Will do. I'm going into the bathroom to hide."
+            },
+            {
+                "role": "assistant",
+                "content": "That's fine. Just stay safe, and keep the line open."
+            },
+            {
+                "role": "user",
+                "content": "I can hear them yelling outside."
+            },
+            {
+                "role": "assistant",
+                "content": "Alright. Just keep low and remain inside."
+            },
+            {
+                "role": "user",
+                "content": "Oh my God, she's still out there shooting!"
+            },
+            {
+                "role": "assistant",
+                "content": "Stay down and stay away from windows and doors."
+            },
+            {
+                "role": "user",
+                "content": "More gunshots. We cannot believe someone is not here by now."
+            },
+            {
+                "role": "assistant",
+                "content": "Sir, I have units out there. Just stay inside."
+            },
+            {
+                "role": "user",
+                "content": "Are you done with me?"
+            },
+            {
+                "role": "assistant",
+                "content": "No, I need you to stay on the phone with me."
+            },
+            {
+                "role": "user",
+                "content": "The wife is back on the phone. She's still over there shooting."
+            },
+            {
+                "role": "assistant",
+                "content": "How many shots do you hear now?"
+            },
+            {
+                "role": "user",
+                "content": "It's been at least six."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, just hold on. Stay with me."
+            },
+            {
+                "role": "user",
+                "content": "Should I let you go?"
+            },
+            {
+                "role": "assistant",
+                "content": "No, stay on the line. We need to know what's happening."
+            },
+            {
+                "role": "user",
+                "content": "Alright."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you know who has the gun now?"
+            },
+            {
+                "role": "user",
+                "content": "No, it's too dark to see clearly."
+            },
+            {
+                "role": "assistant",
+                "content": "Stay inside until the police give you the all-clear."
+            },
+            {
+                "role": "user",
+                "content": "The mother is Tanya."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you know the names of the children?"
+            },
+            {
+                "role": "user",
+                "content": "Joel, Pebbles, Jacks or Romeo, and another girl but I don't know her name."
+            },
+            {
+                "role": "assistant",
+                "content": "Understood. Just stay safe and keep hidden."
+            },
+            {
+                "role": "user",
+                "content": "The lights are all off in our house now."
+            },
+            {
+                "role": "assistant",
+                "content": "Good. The units should be arriving shortly."
+            },
+            {
+                "role": "user",
+                "content": "I hear more shots again. Oh my God!"
+            },
+            {
+                "role": "assistant",
+                "content": "Stay down and keep quiet. Help is arriving."
+            },
+            {
+                "role": "user",
+                "content": "Do you need any more information?"
+            },
+            {
+                "role": "assistant",
+                "content": "We're good for now. Just stay on the line."
+            },
+            {
+                "role": "user",
+                "content": "I need to call my work to inform them."
+            },
+            {
+                "role": "assistant",
+                "content": "Stay on this line for now. We might need more information."
+            },
+            {
+                "role": "user",
+                "content": "Okay."
+            },
+            {
+                "role": "assistant",
+                "content": "Have you heard any other noises or seen anything else?"
+            },
+            {
+                "role": "user",
+                "content": "No, nothing new. Just staying hidden."
+            },
+            {
+                "role": "assistant",
+                "content": "Alright. If anything changes, let me know immediately."
+            },
+            {
+                "role": "user",
+                "content": "Understood."
+            },
+            {
+                "role": "assistant",
+                "content": "Thank you for your help. Stay safe."
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Anxiety",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Fear",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_7": {
+        "id": "archived_7",
+        "title": "SHOOTING INCIDENT",
+        "severity": "CRITICAL",
+        "time": "10:4:36 PM",
+        "location_name": "I'm going to do is have him come to the ",
+        "location_coords": {
+            "lat": 37.834900000000005,
+            "lng": -122.3594
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Hi, this is really calling from Motel 6."
+            },
+            {
+                "role": "assistant",
+                "content": "Mm-hmm."
+            },
+            {
+                "role": "user",
+                "content": "I have a gentleman in a room, and when he went to change his room, a bag of pot fell out of his pocket onto the desk in front of me."
+            },
+            {
+                "role": "assistant",
+                "content": "So there's something suspicious?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, it was a rather big bag."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, and is he still there?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, he's still here."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, and this is Motel 6?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, that's correct."
+            },
+            {
+                "role": "assistant",
+                "content": "What I'm going to do is have him come to the office and talk with you, and you let them know about the situation. Alright?"
+            },
+            {
+                "role": "user",
+                "content": "Okay."
+            },
+            {
+                "role": "assistant",
+                "content": "Alright. Mm-hmm. Bye-bye."
+            },
+            {
+                "role": "user",
+                "content": "Radio is 78, 1042 at Motel 6, reference subject, Signal 60 in one of the rooms there."
+            },
+            {
+                "role": "assistant",
+                "content": "78, please go ahead with your message."
+            },
+            {
+                "role": "user",
+                "content": "Hello, I'm calling. This is Windell, W-I-N-D-E-L-L. Date of birth is 5/29/1986."
+            },
+            {
+                "role": "assistant",
+                "content": "78, you'll have to repeat the first name again, was unable to copy."
+            },
+            {
+                "role": "user",
+                "content": "Vincent, V-I-N-C-E-N-T."
+            },
+            {
+                "role": "assistant",
+                "content": "Clear."
+            },
+            {
+                "role": "user",
+                "content": "Lady at Motel 6."
+            },
+            {
+                "role": "assistant",
+                "content": "10-4."
+            },
+            {
+                "role": "user",
+                "content": "Radio to 78, he has a local Signal 60 and NCIC is clear."
+            },
+            {
+                "role": "assistant",
+                "content": "Radio, unit with traffic, go ahead."
+            },
+            {
+                "role": "user",
+                "content": "We're going to stop, and bars."
+            },
+            {
+                "role": "assistant",
+                "content": "Radio, shots fired."
+            },
+            {
+                "role": "user",
+                "content": "Shots fired, unit, Signal 100."
+            },
+            {
+                "role": "assistant",
+                "content": "Where's that, radio?"
+            },
+            {
+                "role": "user",
+                "content": "They were at Motel 6. Radio's corporate. Can't breathe."
+            },
+            {
+                "role": "assistant",
+                "content": "Clear."
+            },
+            {
+                "role": "user",
+                "content": "Radio, is that you there?"
+            },
+            {
+                "role": "assistant",
+                "content": "78 was the last one that talked. I have an ambulance en route. 78, can you copy me?"
+            },
+            {
+                "role": "user",
+                "content": "You have a hundred steps where you're on me. Go again?"
+            },
+            {
+                "role": "assistant",
+                "content": "Yeah, barely. Alright, just take some deep breaths and slow your breathing down."
+            },
+            {
+                "role": "user",
+                "content": "31, 19."
+            },
+            {
+                "role": "assistant",
+                "content": "Clear, where are you at?"
+            },
+            {
+                "role": "user",
+                "content": "Refer to room 225, very back left corner from the office."
+            },
+            {
+                "role": "assistant",
+                "content": "I don't know where 80 is."
+            },
+            {
+                "role": "user",
+                "content": "78 at the Motel 6."
+            },
+            {
+                "role": "assistant",
+                "content": "76 units, I'm looking for you, where are you at?"
+            },
+            {
+                "role": "user",
+                "content": "On the very back corner."
+            },
+            {
+                "role": "assistant",
+                "content": "Very back corner? What are you dealing with?"
+            },
+            {
+                "role": "user",
+                "content": "There you are, upstairs in the back corner."
+            },
+            {
+                "role": "assistant",
+                "content": "Upstairs in the back corner. Do we have eyes on the suspect?"
+            },
+            {
+                "role": "user",
+                "content": "The suspect's already gone."
+            },
+            {
+                "role": "assistant",
+                "content": "I'm not clear, do we have a location on the suspect?"
+            },
+            {
+                "role": "user",
+                "content": "Nobody's advised. A unit goes to the desk, she said they got his driver's license. He's a white male, about 5'8, black clothing, white margin, was carrying a black duffle bag."
+            },
+            {
+                "role": "assistant",
+                "content": "78 copy, suspect ran off."
+            },
+            {
+                "role": "user",
+                "content": "Radio to any officer, can you advise on the unit?"
+            },
+            {
+                "role": "assistant",
+                "content": "78, down."
+            },
+            {
+                "role": "user",
+                "content": "78, down."
+            },
+            {
+                "role": "assistant",
+                "content": "Where are you at, 80?"
+            },
+            {
+                "role": "user",
+                "content": "Top floor, bad man, second room. Where are you?"
+            },
+            {
+                "role": "assistant",
+                "content": "Top floor, above the office."
+            },
+            {
+                "role": "user",
+                "content": "People are here, you got to tell us what room. Above the office, I suppose."
+            },
+            {
+                "role": "assistant",
+                "content": "Start checking on them."
+            },
+            {
+                "role": "user",
+                "content": "Help, please help."
+            },
+            {
+                "role": "assistant",
+                "content": "Unit, second ambulance is en route."
+            },
+            {
+                "role": "user",
+                "content": "We've got him about there. He's right above the office. I need some backup there now."
+            },
+            {
+                "role": "assistant",
+                "content": "He's got a critical injury."
+            },
+            {
+                "role": "user",
+                "content": "Radio, 45-4, I'm with your officer here at the rear with EMS. Does another officer need assistance inside this one?"
+            },
+            {
+                "role": "assistant",
+                "content": "I have two officers. Can anybody on the scene advise exactly where they're at?"
+            },
+            {
+                "role": "user",
+                "content": "They're in front of 207, just coming right above the office."
+            },
+            {
+                "role": "assistant",
+                "content": "ASAP, now. Above the office is priority number one."
+            },
+            {
+                "role": "user",
+                "content": "Radio's clear."
+            },
+            {
+                "role": "assistant",
+                "content": "We're here now, office on the second floor, ASAP."
+            },
+            {
+                "role": "user",
+                "content": "Radio's clear. Ambulance en route. We're checking with them."
+            },
+            {
+                "role": "assistant",
+                "content": "Radio, we need an ETA on the ambulance, ASAP, please."
+            },
+            {
+                "role": "user",
+                "content": "Radio's clear, 76."
+            },
+            {
+                "role": "assistant",
+                "content": "76, I just got off the phone with them, they advised one unit should be on scene, the other has an ETA of about 4-5 minutes."
+            },
+            {
+                "role": "user",
+                "content": "Clear, we need transport for 78, ASAP."
+            },
+            {
+                "role": "assistant",
+                "content": "Paramedics and fire are en route, but we need transport."
+            },
+            {
+                "role": "user",
+                "content": "10-4. 53 is on the scene."
+            },
+            {
+                "role": "assistant",
+                "content": "Alright. Have University on standby, get StatFlight here."
+            },
+            {
+                "role": "user",
+                "content": "Radio's clear on StatFlight. 53."
+            },
+            {
+                "role": "assistant",
+                "content": "StatFlight en route. "
+            },
+            {
+                "role": "user",
+                "content": "Verify if Vincent Windell is the suspect."
+            },
+            {
+                "role": "assistant",
+                "content": "Look up anything you have on Vincent Windell."
+            },
+            {
+                "role": "user",
+                "content": "Thank you."
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Anxiety",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Fear",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_8": {
+        "id": "archived_8",
+        "title": "EMERGENCY CALL",
+        "severity": "LOW",
+        "time": "11:3:37 PM",
+        "location_name": "Unknown Location",
+        "location_coords": {
+            "lat": 37.8449,
+            "lng": -122.3494
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Hello, 911."
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Confusion",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Calm",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_9": {
+        "id": "archived_9",
+        "title": "FIREARM EMERGENCY",
+        "severity": "CRITICAL",
+        "time": "10:2:38 PM",
+        "location_name": "us!",
+        "location_coords": {
+            "lat": 37.8549,
+            "lng": -122.3394
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "650 for Belmore, an auto accident, a car hit a telephone transformer."
+            },
+            {
+                "role": "assistant",
+                "content": "Can you confirm your location?"
+            },
+            {
+                "role": "user",
+                "content": "Belmar Avenue and Merrick Road."
+            },
+            {
+                "role": "assistant",
+                "content": "Is anyone injured?"
+            },
+            {
+                "role": "user",
+                "content": "They're shooting at us!"
+            },
+            {
+                "role": "assistant",
+                "content": "Repeat your location."
+            },
+            {
+                "role": "user",
+                "content": "Claxton and Belmont Avenue."
+            },
+            {
+                "role": "assistant",
+                "content": "What is happening there?"
+            },
+            {
+                "role": "user",
+                "content": "A man is shooting at the vehicle that got into the accident. He has a gun."
+            },
+            {
+                "role": "assistant",
+                "content": "Use caution, there's a male shooting a gun at Claxton and Belmar Avenue."
+            },
+            {
+                "role": "user",
+                "content": "I'm on the phone with 911 now."
+            },
+            {
+                "role": "assistant",
+                "content": "All units stand by unless urgent. Stage at Merrick Road and Belmore Avenue."
+            },
+            {
+                "role": "user",
+                "content": "We have a gunshot victim here."
+            },
+            {
+                "role": "assistant",
+                "content": "Is the victim on the way to the hospital?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, the victim is on the way to the hospital."
+            },
+            {
+                "role": "assistant",
+                "content": "Who is transporting the shooting victim?"
+            },
+            {
+                "role": "user",
+                "content": "Secure one with the medical center."
+            },
+            {
+                "role": "assistant",
+                "content": "All units are to stay off Belmar Avenue. The scene is not secure."
+            },
+            {
+                "role": "user",
+                "content": "We're staging at Station 2 until further notice."
+            },
+            {
+                "role": "assistant",
+                "content": "All units, repeat, stage at Station 2 until further notice."
+            },
+            {
+                "role": "user",
+                "content": "Copy, all units are to stage at station number two."
+            },
+            {
+                "role": "assistant",
+                "content": "Belmore Avenue and Marion Street, auto accident with injury. Is that the same location?"
+            },
+            {
+                "role": "user",
+                "content": "It may be. Marion's only one block down, so I'll check it out."
+            },
+            {
+                "role": "assistant",
+                "content": "Stand by. We will notify the fire department for an ambulance."
+            },
+            {
+                "role": "user",
+                "content": "It's possibly a DWI."
+            },
+            {
+                "role": "assistant",
+                "content": "Any 7th Precinct units respond to 2485 Belmore Avenue for shots fired."
+            },
+            {
+                "role": "user",
+                "content": "K-9-3 is on the air."
+            },
+            {
+                "role": "assistant",
+                "content": "Are you responding as well to 2485 Belmore Avenue?"
+            },
+            {
+                "role": "user",
+                "content": "10-4, K-9-3 responding."
+            },
+            {
+                "role": "assistant",
+                "content": "Received. Shots fired, Belmore Avenue. Do we have an ETA for BSO?"
+            },
+            {
+                "role": "user",
+                "content": "Still waiting on BSO. One person is still armed in the vehicle."
+            },
+            {
+                "role": "assistant",
+                "content": "Copy, one person armed in the vehicle. Still awaiting BSO."
+            },
+            {
+                "role": "user",
+                "content": "743 advising, shooting shots fired at Belmore Avenue."
+            },
+            {
+                "role": "assistant",
+                "content": "Confirmed, shots fired at Belmore Avenue. Anyone else on scene?"
+            },
+            {
+                "role": "user",
+                "content": "716 on scene. Location is Belmore Avenue and Marion Street."
+            },
+            {
+                "role": "assistant",
+                "content": "Notify ESU, outer perimeter at Merrick Road and Belmore Avenue."
+            },
+            {
+                "role": "user",
+                "content": "2434 on scene, Merrick Road."
+            },
+            {
+                "role": "assistant",
+                "content": "Hold the ambulance outside the perimeter at Merrick Road and Belmore Avenue."
+            },
+            {
+                "role": "user",
+                "content": "Received, holding at perimeter."
+            },
+            {
+                "role": "assistant",
+                "content": "One Fillmore Fire Department member was shot and is on the way to the hospital."
+            },
+            {
+                "role": "user",
+                "content": "117 responding to the hospital to secure the person."
+            },
+            {
+                "role": "assistant",
+                "content": "Copy, the scene is now clear for the bus to respond."
+            },
+            {
+                "role": "user",
+                "content": "Sending a stretcher down the block now."
+            },
+            {
+                "role": "assistant",
+                "content": "All units stand by for further instructions."
+            },
+            {
+                "role": "user",
+                "content": "6751 operators are responding down."
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Anxiety",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Fear",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_10": {
+        "id": "archived_10",
+        "title": "AIRCRAFT EMERGENCY",
+        "severity": "LOW",
+        "time": "11:1:39 PM",
+        "location_name": "went down in Munson Park",
+        "location_coords": {
+            "lat": 37.864900000000006,
+            "lng": -122.32939999999999
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, we do. We have a plane that went down in Munson Park."
+            },
+            {
+                "role": "assistant",
+                "content": "A plane went down in Munson Park?"
+            },
+            {
+                "role": "user",
+                "content": "It went down. It crashed. It's on fire."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we have emergency services on the way. Thank you very much."
+            },
+            {
+                "role": "user",
+                "content": "Thank you. Goodbye."
+            },
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, an airplane just went down at Munson Park. We're right here right now."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we have help on the way. Stay safe."
+            },
+            {
+                "role": "user",
+                "content": "Okay, we'll do. Bye."
+            },
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Yeah, a plane just crashed at Munson Park."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you know what kind of plane it was?"
+            },
+            {
+                "role": "user",
+                "content": "It looked like a single-engine plane, maybe a four-seater."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we have help on the way. Can I get your name and phone number, please?"
+            },
+            {
+                "role": "user",
+                "content": "My name is Jeff Smith. My phone number is 734-799-1067."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we've got help on the way. Thank you."
+            },
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Yeah, this is Bob. I'm out here behind Munson Park, and an aircraft just crashed back here."
+            },
+            {
+                "role": "assistant",
+                "content": "Yep, we have help on the way."
+            },
+            {
+                "role": "user",
+                "content": "It doesn't look like anyone survived."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, I appreciate the call. Thank you."
+            },
+            {
+                "role": "user",
+                "content": "Okay. Bye-bye."
+            },
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "We have a plane crash just to the east of Custer Airport."
+            },
+            {
+                "role": "assistant",
+                "content": "We have help on the way. Are you at the airport?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, I am."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you know what kind of plane it is or how many passengers?"
+            },
+            {
+                "role": "user",
+                "content": "It's a Malibu, maybe three passengers."
+            },
+            {
+                "role": "assistant",
+                "content": "All right, what's your name, sir?"
+            },
+            {
+                "role": "user",
+                "content": "I'm John Ripple."
+            },
+            {
+                "role": "assistant",
+                "content": "And your phone number?"
+            },
+            {
+                "role": "user",
+                "content": "384-961-616."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, thanks. Help is on the way."
+            },
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "There's a fire at Munson Park."
+            },
+            {
+                "role": "assistant",
+                "content": "Yep, we got it, ma'am."
+            },
+            {
+                "role": "user",
+                "content": "Okay, thank you."
+            },
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, you had a plane crash in Munson Park off Monroe Custer."
+            },
+            {
+                "role": "assistant",
+                "content": "Yes, we have reports of it. Do you know if anyone's hurt?"
+            },
+            {
+                "role": "user",
+                "content": "I think it's beyond hurt."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we have help on the way. Thank you."
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Confusion",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Calm",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_11": {
+        "id": "archived_11",
+        "title": "HOMICIDE REPORT",
+        "severity": "CRITICAL",
+        "time": "10:0:40 PM",
+        "location_name": "the police station, Monroe Falls",
+        "location_coords": {
+            "lat": 37.874900000000004,
+            "lng": -122.3194
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "I'm here at the police station, Monroe Falls."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, what's wrong?"
+            },
+            {
+                "role": "user",
+                "content": "I killed my sister. I'm turning myself in."
+            },
+            {
+                "role": "assistant",
+                "content": "Where did it happen?"
+            },
+            {
+                "role": "user",
+                "content": "At my house."
+            },
+            {
+                "role": "assistant",
+                "content": "Where do you live?"
+            },
+            {
+                "role": "user",
+                "content": "247 Monroe Falls Avenue."
+            },
+            {
+                "role": "assistant",
+                "content": "How did you kill her?"
+            },
+            {
+                "role": "user",
+                "content": "I strangled her."
+            },
+            {
+                "role": "assistant",
+                "content": "What apartment number?"
+            },
+            {
+                "role": "user",
+                "content": "It's not an apartment, 247 Monroe Falls."
+            },
+            {
+                "role": "assistant",
+                "content": "When did you do this?"
+            },
+            {
+                "role": "user",
+                "content": "I just did it this morning."
+            },
+            {
+                "role": "assistant",
+                "content": "How old is your sister?"
+            },
+            {
+                "role": "user",
+                "content": "She's 32."
+            },
+            {
+                "role": "assistant",
+                "content": "How did you strangle her?"
+            },
+            {
+                "role": "user",
+                "content": "I just, I got angry and I strangled her. We had an argument."
+            },
+            {
+                "role": "user",
+                "content": "She said she was going to hurt my mom and everything, and I just lost it."
+            },
+            {
+                "role": "assistant",
+                "content": "What's your last name?"
+            },
+            {
+                "role": "user",
+                "content": "Hanley."
+            },
+            {
+                "role": "assistant",
+                "content": "Hanley? Can you spell that for me?"
+            },
+            {
+                "role": "user",
+                "content": "Yeah, H-A-N-L-E-Y."
+            },
+            {
+                "role": "assistant",
+                "content": "Are you calling from your cell phone?"
+            },
+            {
+                "role": "user",
+                "content": "Yes."
+            },
+            {
+                "role": "assistant",
+                "content": "Are you okay?"
+            },
+            {
+                "role": "user",
+                "content": "Yeah, I'm just frantic. I just panicked. I just lost it."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay. Are you on any medication?"
+            },
+            {
+                "role": "user",
+                "content": "I take some steroidal medication and stuff like that."
+            },
+            {
+                "role": "assistant",
+                "content": "What's that for?"
+            },
+            {
+                "role": "user",
+                "content": "You might need to get someone."
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Anxiety",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Fear",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_12": {
+        "id": "archived_12",
+        "title": "FIREARM EMERGENCY",
+        "severity": "CRITICAL",
+        "time": "11:0:41 PM",
+        "location_name": "6th Hill Road",
+        "location_coords": {
+            "lat": 37.8849,
+            "lng": -122.3094
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "I need an emergency. There's a shooting out on Rock Hill Road at 6th Hill Road."
+            },
+            {
+                "role": "assistant",
+                "content": "And do you need police, fire, or an ambulance?"
+            },
+            {
+                "role": "user",
+                "content": "I need police and an ambulance. There's been a shooting. Please hurry."
+            },
+            {
+                "role": "assistant",
+                "content": "Ma'am, what's the address you're calling from?"
+            },
+            {
+                "role": "user",
+                "content": "Hurry, he's bleeding, hurry."
+            },
+            {
+                "role": "assistant",
+                "content": "Ma'am, how old is he?"
+            },
+            {
+                "role": "user",
+                "content": "He's 59 going on 60."
+            },
+            {
+                "role": "assistant",
+                "content": "Are you with him now, ma'am?"
+            },
+            {
+                "role": "user",
+                "content": "I'm in the other room. I've got to get to him."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, can you get in there with him, ma'am?"
+            },
+            {
+                "role": "assistant",
+                "content": "Who shot him?"
+            },
+            {
+                "role": "user",
+                "content": "It was an accident."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay. Is he awake?"
+            },
+            {
+                "role": "user",
+                "content": "No, he's bleeding and he's shot in the head. Hurry!"
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, ma'am, is he breathing?"
+            },
+            {
+                "role": "user",
+                "content": "Sue. Sue. Oh, God. Sue. Oh, God. Sue, can you hear me? Oh, God. Sue, can you hear my voice?"
+            },
+            {
+                "role": "assistant",
+                "content": "Hello? Ma'am, it's going to take a bit of time for help to get there. Stay with me."
+            },
+            {
+                "role": "assistant",
+                "content": "Hello? Hello."
+            },
+            {
+                "role": "assistant",
+                "content": "Walton County 911. Is this Sue?"
+            },
+            {
+                "role": "user",
+                "content": "Yeah."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, Sue, you just hung up on me. I'm still here until the medics get there. I need you to tell me what's going on, ma'am."
+            },
+            {
+                "role": "user",
+                "content": "He's dead."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, can you tell me who shot him?"
+            },
+            {
+                "role": "user",
+                "content": "I don't know."
+            },
+            {
+                "role": "assistant",
+                "content": "Sue, who shot him?"
+            },
+            {
+                "role": "user",
+                "content": "We were both in here. And he was playing quick draw."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, he was playing quick draw. What kind of gun?"
+            },
+            {
+                "role": "user",
+                "content": "He had a .45."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, where is the .45 now?"
+            },
+            {
+                "role": "user",
+                "content": "I don't know."
+            },
+            {
+                "role": "assistant",
+                "content": "You don't know where the gun is right now, ma'am?"
+            },
+            {
+                "role": "user",
+                "content": "No."
+            },
+            {
+                "role": "user",
+                "content": "And I have a .38."
+            },
+            {
+                "role": "assistant",
+                "content": "You have a .38? He said they were both loaded?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, we were just playing. I don't know."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay. Ma'am, I need you to tell me what your house looks like."
+            },
+            {
+                "role": "user",
+                "content": "It's gray."
+            },
+            {
+                "role": "assistant",
+                "content": "Is it a mobile home?"
+            },
+            {
+                "role": "user",
+                "content": "No."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay. Is it a gray, two-story, brick house or a wood house?"
+            },
+            {
+                "role": "user",
+                "content": "One story. It's a wood house."
+            },
+            {
+                "role": "assistant",
+                "content": "Are there any vehicles in the driveway?"
+            },
+            {
+                "role": "user",
+                "content": "Yes."
+            },
+            {
+                "role": "assistant",
+                "content": "What kind of vehicles are in the driveway?"
+            },
+            {
+                "role": "user",
+                "content": "A white truck."
+            },
+            {
+                "role": "assistant",
+                "content": "Is it a large truck or a small truck?"
+            },
+            {
+                "role": "user",
+                "content": "A small one."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay. Sue, it's very important. I need you to tell me where your .38 is."
+            },
+            {
+                "role": "user",
+                "content": "It's in the living room somewhere."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay. He had the .45 and you had the .38?"
+            },
+            {
+                "role": "user",
+                "content": "Yes."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, but you're not sure where his gun is?"
+            },
+            {
+                "role": "user",
+                "content": "No."
+            },
+            {
+                "role": "user",
+                "content": "The police are here now. Can I call my daughter?"
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, Sue, I need to speak to the police when they get there. Let me speak to one of them when they come in the house."
+            },
+            {
+                "role": "user",
+                "content": "They're in the driveway."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, I need to talk to them when they come in the house. I can't release the line until I speak to one of them, okay?"
+            },
+            {
+                "role": "user",
+                "content": "I need to call my daughter."
+            },
+            {
+                "role": "assistant",
+                "content": "You can do that after I talk to the police, ma'am."
+            },
+            {
+                "role": "user",
+                "content": "I got my little dog."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, I need to talk to one of the deputies when they arrive. Let me speak to them."
+            },
+            {
+                "role": "assistant",
+                "content": "Is there anyone else in the house, ma'am?"
+            },
+            {
+                "role": "user",
+                "content": "No."
+            },
+            {
+                "role": "assistant",
+                "content": "Are you sure that he's passed away, ma'am? Do you think he's beyond help?"
+            },
+            {
+                "role": "user",
+                "content": "Yeah."
+            },
+            {
+                "role": "user",
+                "content": "I gotta go now."
+            },
+            {
+                "role": "assistant",
+                "content": "Let me speak to one of the officers, ma'am."
+            },
+            {
+                "role": "assistant",
+                "content": "Sue? Sue?"
+            },
+            {
+                "role": "assistant",
+                "content": "Sue? You want me to disconnect?"
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Anxiety",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Fear",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_13": {
+        "id": "archived_13",
+        "title": "SHOOTING INCIDENT",
+        "severity": "CRITICAL",
+        "time": "10:0:42 PM",
+        "location_name": "the address?",
+        "location_coords": {
+            "lat": 37.8949,
+            "lng": -122.29939999999999
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "517 West Doty Street."
+            },
+            {
+                "role": "assistant",
+                "content": "Can you repeat the address?"
+            },
+            {
+                "role": "user",
+                "content": "517 West Doty Street."
+            },
+            {
+                "role": "assistant",
+                "content": "Is there an apartment number?"
+            },
+            {
+                "role": "user",
+                "content": "It's the lower flat, apartment one."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, what's the phone number you're calling from, please?"
+            },
+            {
+                "role": "user",
+                "content": "715-305-2584."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, what is your name?"
+            },
+            {
+                "role": "user",
+                "content": "Jordan Gonerang."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, tell me exactly what happened."
+            },
+            {
+                "role": "user",
+                "content": "I just came home, the door was busted in, and my girlfriend's been shot."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, stay on the phone with me, okay?"
+            },
+            {
+                "role": "user",
+                "content": "Yep."
+            },
+            {
+                "role": "assistant",
+                "content": "Are you with her right now?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, I am."
+            },
+            {
+                "role": "assistant",
+                "content": "How old is she?"
+            },
+            {
+                "role": "user",
+                "content": "She is 19, no, she's 21."
+            },
+            {
+                "role": "assistant",
+                "content": "21?"
+            },
+            {
+                "role": "user",
+                "content": "Yes."
+            },
+            {
+                "role": "assistant",
+                "content": "Is she conscious?"
+            },
+            {
+                "role": "user",
+                "content": "No, she's not."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, stay on the phone, okay?"
+            },
+            {
+                "role": "assistant",
+                "content": "Are you safe where you are right now?"
+            },
+            {
+                "role": "user",
+                "content": "I think so."
+            },
+            {
+                "role": "assistant",
+                "content": "Is the person that did this still nearby?"
+            },
+            {
+                "role": "user",
+                "content": "I don't know."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, I'm sending an ambulance to help you. I want you to stay on the line with me so I can tell you what to do next, okay?"
+            },
+            {
+                "role": "user",
+                "content": "Okay."
+            },
+            {
+                "role": "assistant",
+                "content": "I want you to get as close to her with the phone as you can, okay?"
+            },
+            {
+                "role": "user",
+                "content": "Yes."
+            },
+            {
+                "role": "assistant",
+                "content": "Are you right by her now?"
+            },
+            {
+                "role": "user",
+                "content": "Yes."
+            },
+            {
+                "role": "assistant",
+                "content": "Alright, I want you to lay her flat on her back on the ground."
+            },
+            {
+                "role": "user",
+                "content": "Okay."
+            },
+            {
+                "role": "assistant",
+                "content": "Remove any pillows."
+            },
+            {
+                "role": "user",
+                "content": "Okay."
+            },
+            {
+                "role": "assistant",
+                "content": "I need you to kneel next to her and look in her mouth for any food or vomit. Is there anything?"
+            },
+            {
+                "role": "user",
+                "content": "No."
+            },
+            {
+                "role": "assistant",
+                "content": "Is she breathing?"
+            },
+            {
+                "role": "user",
+                "content": "No, I don't think so."
+            },
+            {
+                "role": "assistant",
+                "content": "Just so you know, there's an ambulance on the way and the officers are also on the way, okay?"
+            },
+            {
+                "role": "user",
+                "content": "Okay."
+            },
+            {
+                "role": "assistant",
+                "content": "Is that you standing by the window?"
+            },
+            {
+                "role": "user",
+                "content": "Yes."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, I want you to come out right now so they can get in there to help her, okay?"
+            },
+            {
+                "role": "user",
+                "content": "Okay."
+            },
+            {
+                "role": "user",
+                "content": "The officer told me to hang up."
+            },
+            {
+                "role": "assistant",
+                "content": "Alright, goodbye."
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Anxiety",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Fear",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_14": {
+        "id": "archived_14",
+        "title": "VEHICLE EMERGENCY",
+        "severity": "LOW",
+        "time": "11:0:43 PM",
+        "location_name": "happened",
+        "location_coords": {
+            "lat": 37.904900000000005,
+            "lng": -122.2894
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "This is 946 West Dallas Street, number 6. EMS please."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay. Tell me exactly what happened."
+            },
+            {
+                "role": "user",
+                "content": "My husband's eyes are rolling back and he's not breathing right."
+            },
+            {
+                "role": "assistant",
+                "content": "I need somebody there immediately."
+            },
+            {
+                "role": "assistant",
+                "content": "They're already on their way. I'm going to ask you some questions to help him until they get there, okay?"
+            },
+            {
+                "role": "user",
+                "content": "Okay."
+            },
+            {
+                "role": "assistant",
+                "content": "Are you with him now?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, I am."
+            },
+            {
+                "role": "assistant",
+                "content": "How old is he?"
+            },
+            {
+                "role": "user",
+                "content": "He's 26."
+            },
+            {
+                "role": "assistant",
+                "content": "Is he awake?"
+            },
+            {
+                "role": "user",
+                "content": "His chest is expanding, but he's not awake."
+            },
+            {
+                "role": "assistant",
+                "content": "Is he breathing?"
+            },
+            {
+                "role": "user",
+                "content": "Barely, please."
+            },
+            {
+                "role": "assistant",
+                "content": "The paramedics are already on their way. Is his breathing completely normal?"
+            },
+            {
+                "role": "user",
+                "content": "No, it's not."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, is he changing color?"
+            },
+            {
+                "role": "user",
+                "content": "He's getting red and sweating."
+            },
+            {
+                "role": "assistant",
+                "content": "Does he have a history of heart problems?"
+            },
+            {
+                "role": "user",
+                "content": "No, he does not."
+            },
+            {
+                "role": "assistant",
+                "content": "The paramedics are on their way. Stay on the line with me and I'll tell you what to do next."
+            },
+            {
+                "role": "user",
+                "content": "Okay."
+            },
+            {
+                "role": "assistant",
+                "content": "Are you right by him now?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, I am."
+            },
+            {
+                "role": "assistant",
+                "content": "Lay him flat on his back and remove any pillows."
+            },
+            {
+                "role": "user",
+                "content": "Okay, I've done that."
+            },
+            {
+                "role": "assistant",
+                "content": "Place one hand on his forehead and your other hand under his neck, then tilt his head back. Check if you can feel or hear any breathing."
+            },
+            {
+                "role": "user",
+                "content": "No, I can't."
+            },
+            {
+                "role": "assistant",
+                "content": "Listen carefully, I'm going to tell you how to do compressions. Place the heel of your hand on the breastbone in the center of his chest, right between the nipples. Put your other hand on top of that hand. Push hard and fast, at least twice per second, and two inches deep. Let the chest come all the way up between pumps. We're going to do this 600 times or until help takes over. Count out loud so I can keep track with you."
+            },
+            {
+                "role": "user",
+                "content": "Okay, starting now. One, two, three, four, five, six, seven, eight, nine, ten."
+            },
+            {
+                "role": "assistant",
+                "content": "Keep going. Count out loud so I know how much you're doing."
+            },
+            {
+                "role": "user",
+                "content": "Two, three, four, five, six, he's trying to catch his breath."
+            },
+            {
+                "role": "assistant",
+                "content": "That's okay. You still need to pump his chest."
+            },
+            {
+                "role": "user",
+                "content": "I'm going, I'm going."
+            },
+            {
+                "role": "assistant",
+                "content": "What did he do?"
+            },
+            {
+                "role": "user",
+                "content": "He's breathing loud and hard."
+            },
+            {
+                "role": "assistant",
+                "content": "It could be from the chest compressions. Keep pumping his chest."
+            },
+            {
+                "role": "user",
+                "content": "Okay, I'm going."
+            },
+            {
+                "role": "user",
+                "content": "One, two, three, four, six, two, three..."
+            },
+            {
+                "role": "assistant",
+                "content": "I know it seems like a long time, but it's only been a couple of minutes. You're doing fine, just keep going until help takes over."
+            },
+            {
+                "role": "user",
+                "content": "Okay. Are you going to tell me when they're outside?"
+            },
+            {
+                "role": "assistant",
+                "content": "Is your front door unlocked?"
+            },
+            {
+                "role": "user",
+                "content": "No."
+            },
+            {
+                "role": "assistant",
+                "content": "When they pull up, unlock your front door and come right back to him, but keep pumping his chest until then."
+            },
+            {
+                "role": "user",
+                "content": "Okay, he keeps trying to breathe."
+            },
+            {
+                "role": "assistant",
+                "content": "That means he's still struggling. Keep pumping."
+            },
+            {
+                "role": "assistant",
+                "content": "I know it's hard, but you're doing great. Keep going."
+            },
+            {
+                "role": "user",
+                "content": "Okay, come on, Derek, wake up!"
+            },
+            {
+                "role": "assistant",
+                "content": "The fire department just pulled up. Go unlock the door and come right back to him."
+            },
+            {
+                "role": "user",
+                "content": "Okay."
+            },
+            {
+                "role": "assistant",
+                "content": "Are you back with him?"
+            },
+            {
+                "role": "user",
+                "content": "They're going upstairs right now."
+            },
+            {
+                "role": "assistant",
+                "content": "Go back to your husband and start compressions again until they take over."
+            },
+            {
+                "role": "user",
+                "content": "Okay, do you want me to hang up now?"
+            },
+            {
+                "role": "assistant",
+                "content": "Are they with you now?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, they are."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, you did a great job. Goodbye."
+            },
+            {
+                "role": "user",
+                "content": "Thank you, bye."
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Confusion",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Calm",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_15": {
+        "id": "archived_15",
+        "title": "FIREARM EMERGENCY",
+        "severity": "CRITICAL",
+        "time": "10:0:44 PM",
+        "location_name": "the school are they with the gun?",
+        "location_coords": {
+            "lat": 37.9149,
+            "lng": -122.2794
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, this is a student from Sparks Middle School."
+            },
+            {
+                "role": "assistant",
+                "content": "Can you please speak up? I can't hear you well."
+            },
+            {
+                "role": "user",
+                "content": "This is a student from Sparks Middle School. Can you please send police out here? There's a kid with a gun."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, where exactly are they with the gun?"
+            },
+            {
+                "role": "user",
+                "content": "Huh?"
+            },
+            {
+                "role": "assistant",
+                "content": "Where exactly at the school are they with the gun?"
+            },
+            {
+                "role": "user",
+                "content": "By the basketball court."
+            },
+            {
+                "role": "assistant",
+                "content": "By the basketball court? Okay, I need you to stay on the line. Don't hang up, okay? Hold on one second."
+            },
+            {
+                "role": "user",
+                "content": "911 emergency."
+            },
+            {
+                "role": "user",
+                "content": "This is Joe Pizarre, a teacher at Sparks Middle, and we have some kids outside who had a gun pointed at them, so we're locked down in the building."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, so you're locked down. Have you called the school police?"
+            },
+            {
+                "role": "user",
+                "content": "We're locked down and trying to get through to them. We have 911 calls coming in."
+            },
+            {
+                "role": "assistant",
+                "content": "I have fire, medics, and police en route. We will get a hold of school police as well. Stay safe."
+            },
+            {
+                "role": "user",
+                "content": "Okay, thank you. Bye-bye."
+            },
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "There's a kid with a gun at the basketball courts."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, do they still have the gun? Is anyone injured?"
+            },
+            {
+                "role": "user",
+                "content": "I don't know, we're all scared and crammed here. Please come quickly."
+            },
+            {
+                "role": "assistant",
+                "content": "We already have police and medics en route. I just need more information if you have any."
+            },
+            {
+                "role": "user",
+                "content": "I think somebody has been injured, but I'm not sure."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, thank you. We'll get someone out there as soon as possible."
+            },
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Hi, this is Leah from School Police. You guys have Sparks Middle?"
+            },
+            {
+                "role": "assistant",
+                "content": "We do. We have multiple calls and have a teacher and student down. Police are en route."
+            },
+            {
+                "role": "user",
+                "content": "Do you have any description of the suspect?"
+            },
+            {
+                "role": "assistant",
+                "content": "No, I don't have any descriptions yet. We're working on getting more information."
+            },
+            {
+                "role": "user",
+                "content": "The shooter is in the cafeteria area."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, the shooter is in the cafeteria area with a victim. We'll inform our units."
+            },
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Hi, this is Pam calling from Sparks Middle School. We have a shooting at our school."
+            },
+            {
+                "role": "assistant",
+                "content": "You have a shooting? Is anyone injured?"
+            },
+            {
+                "role": "user",
+                "content": "We have a teacher down."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, let me transfer you to emergency services. Hold on one second."
+            },
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Somebody brought a gun to school. They shot a teacher."
+            },
+            {
+                "role": "assistant",
+                "content": "The teacher is down?"
+            },
+            {
+                "role": "user",
+                "content": "Yes."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we'll get someone out there right away. You're at Sparks Middle School?"
+            },
+            {
+                "role": "user",
+                "content": "Yes. They shot again."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we'll get someone out there, okay?"
+            },
+            {
+                "role": "user",
+                "content": "Okay, thank you."
+            },
+            {
+                "role": "assistant",
+                "content": "Uh-huh, bye-bye."
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Anxiety",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Fear",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_16": {
+        "id": "archived_16",
+        "title": "AIRCRAFT EMERGENCY",
+        "severity": "CRITICAL",
+        "time": "11:0:45 PM",
+        "location_name": "the Venice airport",
+        "location_coords": {
+            "lat": 37.9249,
+            "lng": -122.26939999999999
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Hi, this is at the Venice airport. We have an aircraft declaring an emergency that's going to land on the beach at Venice, close to the airport. I'm not sure exactly where he is."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, you said he's going to be landing on the beach?"
+            },
+            {
+                "role": "user",
+                "content": "Yes."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, I've got 101 North Esplanade. Do you know the Cross Street?"
+            },
+            {
+                "role": "user",
+                "content": "I don't know. He's trying to make the airport. He says he's not going to make the airport, but he's going to be on the beach."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, hold on just one second."
+            },
+            {
+                "role": "user",
+                "content": "Okay, thank you."
+            },
+            {
+                "role": "assistant",
+                "content": "How many are on board?"
+            },
+            {
+                "role": "user",
+                "content": "Okay, I've got another plane that's going to try to see if they've already gone down."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, what's your phone number?"
+            },
+            {
+                "role": "user",
+                "content": "Our number here is..."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, and just to clarify, you're not certain if it's actually crashed on the beach?"
+            },
+            {
+                "role": "user",
+                "content": "I do not know yet. He had declared an emergency on the Unicom. We monitor Unicom here. He declared an emergency. I got his N number, but he's not answering me now. I'm trying to see how many are on board. I've got another plane that's going to see if he can find them."
+            },
+            {
+                "role": "assistant",
+                "content": "Venice Unicom, Helicopter Aero Med here. Let's helicopter calling Venice. Go ahead, please."
+            },
+            {
+                "role": "user",
+                "content": "We're just about 10 east of the field and was monitoring that traffic. Could you use our assistance?"
+            },
+            {
+                "role": "assistant",
+                "content": "Yes, sir, please. He declared an emergency, but I haven't gotten any other information. Do you know if he was north or south of the field?"
+            },
+            {
+                "role": "user",
+                "content": "No, sir, I do not. He just said that he was trying to make the field but is not going to make the field."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we've got a call on the beach. He is on the beach. The wheels are down and there are people around the airplane."
+            },
+            {
+                "role": "user",
+                "content": "Okay, we're in location for the airport. Is he north or south of us?"
+            },
+            {
+                "role": "assistant",
+                "content": "About a mile south of the airport on the beach."
+            },
+            {
+                "role": "user",
+                "content": "Okay, thank you very much."
+            },
+            {
+                "role": "assistant",
+                "content": "You're welcome. Okay, they're saying a mile south of the airport on the beach. What's the registration number?"
+            },
+            {
+                "role": "user",
+                "content": "Yeah, it was 886 Charlie."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, what type of aircraft is involved? Large, small, or military?"
+            },
+            {
+                "role": "user",
+                "content": "Stand by, I can look it up for you if you want it. Do you want me to?"
+            },
+            {
+                "role": "assistant",
+                "content": "If you can, that would be helpful."
+            },
+            {
+                "role": "user",
+                "content": "Okay, the tail number on that plane was 886 Charlie. It's a Piper 28 181, which is a Piper Archer."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, so it's a low-wing four-seater."
+            },
+            {
+                "role": "user",
+                "content": "Correct."
+            },
+            {
+                "role": "assistant",
+                "content": "Is the aircraft on fire, do you know?"
+            },
+            {
+                "role": "user",
+                "content": "No, nobody said it was on fire. There are people around it, so you'll probably get another 911 call."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, do you know if it's a single engine?"
+            },
+            {
+                "role": "user",
+                "content": "It is a single engine, yes."
+            },
+            {
+                "role": "assistant",
+                "content": "And do we know how much fuel is on board?"
+            },
+            {
+                "role": "user",
+                "content": "We do not."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you know if there are any dangerous goods or hazardous materials on board?"
+            },
+            {
+                "role": "user",
+                "content": "I do not know."
+            },
+            {
+                "role": "assistant",
+                "content": "And do you know how many souls are on board?"
+            },
+            {
+                "role": "user",
+                "content": "We do not."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we do already have units on the way."
+            },
+            {
+                "role": "user",
+                "content": "Okay, thank you."
+            },
+            {
+                "role": "assistant",
+                "content": "I'll tell you exactly what to do next. I'm going to let you go. Help is on the way. If you have any further information, please call us back."
+            },
+            {
+                "role": "user",
+                "content": "Okay, thank you."
+            },
+            {
+                "role": "assistant",
+                "content": "And what was your location?"
+            },
+            {
+                "role": "user",
+                "content": "I'm at the Venice airport. I operate Unicom here."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we have units on the way now and possibly on scene."
+            },
+            {
+                "role": "user",
+                "content": "Okay, perfect. Thank you."
+            },
+            {
+                "role": "assistant",
+                "content": "You're welcome. Bye."
+            },
+            {
+                "role": "user",
+                "content": "A small plane crash on Caspersen Beach."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, I'm sorry, which beach?"
+            },
+            {
+                "role": "user",
+                "content": "Caspersen, correct. Are you there?"
+            },
+            {
+                "role": "assistant",
+                "content": "One second for me. All right, we've had people saying it's on Venice Beach. Are you on Caspersen Beach?"
+            },
+            {
+                "role": "user",
+                "content": "Yes. If you go to the end of Harbor Drive."
+            },
+            {
+                "role": "assistant",
+                "content": "I'm sorry, your phone broke up. What did you say?"
+            },
+            {
+                "role": "user",
+                "content": "We're south of the airport."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay. Hold on one second for me, okay?"
+            },
+            {
+                "role": "user",
+                "content": "Yep."
+            },
+            {
+                "role": "assistant",
+                "content": "Is the plane still in the water?"
+            },
+            {
+                "role": "user",
+                "content": "It hit the sand right at the shoreline. It hit the water and kind of rolled up on the sand. People are running down to it. I'm not quite down yet."
+            },
+            {
+                "role": "assistant",
+                "content": "Is there anyone coming out of the plane that you can tell?"
+            },
+            {
+                "role": "user",
+                "content": "I can't tell just yet, but I assume there are people."
+            },
+            {
+                "role": "assistant",
+                "content": "What color is the plane?"
+            },
+            {
+                "role": "user",
+                "content": "I believe it's white. I'm trying to see it from the distance. White with a blue stripe, I think."
+            },
+            {
+                "role": "assistant",
+                "content": "Was there anyone else near the plane when it crashed? Were there any bystanders?"
+            },
+            {
+                "role": "user",
+                "content": "Hard to tell, it's about 200 yards in front of me. There are so many people standing around. I see a guy down on his knees."
+            },
+            {
+                "role": "assistant",
+                "content": "What is your name and phone number for our records?"
+            },
+            {
+                "role": "user",
+                "content": "Phone number."
+            },
+            {
+                "role": "assistant",
+                "content": "We do have fire units on the way out there as well as law enforcement."
+            },
+            {
+                "role": "user",
+                "content": "Okay."
+            },
+            {
+                "role": "assistant",
+                "content": "If you could, it would help them if you could flag them down and direct them, just in case they have a hard time locating it."
+            },
+            {
+                "role": "user",
+                "content": "Okay, very good. Thank you."
+            },
+            {
+                "role": "assistant",
+                "content": "Thank you, sir. Bye."
+            },
+            {
+                "role": "user",
+                "content": "We have a plane, we're on the beach. You need to come immediately."
+            },
+            {
+                "role": "assistant",
+                "content": "Hello, I can't hear you. Where are you?"
+            },
+            {
+                "role": "user",
+                "content": "We're on Caspersen Beach right now."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay. Is this about the plane crash?"
+            },
+            {
+                "role": "user",
+                "content": "Yes. My friend's husband."
+            },
+            {
+                "role": "assistant",
+                "content": "We have help on the way right now. Are you involved in the situation at all?"
+            },
+            {
+                "role": "user",
+                "content": "What's that?"
+            },
+            {
+                "role": "assistant",
+                "content": "Are you involved in this situation other than being a bystander?"
+            },
+            {
+                "role": "user",
+                "content": "It's my friend's husband. His daughter is with him, and they are here."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, so are you with the people who are injured right now?"
+            },
+            {
+                "role": "user",
+                "content": "Yes."
+            },
+            {
+                "role": "assistant",
+                "content": "Are they still breathing?"
+            },
+            {
+                "role": "user",
+                "content": "Yes."
+            },
+            {
+                "role": "assistant",
+                "content": "How old are they?"
+            },
+            {
+                "role": "user",
+                "content": "The father is 38."
+            },
+            {
+                "role": "assistant",
+                "content": "Is there any serious bleeding?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, serious bleeding right now."
+            },
+            {
+                "role": "assistant",
+                "content": "Is he completely alert?"
+            },
+            {
+                "role": "user",
+                "content": "He was."
+            },
+            {
+                "role": "assistant",
+                "content": "And what part of the body is injured?"
+            },
+            {
+                "role": "user",
+                "content": "He's hurt badly on his back."
+            },
+            {
+                "role": "assistant",
+                "content": "How old is the daughter?"
+            },
+            {
+                "role": "user",
+                "content": "The daughter is nine."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, like I said, help is on the way. There's been multiple callers on this. We're getting out there as quickly as possible."
+            },
+            {
+                "role": "user",
+                "content": "Okay, thank you."
+            },
+            {
+                "role": "assistant",
+                "content": "Are you with both of the injured people right now?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, we're with them right now."
+            },
+            {
+                "role": "assistant",
+                "content": "Stay on the line. I'm going to tell you exactly what to do next. Don't move them unless they're in danger."
+            },
+            {
+                "role": "user",
+                "content": "Oh my God."
+            },
+            {
+                "role": "assistant",
+                "content": "Is he breathing?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, they're giving him mouth-to-mouth now."
+            },
+            {
+                "role": "assistant",
+                "content": "Who's giving him mouth-to-mouth?"
+            },
+            {
+                "role": "user",
+                "content": "A bystander is."
+            },
+            {
+                "role": "assistant",
+                "content": "Why are they putting him on his side?"
+            },
+            {
+                "role": "user",
+                "content": "They said something about shade."
+            },
+            {
+                "role": "assistant",
+                "content": "Is someone medically trained there?"
+            },
+            {
+                "role": "user",
+                "content": "No."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we have to continue CPR right now. But why is he being turned on his side?"
+            },
+            {
+                "role": "user",
+                "content": "I am not sure."
+            },
+            {
+                "role": "assistant",
+                "content": "Just make sure they don't move him unless it's absolutely necessary."
+            },
+            {
+                "role": "user",
+                "content": "Okay, nobody move him."
+            },
+            {
+                "role": "assistant",
+                "content": "Is someone giving him mouth-to-mouth right now?"
+            },
+            {
+                "role": "user",
+                "content": "Yes."
+            },
+            {
+                "role": "assistant",
+                "content": "Is he not breathing at all?"
+            },
+            {
+                "role": "user",
+                "content": "He is breathing, but barely."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, tell the people not to give him mouth-to-mouth if he is breathing."
+            },
+            {
+                "role": "user",
+                "content": "Okay, nobody give him mouth-to-mouth, they said."
+            },
+            {
+                "role": "assistant",
+                "content": "How long until the ambulance gets to you?"
+            },
+            {
+                "role": "user",
+                "content": "They were on their way since before you called. They're getting there as quickly as possible. Where exactly on the beach are you located?"
+            },
+            {
+                "role": "user",
+                "content": "On Caspersen Beach."
+            },
+            {
+                "role": "assistant",
+                "content": "Where on Caspersen Beach are you? Are you near the parking lot?"
+            },
+            {
+                "role": "user",
+                "content": "We're at the southernmost point, where the road ends."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, start walking south, and we're about 1,200 meters away. You'll see the plane down there."
+            },
+            {
+                "role": "user",
+                "content": "Okay."
+            },
+            {
+                "role": "assistant",
+                "content": "Help is on the way now. Are you with the injured person also?"
+            },
+            {
+                "role": "user",
+                "content": "No, I'm close to the injured people."
+            },
+            {
+                "role": "assistant",
+                "content": "How many people are injured?"
+            },
+            {
+                "role": "user",
+                "content": "There's two. I believe the male is 38 years old and the female is nine years old."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, what's the extent of her injuries?"
+            },
+            {
+                "role": "user",
+                "content": "Internal injuries."
+            },
+            {
+                "role": "assistant",
+                "content": "Was she actually hit by the plane?"
+            },
+            {
+                "role": "user",
+                "content": "Yes."
+            },
+            {
+                "role": "assistant",
+                "content": "Is she breathing?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, she is."
+            },
+            {
+                "role": "assistant",
+                "content": "Is she conscious?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, rapid pulse, difficult breathing, and she's conscious."
+            },
+            {
+                "role": "assistant",
+                "content": "Is she conscious?"
+            },
+            {
+                "role": "user",
+                "content": "She is unconscious right now."
+            },
+            {
+                "role": "assistant",
+                "content": "We do have an ambulance up in the parking lot. Can someone go up to the parking lot and direct the paramedics to the patients as quickly as possible?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, three minutes away, about 1,200 meters. Someone will meet them."
+            },
+            {
+                "role": "assistant",
+                "content": "Thank you very much."
+            },
+            {
+                "role": "user",
+                "content": "You're welcome. Bye."
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Anxiety",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Fear",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_17": {
+        "id": "archived_17",
+        "title": "FIREARM EMERGENCY",
+        "severity": "CRITICAL",
+        "time": "10:0:46 PM",
+        "location_name": "got shot in the head",
+        "location_coords": {
+            "lat": 37.9349,
+            "lng": -122.2594
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "I have a gun range officer that got shot in the head."
+            },
+            {
+                "role": "assistant",
+                "content": "I'm sorry, what's your address?"
+            },
+            {
+                "role": "user",
+                "content": "We're at the last stop on Highway 93."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, I'm getting medical on the line. Hold on."
+            },
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "assistant",
+                "content": "Mojave County with a transfer. We're at the last stop on Highway 93. A male subject's been shot in the head. Hello?"
+            },
+            {
+                "role": "user",
+                "content": "Hello, is this the last stop?"
+            },
+            {
+                "role": "assistant",
+                "content": "Yes, it is. Is he breathing?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, he is. He's having convulsions."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, do you need to send EMS right away?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, sir."
+            },
+            {
+                "role": "assistant",
+                "content": "Alright, are you applying pressure to the wound?"
+            },
+            {
+                "role": "user",
+                "content": "I can't. I have nothing to apply pressure with."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you have any kind of clothing or towels?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, I do."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, if you can get clothing or towels and bunch them up to apply pressure."
+            },
+            {
+                "role": "assistant",
+                "content": "We have EMS on the way, okay?"
+            },
+            {
+                "role": "user",
+                "content": "Okay, I'll do that."
+            },
+            {
+                "role": "assistant",
+                "content": "Alright, thank you."
+            },
+            {
+                "role": "user",
+                "content": "Sir? The last stop, 17 miles northwest."
+            },
+            {
+                "role": "assistant",
+                "content": "Alright, we need an ambulance to the last stop on North U.S. Highway 93 immediately. We have someone shot."
+            },
+            {
+                "role": "user",
+                "content": "Yes, please send an ambulance ASAP."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you have a call open?"
+            },
+            {
+                "role": "user",
+                "content": "I'm sorry, I'm talking to the other dispatcher. We need an ambulance immediately."
+            },
+            {
+                "role": "assistant",
+                "content": "Yes, we're getting medical out there. Stay on the line."
+            },
+            {
+                "role": "user",
+                "content": "Take him to the restaurant. At the gun range."
+            },
+            {
+                "role": "assistant",
+                "content": "We're getting medical on the way. I'm not going to hang up with you."
+            },
+            {
+                "role": "assistant",
+                "content": "Alright, we have a report of an accidental shooting at the gun range. We have medical on the way."
+            },
+            {
+                "role": "user",
+                "content": "Yes, I'm still here. He's still breathing."
+            },
+            {
+                "role": "assistant",
+                "content": "Can you tell me where he was shot?"
+            },
+            {
+                "role": "user",
+                "content": "In the head, on the side of the head."
+            },
+            {
+                "role": "assistant",
+                "content": "What's his name?"
+            },
+            {
+                "role": "user",
+                "content": "Roger."
+            },
+            {
+                "role": "assistant",
+                "content": "How old is he?"
+            },
+            {
+                "role": "user",
+                "content": "He's in his late 30s."
+            },
+            {
+                "role": "user",
+                "content": "I need a sheriff sent out to a shooting range for an accidental shooting. Do you have them coming?"
+            },
+            {
+                "role": "assistant",
+                "content": "Yes, sir. Medical and DPS and sheriffs are all on their way."
+            },
+            {
+                "role": "user",
+                "content": "Alright, thank you."
+            },
+            {
+                "role": "assistant",
+                "content": "You're welcome."
+            },
+            {
+                "role": "user",
+                "content": "Hey, this is Rick at the last stop. We need a helicopter. An ambulance isn't going to work."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, Rick. We've got one on the way."
+            },
+            {
+                "role": "user",
+                "content": "Where is the helicopter? We need it now."
+            },
+            {
+                "role": "assistant",
+                "content": "Let me get medical back on the line for you. Hold on, please."
+            },
+            {
+                "role": "assistant",
+                "content": "Mojave County, reference the last stop, sir. They need the helicopter now."
+            },
+            {
+                "role": "user",
+                "content": "Okay. Is he still breathing?"
+            },
+            {
+                "role": "assistant",
+                "content": "Yes, he is. Are you applying pressure to the wound?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, I am, but he's convulsing and choking on his own spit."
+            },
+            {
+                "role": "assistant",
+                "content": "Are you able to lean him on his side so the spit drains out of his mouth?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, I am. When he bleeds through the cloth, do I put another on top?"
+            },
+            {
+                "role": "assistant",
+                "content": "Yes, apply more on top but do not peel it away."
+            },
+            {
+                "role": "user",
+                "content": "Okay, you're okay, Charlie. You're okay."
+            },
+            {
+                "role": "user",
+                "content": "Please hurry up. We've got medical on the way. We're bending his knee."
+            },
+            {
+                "role": "assistant",
+                "content": "Is he able to speak?"
+            },
+            {
+                "role": "user",
+                "content": "No, he's completely unconscious."
+            },
+            {
+                "role": "assistant",
+                "content": "Just keep an eye on his breathing, okay?"
+            },
+            {
+                "role": "user",
+                "content": "Alright."
+            },
+            {
+                "role": "assistant",
+                "content": "What's the ETA on the helicopter?"
+            },
+            {
+                "role": "assistant",
+                "content": "I'm not sure. We have people coming by ground as well."
+            },
+            {
+                "role": "user",
+                "content": "Alright. Tell them to hurry up."
+            },
+            {
+                "role": "assistant",
+                "content": "They're on their way, sir."
+            },
+            {
+                "role": "assistant",
+                "content": "Are you inside the facility?"
+            },
+            {
+                "role": "user",
+                "content": "No, we're outside on the range."
+            },
+            {
+                "role": "assistant",
+                "content": "Alright. When he bleeds through the cloth, apply more on top. Do not peel it away."
+            },
+            {
+                "role": "user",
+                "content": "Okay. You're alright, Charlie, hang in there."
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Anxiety",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Fear",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_18": {
+        "id": "archived_18",
+        "title": "EMERGENCY CALL",
+        "severity": "LOW",
+        "time": "11:0:47 PM",
+        "location_name": "Wildc",
+        "location_coords": {
+            "lat": 37.944900000000004,
+            "lng": -122.2494
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "I have a... Okay. I'm at Wildcat Haven. We've had one of our keepers get attacked. I need an ambulance."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay. I'm going to get you over to the correct fire dispatch. Just one moment for me, okay?"
+            },
+            {
+                "role": "user",
+                "content": "I understand, sir."
+            },
+            {
+                "role": "assistant",
+                "content": "I don't dispatch medical for that area. I'm transferring you. Stay on the line, okay?"
+            },
+            {
+                "role": "user",
+                "content": "Please hurry."
+            },
+            {
+                "role": "assistant",
+                "content": "We are hurrying."
+            },
+            {
+                "role": "assistant",
+                "content": "I'm with medical transfer, 31369 Southwest Heater Road at Wildcat Haven. I'm going to stay on the line and monitor in case any police need information. Go ahead, sir."
+            },
+            {
+                "role": "user",
+                "content": "Hello? I'm going on. I have a keeper at Wildcat Haven who was attacked, I guess. I just got home here, and I think she's dead, but please hurry."
+            },
+            {
+                "role": "assistant",
+                "content": "How was she attacked?"
+            },
+            {
+                "role": "user",
+                "content": "We have cougars. We rescue them."
+            },
+            {
+                "role": "assistant",
+                "content": "By a cougar, I believe?"
+            },
+            {
+                "role": "user",
+                "content": "Yes. I'm going back down. I need you guys here. I've got to go back down to her."
+            },
+            {
+                "role": "assistant",
+                "content": "She's down in the enclosure?"
+            },
+            {
+                "role": "user",
+                "content": "Yes. I'm going down to get her."
+            },
+            {
+                "role": "assistant",
+                "content": "Can you hear me?"
+            },
+            {
+                "role": "user",
+                "content": "Yeah, I can hear you. I'm on a cordless phone. It's going to run out in a minute here."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, she's in the cat enclosure?"
+            },
+            {
+                "role": "user",
+                "content": "She's in the cat enclosure. I'm going to get her out if I can. I'm going to lose you here."
+            },
+            {
+                "role": "assistant",
+                "content": "I can hear you, yes. We're on our way. How do we get in the gate?"
+            },
+            {
+                "role": "user",
+                "content": "I can't see. I'm going back down. It's dark."
+            },
+            {
+                "role": "assistant",
+                "content": "Are you in a safe position to be able to go in by yourself?"
+            },
+            {
+                "role": "user",
+                "content": "No, I'm here."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, we don't want you to get hurt."
+            },
+            {
+                "role": "user",
+                "content": "I hear what you're saying. Get out of here! Oh my God! Oh my God, oh my God, oh my God!"
+            },
+            {
+                "role": "assistant",
+                "content": "We have help on the way over there to you. Are you in the enclosure right now?"
+            },
+            {
+                "role": "user",
+                "content": "I'm back out."
+            },
+            {
+                "role": "assistant",
+                "content": "Is your friend still in the enclosure?"
+            },
+            {
+                "role": "user",
+                "content": "I got her out."
+            },
+            {
+                "role": "assistant",
+                "content": "Can we try CPR or is she beyond help?"
+            },
+            {
+                "role": "user",
+                "content": "No, she's gone."
+            },
+            {
+                "role": "assistant",
+                "content": "What's your name, sir?"
+            },
+            {
+                "role": "user",
+                "content": "Mark Powell."
+            },
+            {
+                "role": "assistant",
+                "content": "Is anyone else in danger at this point?"
+            },
+            {
+                "role": "user",
+                "content": "Nobody's in danger."
+            },
+            {
+                "role": "assistant",
+                "content": "So you think that she is beyond help?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, I do."
+            },
+            {
+                "role": "assistant",
+                "content": "I'm sorry. Can I start getting support over for you to talk to, like a chaplain or something? Can I call somebody for you?"
+            },
+            {
+                "role": "user",
+                "content": "I don't know."
+            },
+            {
+                "role": "assistant",
+                "content": "Hello?"
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Confusion",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Calm",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_19": {
+        "id": "archived_19",
+        "title": "FIREARM EMERGENCY",
+        "severity": "CRITICAL",
+        "time": "10:0:48 PM",
+        "location_name": "from you",
+        "location_coords": {
+            "lat": 37.9549,
+            "lng": -122.23939999999999
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Hi, I need the police to come to my house right away."
+            },
+            {
+                "role": "user",
+                "content": "My daughter's boyfriend is here."
+            },
+            {
+                "role": "user",
+                "content": "He's in the room, and he has a gun."
+            },
+            {
+                "role": "user",
+                "content": "I have a restraining order against him, and he's not supposed to be here."
+            },
+            {
+                "role": "user",
+                "content": "He's in our apartment."
+            },
+            {
+                "role": "user",
+                "content": "Hello?"
+            },
+            {
+                "role": "user",
+                "content": "He's in the room right now, and he has a gun."
+            },
+            {
+                "role": "user",
+                "content": "He has a gun in his pocket, and he's in one of our bedrooms."
+            },
+            {
+                "role": "assistant",
+                "content": "What's he doing with the gun?"
+            },
+            {
+                "role": "user",
+                "content": "He held it up to my daughter's head and is threatening her."
+            },
+            {
+                "role": "user",
+                "content": "He's in our apartment and won't get out."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, what's your name?"
+            },
+            {
+                "role": "assistant",
+                "content": "Ma'am, I'm going to get some information from you. I want you to stay on the phone with me, okay?"
+            },
+            {
+                "role": "user",
+                "content": "Okay."
+            },
+            {
+                "role": "assistant",
+                "content": "Did you see him take the gun out?"
+            },
+            {
+                "role": "user",
+                "content": "No, I just got home and he's here. He's locked himself in."
+            },
+            {
+                "role": "assistant",
+                "content": "How do you know that he has a gun?"
+            },
+            {
+                "role": "user",
+                "content": "He's here. Do you want to talk to my daughter?"
+            },
+            {
+                "role": "assistant",
+                "content": "I thought she was in the room with him."
+            },
+            {
+                "role": "user",
+                "content": "No, we're in a separate bedroom."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay. Let me talk to her."
+            },
+            {
+                "role": "user",
+                "content": "Hello?"
+            },
+            {
+                "role": "assistant",
+                "content": "Hi, does he have a gun?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, ma'am."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, did he hold it to your head?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, ma'am. I have a restraining order against him, and he's not supposed to be here."
+            },
+            {
+                "role": "assistant",
+                "content": "How did you get away from him?"
+            },
+            {
+                "role": "user",
+                "content": "We were just talking and then he put it down. I was trying to be nice and say I would do what he said."
+            },
+            {
+                "role": "assistant",
+                "content": "What room are you all locked in?"
+            },
+            {
+                "role": "user",
+                "content": "We're locked in my mom's room."
+            },
+            {
+                "role": "user",
+                "content": "But I have a restraining order against him, and he's not supposed to be around me and my kids."
+            },
+            {
+                "role": "user",
+                "content": "I was trying to be nice and let him talk to the kids, but he took it too far."
+            },
+            {
+                "role": "assistant",
+                "content": "What's your name?"
+            },
+            {
+                "role": "assistant",
+                "content": "What's your date of birth, sweetie?"
+            },
+            {
+                "role": "user",
+                "content": "January 28, 1987."
+            },
+            {
+                "role": "assistant",
+                "content": "Where did you see him put the gun?"
+            },
+            {
+                "role": "user",
+                "content": "He put it back in his pocket, his right pocket I think."
+            },
+            {
+                "role": "assistant",
+                "content": "Is he still in your bedroom?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, ma'am."
+            },
+            {
+                "role": "assistant",
+                "content": "Can you describe what your boyfriend is wearing?"
+            },
+            {
+                "role": "user",
+                "content": "He's wearing a black shirt."
+            },
+            {
+                "role": "assistant",
+                "content": "What about his pants?"
+            },
+            {
+                "role": "user",
+                "content": "Long black shorts."
+            },
+            {
+                "role": "assistant",
+                "content": "Long black shorts?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, ma'am."
+            },
+            {
+                "role": "assistant",
+                "content": "Is he wearing sandals?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, ma'am."
+            },
+            {
+                "role": "assistant",
+                "content": "What's his name? Is he white, black, or Hispanic?"
+            },
+            {
+                "role": "user",
+                "content": "He's black."
+            },
+            {
+                "role": "assistant",
+                "content": "Do you know his date of birth?"
+            },
+            {
+                "role": "assistant",
+                "content": "Do you know what kind of gun it is?"
+            },
+            {
+                "role": "user",
+                "content": "I don't know anything about guns."
+            },
+            {
+                "role": "assistant",
+                "content": "Is it a black gun, a silver gun?"
+            },
+            {
+                "role": "user",
+                "content": "It was a little handgun."
+            },
+            {
+                "role": "user",
+                "content": "Where are you going, Mommy? No, stay. What if he finds you?"
+            },
+            {
+                "role": "assistant",
+                "content": "I have officers in the area, but I need you all to stay in one room, so I know where everybody's at."
+            },
+            {
+                "role": "user",
+                "content": "Okay."
+            },
+            {
+                "role": "user",
+                "content": "Stay here, she said stay."
+            },
+            {
+                "role": "assistant",
+                "content": "If I'm at your front door, where is he in relation to the house?"
+            },
+            {
+                "role": "user",
+                "content": "Once you come in the door, you go around by the TV and make a right. It's the first door straight ahead."
+            },
+            {
+                "role": "assistant",
+                "content": "You said past the TV?"
+            },
+            {
+                "role": "user",
+                "content": "Yes, once you come in, the TV is on your right. Then there's a hallway to the right, keep going straight to the first door."
+            },
+            {
+                "role": "assistant",
+                "content": "Where are you in relation to the front door?"
+            },
+            {
+                "role": "user",
+                "content": "He's in here. Hurry up, please."
+            },
+            {
+                "role": "assistant",
+                "content": "Okay, what's he doing?"
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Anxiety",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Fear",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    },
+    "archived_20": {
+        "id": "archived_20",
+        "title": "FIREARM EMERGENCY",
+        "severity": "CRITICAL",
+        "time": "11:0:49 PM",
+        "location_name": "Newburgh",
+        "location_coords": {
+            "lat": 37.9649,
+            "lng": -122.2294
+        },
+        "status": "Resolved",
+        "transcript": [
+            {
+                "role": "assistant",
+                "content": "9-1-1, what's your emergency?"
+            },
+            {
+                "role": "user",
+                "content": "Units in the area of Newburgh and 264."
+            },
+            {
+                "role": "assistant",
+                "content": "I'm getting out on Newburgh."
+            },
+            {
+                "role": "user",
+                "content": "Still in our police car, on town."
+            },
+            {
+                "role": "assistant",
+                "content": "Razor case subject has stolen a marked police car. He's westbound on Waterson from Newburgh."
+            },
+            {
+                "role": "user",
+                "content": "Channel."
+            },
+            {
+                "role": "assistant",
+                "content": "Be advised in reference to the hold-up alarm at Wendy's."
+            },
+            {
+                "role": "user",
+                "content": "We're 1050 and in the ditch."
+            },
+            {
+                "role": "assistant",
+                "content": "Razor K, advising 1050 at Preston in the ditch."
+            },
+            {
+                "role": "user",
+                "content": "Continuing on. He might be trying to make his way back down."
+            },
+            {
+                "role": "assistant",
+                "content": "One person highway north-south, equipment 5621 northbound."
+            },
+            {
+                "role": "user",
+                "content": "Correction on the address, 1624."
+            },
+            {
+                "role": "assistant",
+                "content": "Equipment number on the police car, 5621."
+            },
+            {
+                "role": "user",
+                "content": "The 4th Division unit, starting for Preston."
+            },
+            {
+                "role": "assistant",
+                "content": "411 Adam, on Preston."
+            },
+            {
+                "role": "user",
+                "content": "Vehicle pursuit passing Audubon Parkway, speed about 105 miles an hour."
+            },
+            {
+                "role": "assistant",
+                "content": "Northbound on Preston, passing Eastern."
+            },
+            {
+                "role": "user",
+                "content": "Subject is in a marked police car."
+            },
+            {
+                "role": "assistant",
+                "content": "Equipment number 3621. Make sure all cars know he\u2019s in a marked car."
+            },
+            {
+                "role": "user",
+                "content": "The shotgun is locked in the rack."
+            },
+            {
+                "role": "assistant",
+                "content": "Northbound on Bradley, west on Brandeis."
+            },
+            {
+                "role": "user",
+                "content": "Lost visual at first and Oak."
+            },
+            {
+                "role": "assistant",
+                "content": "Northbound on 2nd coming up on Broadway."
+            },
+            {
+                "role": "user",
+                "content": "14 Baker, gray or white car?"
+            },
+            {
+                "role": "assistant",
+                "content": "White car, lights on, northbound on 2nd."
+            },
+            {
+                "role": "user",
+                "content": "I no longer have visual."
+            },
+            {
+                "role": "assistant",
+                "content": "Last known location was northbound."
+            },
+            {
+                "role": "user",
+                "content": "Circling back onto 65, northbound."
+            },
+            {
+                "role": "assistant",
+                "content": "Getting off Jackson Charles."
+            },
+            {
+                "role": "user",
+                "content": "Eastbound on 10th Street, passing Wall."
+            },
+            {
+                "role": "assistant",
+                "content": "Jacksonville takeover."
+            },
+            {
+                "role": "user",
+                "content": "South down on Pratt from 10th Street."
+            },
+            {
+                "role": "assistant",
+                "content": "Westbound on South Alley, back up to 10th Street."
+            },
+            {
+                "role": "user",
+                "content": "Westbound on 10th back towards 65."
+            },
+            {
+                "role": "assistant",
+                "content": "Southbound on 65."
+            },
+            {
+                "role": "user",
+                "content": "Shutting down at the bridge."
+            },
+            {
+                "role": "assistant",
+                "content": "Officers to set up on the Kentucky side of 65."
+            },
+            {
+                "role": "user",
+                "content": "Taking Second Street bridge."
+            },
+            {
+                "role": "assistant",
+                "content": "Off at Main from Second Street."
+            },
+            {
+                "role": "user",
+                "content": "South down towards the river."
+            },
+            {
+                "role": "assistant",
+                "content": "Eastbound on Market."
+            },
+            {
+                "role": "user",
+                "content": "Westbound near Rocky's."
+            },
+            {
+                "role": "assistant",
+                "content": "Subject in the river with a squad car."
+            },
+            {
+                "role": "user",
+                "content": "Subject in the river on the Indiana side."
+            },
+            {
+                "role": "assistant",
+                "content": "134 Adam, do you have a visual?"
+            },
+            {
+                "role": "user",
+                "content": "Got him, gunpoint."
+            },
+            {
+                "role": "assistant",
+                "content": "134 Adam, shots fired!"
+            },
+            {
+                "role": "user",
+                "content": "Suspect down in the water."
+            },
+            {
+                "role": "assistant",
+                "content": "No officers injured, suspect down in the river."
+            }
+        ],
+        "emotions": [
+            {
+                "emotion": "Anxiety",
+                "intensity": 0.8
+            },
+            {
+                "emotion": "Fear",
+                "intensity": 0.4
+            }
+        ],
+        "summary": "Historical call record extracted from archives."
+    }
+};

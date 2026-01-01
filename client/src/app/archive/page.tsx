@@ -12,6 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
+import { ARCHIVE_MESSAGES } from "@/data/archiveMessages";
 
 const Map = dynamic(() => import("@/components/live/map/Map"), {
     loading: () => <p>Rendering Map...</p>,
@@ -66,38 +67,6 @@ const getWsUrl = () => {
 
 let wss: WebSocket | null = null;
 
-const MESSAGES: Record<string, Call> = {
-    CA22ccebaacd73dcefa23f9b41a9bce0b3: {
-        id: "CA22ccebaacd73dcefa23f9b41a9bce0b3",
-        time: "2024-06-23T22:46:37.335108",
-        transcript: [
-            { role: "agent", content: "9-1-1, what's your emergency?" },
-            { role: "user", content: "Um, there's current earthquakes. Um, send help, please." },
-            { role: "agent", content: "What's your location?" },
-            { role: "user", content: "I am currently at the Golden Gate Bridge, there's a lot of people injured. Please send help." },
-            { role: "agent", content: "Is there immediate danger where you are?" },
-            { role: "agent", content: "Anything changed?" },
-            { role: "user", content: "Um, I'm currently at the Golden Gate Bridge. And we need help. A lot of people here that are injured." },
-            { role: "agent", content: "Is there immediate danger where you are?" },
-        ],
-        emotions: [
-            { emotion: "Fear", intensity: 0.3548029899331076 },
-            { emotion: "Confusion", intensity: 0.2665824613400868 },
-            { emotion: "Anxiety", intensity: 0.21041041083766945 },
-        ],
-        recommendation: "Send emergency services immediately for medical assistance and disaster relief.",
-        severity: "CRITICAL",
-        type: "Police",
-        name: "",
-        phone: "",
-        title: "Earthquake Emergency at Golden Gate Bridge",
-        summary: "Caller reports current earthquakes and requests immediate assistance. Location: Golden Gate Bridge with many people injured.",
-        location_name: "Golden Gate Bridge, San Francisco, CA",
-        location_coords: { lat: 37.8199109, lng: -122.4785598 },
-        street_view: "", // Shortened for initial creation
-    },
-};
-
 const emptyCall: Call = {
     emotions: [],
     id: "",
@@ -117,7 +86,7 @@ const emptyCall: Call = {
 
 const Page = () => {
     const [connected, setConnected] = useState(false);
-    const [data, setData] = useState<Record<string, Call>>(MESSAGES);
+    const [data, setData] = useState<Record<string, Call>>(ARCHIVE_MESSAGES);
     const [selectedId, setSelectedId] = useState<string | undefined>();
     const [resolvedIds, setResolvedIds] = useState<string[]>([]);
     const [city, setCity] = useState("CA");
@@ -257,7 +226,7 @@ const Page = () => {
                     });
                     if (selectedId !== "live_session_1") setSelectedId("live_session_1");
                 } else if (message.data) {
-                    setData(message.data);
+                    setData(prevData => ({ ...prevData, ...message.data }));
                 }
             };
             if (wss) {
@@ -310,10 +279,10 @@ const Page = () => {
                     {/* Collapsible Overlay */}
                     {selectedId && data[selectedId] && (
                         <div className={cn(
-                            "absolute right-2 top-4 z-[1000] flex items-center transition-all duration-300 ease-in-out",
-                            isOverlayOpen ? "translate-x-0" : "translate-x-[calc(100%-48px)]"
+                            "absolute right-0 top-4 z-[1000] flex items-center transition-all duration-300 ease-in-out",
+                            isOverlayOpen ? "translate-x-0" : "translate-x-[calc(100%-44px)]"
                         )}>
-                            <div className="flex flex-row items-center space-x-2">
+                            <div className="flex flex-row items-center space-x-1">
                                 {isOverlayOpen && (
                                     <div className="flex w-80 flex-col space-y-3 rounded-2xl border border-slate-800 bg-slate-950/90 p-4 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-right-4">
                                         {/* Incident Header */}
@@ -366,7 +335,7 @@ const Page = () => {
                                                 <Info size={14} className="text-blue-400" />
                                                 <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Incident Summary</p>
                                             </div>
-                                            <ScrollArea className="max-h-24 pr-2">
+                                            <ScrollArea className="max-h-68 pr-2">
                                                 <p className="text-xs leading-relaxed text-slate-300">
                                                     {data[selectedId]?.summary || "AI is generating summary from live transcript flows..."}
                                                 </p>

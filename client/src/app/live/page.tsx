@@ -517,10 +517,10 @@ const Page = () => {
                     {/* Collapsible Overlay */}
                     {selectedId && data[selectedId] && (
                         <div className={cn(
-                            "absolute right-2 top-4 z-[1000] flex items-center transition-all duration-300 ease-in-out",
-                            isOverlayOpen ? "translate-x-0" : "translate-x-[calc(100%-48px)]"
+                            "absolute right-0 top-4 z-[1000] flex items-center transition-all duration-300 ease-in-out",
+                            isOverlayOpen ? "translate-x-0" : "translate-x-[calc(100%-44px)]"
                         )}>
-                            <div className="flex flex-row items-center space-x-2">
+                            <div className="flex flex-row items-center space-x-1">
                                 {isOverlayOpen && (
                                     <div className="flex w-80 flex-col space-y-3 rounded-2xl border border-slate-800 bg-slate-950/90 p-4 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-right-4">
                                         {/* Incident Header */}
@@ -573,7 +573,7 @@ const Page = () => {
                                                 <Info size={14} className="text-blue-400" />
                                                 <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Incident Summary</p>
                                             </div>
-                                            <ScrollArea className="max-h-24 pr-2">
+                                            <ScrollArea className="max-h-60 pr-2">
                                                 <p className="text-xs leading-relaxed text-slate-300">
                                                     {data[selectedId]?.summary || "AI is generating summary from live transcript flows..."}
                                                 </p>
