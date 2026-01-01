@@ -280,6 +280,8 @@ const Page = () => {
                         data={filteredData}
                         selectedId={selectedId || undefined}
                         handleSelect={handleSelect}
+                        title="Archive"
+                        showCounters={false}
                     />
                 </div>
 
@@ -438,6 +440,7 @@ const Page = () => {
                         selectedId={selectedId || undefined}
                         handleTransfer={handleTransfer}
                         handleResolve={handleResolve}
+                        mode="archive"
                     />
                 </div>
             </div>

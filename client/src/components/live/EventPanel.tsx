@@ -10,9 +10,17 @@ interface EventPanelProps {
     data: Record<string, Call> | undefined;
     selectedId: string | undefined;
     handleSelect: (id: string) => void;
+    title?: string;
+    showCounters?: boolean;
 }
 
-const EventPanel = ({ data, selectedId, handleSelect }: EventPanelProps) => {
+const EventPanel = ({
+    data,
+    selectedId,
+    handleSelect,
+    title = "Emergencies",
+    showCounters = true
+}: EventPanelProps) => {
     const [search, setSearch] = useState("");
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -22,13 +30,15 @@ const EventPanel = ({ data, selectedId, handleSelect }: EventPanelProps) => {
     return (
         <div className="flex flex-col h-full bg-slate-900 px-3 py-4">
             <div className="mb-4 mt-2 flex items-center justify-between px-3">
-                <h2 className="text-xl font-bold uppercase tracking-wider text-blue-400">Emergencies</h2>
-                <div className="flex space-x-2 text-xs font-mono text-slate-500">
-                    <span>LIVE FEED</span>
-                    <div className="h-4 w-4 rounded-full bg-red-500/20 p-1">
-                        <div className="h-full w-full animate-ping rounded-full bg-red-500" />
+                <h2 className="text-xl font-bold uppercase tracking-wider text-blue-400">{title}</h2>
+                {showCounters && (
+                    <div className="flex space-x-2 text-xs font-mono text-slate-500">
+                        <span>LIVE FEED</span>
+                        <div className="h-4 w-4 rounded-full bg-red-500/20 p-1">
+                            <div className="h-full w-full animate-ping rounded-full bg-red-500" />
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
 
             <div className="mb-6 px-2">
@@ -40,36 +50,38 @@ const EventPanel = ({ data, selectedId, handleSelect }: EventPanelProps) => {
                 />
             </div>
 
-            <div className="mb-6 flex justify-between rounded-lg border border-slate-700 bg-slate-800/50 p-4 mx-2">
-                <div className="text-center">
-                    <div className="text-2xl font-black text-slate-200">
-                        {data ? Object.keys(data).length : "-"}
+            {showCounters && (
+                <div className="mb-6 flex justify-between rounded-lg border border-slate-700 bg-slate-800/50 p-4 mx-2">
+                    <div className="text-center">
+                        <div className="text-2xl font-black text-slate-200">
+                            {data ? Object.keys(data).length : "-"}
+                        </div>
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Total</div>
                     </div>
-                    <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Total</div>
-                </div>
-                <div className="h-10 w-[1px] bg-slate-700" />
-                <div className="text-center">
-                    <div className="text-2xl font-black text-red-500 animate-pulse">
-                        {data
-                            ? Object.entries(data).filter(
-                                ([_, value]) => value.severity === "CRITICAL",
-                            ).length
-                            : "-"}
+                    <div className="h-10 w-[1px] bg-slate-700" />
+                    <div className="text-center">
+                        <div className="text-2xl font-black text-red-500 animate-pulse">
+                            {data
+                                ? Object.entries(data).filter(
+                                    ([_, value]) => value.severity === "CRITICAL",
+                                ).length
+                                : "-"}
+                        </div>
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Critical</div>
                     </div>
-                    <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Critical</div>
-                </div>
-                <div className="h-10 w-[1px] bg-slate-700" />
-                <div className="text-center">
-                    <div className="text-2xl font-black text-green-500">
-                        {data
-                            ? Object.entries(data).filter(
-                                ([_, value]) => value.severity === "RESOLVED",
-                            ).length
-                            : "-"}
+                    <div className="h-10 w-[1px] bg-slate-700" />
+                    <div className="text-center">
+                        <div className="text-2xl font-black text-green-500">
+                            {data
+                                ? Object.entries(data).filter(
+                                    ([_, value]) => value.severity === "RESOLVED",
+                                ).length
+                                : "-"}
+                        </div>
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Resolved</div>
                     </div>
-                    <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Resolved</div>
                 </div>
-            </div>
+            )}
 
             <div className="h-[calc(100vh-320px)] space-y-3 overflow-y-auto px-1 scrollbar-thin scrollbar-track-slate-900 scrollbar-thumb-slate-700">
                 {data &&

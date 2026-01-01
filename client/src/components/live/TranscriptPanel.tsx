@@ -14,6 +14,9 @@ import {
     Siren,
     Info,
     History,
+    Play,
+    Pause,
+    Volume2,
 } from "lucide-react";
 
 import { Button } from "../ui/button";
@@ -26,6 +29,7 @@ import EmotionCard from "./EmotionCard";
 interface TranscriptPanelProps extends CallProps {
     handleTransfer: (id: string) => void;
     handleResolve: (id: string) => void;
+    mode?: "live" | "archive";
 }
 
 const TranscriptPanel = ({
@@ -33,6 +37,7 @@ const TranscriptPanel = ({
     selectedId,
     handleTransfer,
     handleResolve,
+    mode = "live",
 }: TranscriptPanelProps) => {
     const [transferred, setTransferred] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -100,7 +105,36 @@ const TranscriptPanel = ({
                     </div>
                 </div>
 
-                {/* 6. Critical Action Button (Bottom) */}
+                {/* 6. Call Recording (Archive Mode Only) */}
+                {mode === "archive" && (
+                    <div className="pt-2 space-y-2">
+                        <div className="flex items-center justify-between pb-1">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 flex items-center gap-1.5">
+                                <Volume2 size={12} className="text-blue-400" /> Call Recording
+                            </label>
+                            <span className="text-[10px] font-mono text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">0:12 / 0:45</span>
+                        </div>
+                        <div className="flex items-center space-x-3 rounded-xl bg-slate-950/60 p-3 border border-slate-800 group hover:border-blue-500/30 transition-colors">
+                            <button className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-blue-600/10 text-blue-400 hover:bg-blue-600 hover:text-white transition-all shadow-lg active:scale-90">
+                                <Play size={18} fill="currentColor" />
+                            </button>
+                            <div className="flex-1 space-y-1">
+                                <div className="h-1.5 w-full rounded-full bg-slate-800 relative overflow-hidden group-hover:bg-slate-700 transition-colors">
+                                    <div className="absolute top-0 left-0 h-full w-[35%] bg-gradient-to-r from-blue-500 to-indigo-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
+                                </div>
+                                <div className="flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <div className="flex gap-2">
+                                        {[1, 2, 3, 4, 5, 6, 7].map(i => (
+                                            <div key={i} className={cn("w-0.5 rounded-full bg-blue-500/40", i < 4 ? "h-2" : "h-1")} />
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* 7. Critical Action Button (Bottom) */}
                 <div className="pt-2">
                     {transferred ? (
                         <Button
