@@ -17,7 +17,7 @@ const Sidebar = () => {
     const pathname = usePathname();
 
     return (
-        <div className="flex w-14 flex-col items-center border-r border-slate-700 bg-slate-950 pt-3 shadow-xl z-50">
+        <div className="flex w-16 flex-col items-center rounded-xl border border-slate-700/50 bg-slate-950 pt-4 shadow-2xl z-50 mr-1">
             <div className="flex-center aspect-square flex-col rounded-full p-2 hover:bg-slate-800 transition-colors cursor-pointer">
                 <Link href="/">
                     <Headset className="m-auto text-blue-400" size={24} />

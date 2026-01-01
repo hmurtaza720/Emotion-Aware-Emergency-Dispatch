@@ -20,7 +20,7 @@ const EventPanel = ({ data, selectedId, handleSelect }: EventPanelProps) => {
     };
 
     return (
-        <div className="absolute left-0 z-50 h-[calc(100vh-60px)] w-[380px] rounded-none border-r border-slate-700 bg-slate-900/95 p-2 shadow-2xl backdrop-blur-sm">
+        <div className="flex flex-col h-full bg-slate-900 px-3 py-4">
             <div className="mb-4 mt-2 flex items-center justify-between px-3">
                 <h2 className="text-xl font-bold uppercase tracking-wider text-blue-400">Emergencies</h2>
                 <div className="flex space-x-2 text-xs font-mono text-slate-500">

@@ -72,9 +72,9 @@ const DetailsPanel = ({ call, handleResolve }: DetailsPanelProps) => {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: "100%", opacity: 1 }}
             transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 }}
-            className="fixed right-[400px] z-40"
+            className="h-full"
         >
-            <Card className="h-fit w-[400px] rounded-l-lg border-y border-l border-slate-700 bg-slate-900/95 shadow-2xl backdrop-blur-md">
+            <Card className="h-full w-[380px] rounded-xl border border-slate-700/50 bg-slate-900/95 shadow-2xl backdrop-blur-md overflow-hidden">
                 <div className="flex items-center justify-between px-4 py-3 bg-slate-950/50 rounded-tl-lg">
                     <p className="text-sm font-bold uppercase tracking-wider text-slate-300">Case Details</p>
                     <div className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse" />

@@ -1,9 +1,7 @@
 .mapWrap {
-    position: absolute;
-    top: 50px;
-    bottom: 0px;
-    left: 48px; /* sidebar width approx */
-    right: 0px;
+    position: relative;
+    width: 100%;
+    height: 100%;
     z-index: 1; /* Ensure it's above background */
     overflow: hidden;
 }

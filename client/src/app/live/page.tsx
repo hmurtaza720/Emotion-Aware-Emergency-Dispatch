@@ -2,10 +2,16 @@
 
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import DetailsPanel from "@/components/live/DetailsPanel";
 import EventPanel from "@/components/live/EventPanel";
-import Header from "@/components/live/Header";
+import Header, { US_STATES } from "@/components/live/Header";
 import TranscriptPanel from "@/components/live/TranscriptPanel";
+import { ChevronRight, ChevronLeft, Info, BrainCircuit, Siren, FireExtinguisher, Ambulance } from "lucide-react";
+import EmotionCard from "@/components/live/EmotionCard";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
+import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
 
 const Map = dynamic(() => import("@/components/live/map/Map"), {
     loading: () => <p>Rendering Map...</p>,
@@ -227,7 +233,9 @@ const Page = () => {
     const [data, setData] = useState<Record<string, Call>>(MESSAGES);
     const [selectedId, setSelectedId] = useState<string | undefined>();
     const [resolvedIds, setResolvedIds] = useState<string[]>([]);
-    const [city, setCity] = useState("SF");
+    const [city, setCity] = useState("CA");
+    const [isOverlayOpen, setIsOverlayOpen] = useState(true);
+    const { toast } = useToast();
 
     const [center, setCenter] = useState<{ lat: number; lng: number }>({
         lat: 37.867989,
@@ -252,20 +260,26 @@ const Page = () => {
         let match = true;
         const loc = call.location_name || ""; // Safe guard against undefined
 
-        if (city === "SF") match = loc.includes("San Francisco") || loc.includes("Bay Area") || loc.includes("Golden Gate");
-        if (city === "BER") match = loc.includes("Berkeley");
-        if (city === "OAK") match = loc.includes("Oakland");
+        const stateInfo = US_STATES.find(s => s.code === city);
+        if (stateInfo) {
+            match = loc.includes(` ${stateInfo.code}`) ||
+                loc.includes(`, ${stateInfo.code}`) ||
+                loc.toLowerCase().includes(stateInfo.name.toLowerCase());
+        }
 
         if (match) acc[key] = call;
         return acc;
     }, {} as Record<string, Call>);
 
-    // Update center when city changes
+    // Handle map centering based on city selection
     useEffect(() => {
-        if (city === "SF") setCenter({ lat: 37.7749, lng: -122.4194 });
-        if (city === "BER") setCenter({ lat: 37.8715, lng: -122.2730 });
-        if (city === "OAK") setCenter({ lat: 37.8044, lng: -122.2712 });
-    }, [city]);
+        // If no call is selected, we could center on a default point for the state
+        // For now, let's just use the first call found in that state if available
+        const firstCallWithCoords = Object.entries(filteredData).find(([_, c]) => c.location_coords)?.[1];
+        if (firstCallWithCoords && firstCallWithCoords.location_coords && !selectedId) {
+            setCenter(firstCallWithCoords.location_coords);
+        }
+    }, [city, filteredData, selectedId]);
 
     const handleSelect = (id: string) => {
         setSelectedId(id === selectedId ? undefined : id);
@@ -311,6 +325,24 @@ const Page = () => {
             data[selectedId].location_coords as { lat: number; lng: number }, // TS being lame, so type-cast
         );
     }, [selectedId, data]);
+
+    // Sync state dropdown with selected call location
+    useEffect(() => {
+        if (selectedId && data[selectedId]) {
+            const locName = data[selectedId].location_name;
+            if (locName) {
+                const matchedState = US_STATES.find(s =>
+                    locName.includes(` ${s.code}`) ||
+                    locName.includes(`, ${s.code}`) ||
+                    locName.toLowerCase().includes(s.name.toLowerCase())
+                );
+
+                if (matchedState && matchedState.code !== city) {
+                    setCity(matchedState.code);
+                }
+            }
+        }
+    }, [selectedId, data, city]);
 
     useEffect(() => {
         // Initialize WS
@@ -445,61 +477,178 @@ const Page = () => {
     }, []);
 
     return (
-        <div className="h-screen max-h-screen overflow-hidden bg-background text-foreground selection:bg-blue-500/30">
-            <Header connected={connected} city={city} setCity={setCity} />
+        <div className="flex h-full flex-col space-y-1 selection:bg-blue-500/30">
+            <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900 shadow-xl">
+                <Header connected={connected} city={city} setCity={setCity} />
+            </div>
 
-            <div className="relative flex h-full justify-between">
-                <EventPanel
-                    data={filteredData}
-                    selectedId={selectedId || undefined}
-                    handleSelect={handleSelect}
-                />
+            <div className="flex flex-1 space-x-1 overflow-hidden">
+                {/* Column 1: Emergency Feed */}
+                <div className="w-[360px] flex-shrink-0 overflow-hidden rounded-xl border border-slate-800 bg-slate-900/50 shadow-xl">
+                    <EventPanel
+                        data={filteredData}
+                        selectedId={selectedId || undefined}
+                        handleSelect={handleSelect}
+                    />
+                </div>
 
-                {selectedId && data ? (
-                    <div className="absolute right-0 z-50 flex">
-                        <DetailsPanel
-                            call={selectedId ? data[selectedId] : emptyCall}
-                            handleResolve={handleResolve}
-                        />
-                        <TranscriptPanel
-                            call={selectedId ? data[selectedId] : emptyCall}
-                            selectedId={selectedId || undefined}
-                            handleTransfer={handleTransfer}
-                        />
-                    </div>
-                ) : null}
+                {/* Column 2: Map Workspace */}
+                <div className="relative flex-1 overflow-hidden rounded-xl border border-slate-800 bg-slate-950/20 shadow-2xl">
+                    <Map
+                        center={center}
+                        pins={
+                            Object.entries(filteredData)
+                                .filter(
+                                    ([_, call]) =>
+                                        call.location_coords && call.location_name,
+                                )
+                                .map(([_, call]) => {
+                                    return {
+                                        coordinates: [
+                                            call.location_coords?.lat as number,
+                                            call.location_coords?.lng as number,
+                                        ],
+                                        popupHtml: `<b>${call.title}</b><br>Location: ${call.location_name}`,
+                                    };
+                                })
+                        }
+                    />
 
-                <Map
-                    center={center}
-                    pins={
-                        // {
-                        //     coordinates: [37.867989, -122.271507],
-                        //     popupHtml: "<b>Richard Davis</b><br>ID: #272428",
-                        // },
-                        // {
-                        //     coordinates: [33.634023, -117.851286],
-                        //     popupHtml: "<b>Sophia Jones</b><br>ID: #121445",
-                        // },
-                        // {
-                        //     coordinates: [33.634917, -117.862744],
-                        //     popupHtml: "<b>Adam Smith</b><br>ID: #920232",
-                        // },
-                        Object.entries(filteredData)
-                            .filter(
-                                ([_, call]) =>
-                                    call.location_coords && call.location_name,
-                            )
-                            .map(([_, call]) => {
-                                return {
-                                    coordinates: [
-                                        call.location_coords?.lat as number, // type-cast cuz TS trolling
-                                        call.location_coords?.lng as number, // type-cast cuz TS trolling
-                                    ],
-                                    popupHtml: `<b>${call.title}</b><br>Location: ${call.location_name}`,
-                                };
-                            })
-                    }
-                />
+                    {/* Collapsible Overlay */}
+                    {selectedId && data[selectedId] && (
+                        <div className={cn(
+                            "absolute right-2 top-4 z-[1000] flex items-center transition-all duration-300 ease-in-out",
+                            isOverlayOpen ? "translate-x-0" : "translate-x-[calc(100%-48px)]"
+                        )}>
+                            <div className="flex flex-row items-center space-x-2">
+                                {isOverlayOpen && (
+                                    <div className="flex w-80 flex-col space-y-3 rounded-2xl border border-slate-800 bg-slate-950/90 p-4 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-right-4">
+                                        {/* Incident Header */}
+                                        <div className="space-y-1">
+                                            <div className="flex items-start justify-between">
+                                                <div className="space-y-0.5">
+                                                    <h3 className="text-base font-bold leading-tight text-white">{data[selectedId].title || "Untiled Case"}</h3>
+                                                    <p className="text-[10px] text-slate-500 font-medium">{data[selectedId].location_name}</p>
+                                                </div>
+                                                <div className={cn(
+                                                    "rounded p-1",
+                                                    data[selectedId].severity === "CRITICAL" ? "bg-red-500/10 text-red-500" : "bg-blue-500/10 text-blue-500"
+                                                )}>
+                                                    <Info size={14} />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <Separator className="bg-slate-800/50" />
+
+                                        {/* Emotions Section */}
+                                        <div className="space-y-2">
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center space-x-2">
+                                                    <BrainCircuit size={14} className="text-blue-400" />
+                                                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Emotion Intel</p>
+                                                </div>
+                                                <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
+                                            </div>
+                                            <div className="flex space-x-2 overflow-x-auto pb-1 scrollbar-hide">
+                                                {data[selectedId]?.emotions?.map((em, idx) => (
+                                                    <EmotionCard
+                                                        key={idx}
+                                                        emotion={em.emotion}
+                                                        percentage={em.intensity * 100}
+                                                        color={idx === 0 ? "bg-blue-500" : "bg-slate-700"}
+                                                    />
+                                                ))}
+                                                {(!data[selectedId]?.emotions || data[selectedId].emotions.length === 0) && (
+                                                    <p className="text-[10px] text-slate-600 italic">Analyzing voice patterns...</p>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        <Separator className="bg-slate-800/50" />
+
+                                        {/* Summary Section */}
+                                        <div className="space-y-2">
+                                            <div className="flex items-center space-x-2">
+                                                <Info size={14} className="text-blue-400" />
+                                                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Incident Summary</p>
+                                            </div>
+                                            <ScrollArea className="max-h-24 pr-2">
+                                                <p className="text-xs leading-relaxed text-slate-300">
+                                                    {data[selectedId]?.summary || "AI is generating summary from live transcript flows..."}
+                                                </p>
+                                            </ScrollArea>
+                                        </div>
+
+                                        <Separator className="bg-slate-800/50" />
+
+                                        {/* Rapid Dispatch Section */}
+                                        <div className="space-y-2">
+                                            <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Rapid Dispatch</p>
+                                            <div className="grid grid-cols-3 gap-2">
+                                                <Button
+                                                    variant="outline"
+                                                    className="h-9 px-2 border-blue-900/30 bg-blue-950/20 text-blue-400 hover:bg-blue-900/30 text-[10px] gap-1.5"
+                                                    onClick={() => {
+                                                        toast({
+                                                            title: "Police Dispatched",
+                                                            description: `Units en route to ${data[selectedId].location_name}`
+                                                        });
+                                                        handleResolve(selectedId);
+                                                    }}
+                                                >
+                                                    <Siren size={12} /> Police
+                                                </Button>
+                                                <Button
+                                                    variant="outline"
+                                                    className="h-9 px-2 border-red-900/30 bg-red-950/20 text-red-400 hover:bg-red-900/30 text-[10px] gap-1.5"
+                                                    onClick={() => {
+                                                        toast({
+                                                            title: "Fire Dispatched",
+                                                            description: "Engine units responding."
+                                                        });
+                                                        handleResolve(selectedId);
+                                                    }}
+                                                >
+                                                    <FireExtinguisher size={12} /> Fire
+                                                </Button>
+                                                <Button
+                                                    variant="outline"
+                                                    className="h-9 px-2 border-green-900/30 bg-green-950/20 text-green-400 hover:bg-green-900/30 text-[10px] gap-1.5"
+                                                    onClick={() => {
+                                                        toast({
+                                                            title: "EMS Dispatched",
+                                                            description: "Paramedics en route."
+                                                        });
+                                                        handleResolve(selectedId);
+                                                    }}
+                                                >
+                                                    <Ambulance size={12} /> EMS
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                                <button
+                                    onClick={() => setIsOverlayOpen(!isOverlayOpen)}
+                                    className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-slate-900/90 border border-slate-700 text-slate-400 hover:bg-slate-800 hover:text-white shadow-lg transition-all"
+                                >
+                                    {isOverlayOpen ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                {/* Column 3: Action Sidebar */}
+                <div className="w-[400px] flex-shrink-0 overflow-hidden rounded-xl border border-slate-800 bg-slate-900 shadow-xl">
+                    <TranscriptPanel
+                        call={selectedId ? data[selectedId] : emptyCall}
+                        selectedId={selectedId || undefined}
+                        handleTransfer={handleTransfer}
+                        handleResolve={handleResolve} // Passing resolve handler to unified sidebar
+                    />
+                </div>
             </div>
         </div>
     );

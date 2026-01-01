@@ -31,25 +31,16 @@ const Map: React.FC<MapProps> = ({ center, pins }) => {
     const mapContainer = useRef(null);
     const map = useRef<L.Map | null>(null);
 
-    // Offset to account for right two panels blocking some of view
-    const offset = { lng: 0.0025, lat: 0.0 };
-
-    // Where to start the map (offset + start pos)
-    const adjustedCenter = {
-        lng: center.lng + offset.lng,
-        lat: center.lat + offset.lat,
-    };
-
     const [zoom] = useState(17);
 
     useEffect(() => {
         if (!map.current) {
             //@ts-expect-error trust me bro
             map.current = new L.Map(mapContainer.current, {
-                center: L.latLng(adjustedCenter.lat, adjustedCenter.lng),
+                center: L.latLng(center.lat, center.lng),
                 zoom: zoom,
                 dragging: true,
-                scrollWheelZoom: false,
+                scrollWheelZoom: true,
                 doubleClickZoom: true,
                 touchZoom: true,
                 boxZoom: true,
@@ -64,7 +55,7 @@ const Map: React.FC<MapProps> = ({ center, pins }) => {
 
         // Update map center when center prop changes
         map.current.flyTo(
-            [adjustedCenter.lat, adjustedCenter.lng],
+            [center.lat, center.lng],
             map.current.getZoom(),
             {
                 animate: true,
@@ -85,7 +76,7 @@ const Map: React.FC<MapProps> = ({ center, pins }) => {
                 .addTo(map.current!)
                 .bindPopup(pin.popupHtml);
         });
-    }, [adjustedCenter.lng, adjustedCenter.lat, zoom, pins]);
+    }, [center.lng, center.lat, zoom, pins]);
 
     return (
         <div className={styles.mapWrap}>
