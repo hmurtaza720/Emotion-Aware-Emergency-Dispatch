@@ -21,6 +21,7 @@ export interface FilterState {
     city: string;
     emotion: string;
     type: string;
+    severity: string;
 }
 
 interface EventPanelProps {
@@ -31,6 +32,7 @@ interface EventPanelProps {
     showCounters?: boolean;
     filters?: FilterState;
     onFilterChange?: (filters: FilterState) => void;
+    countersData?: Record<string, Call>;
 }
 
 const EventPanel = ({
@@ -40,7 +42,8 @@ const EventPanel = ({
     title = "Emergencies",
     showCounters = true,
     filters,
-    onFilterChange
+    onFilterChange,
+    countersData
 }: EventPanelProps) => {
     const [search, setSearch] = useState("");
     const [isFiltersOpen, setIsFiltersOpen] = useState(false);
@@ -164,15 +167,28 @@ const EventPanel = ({
                 <div className="mb-6 flex justify-between rounded-lg border border-slate-700 bg-slate-800/50 p-4 mx-2">
                     <div className="text-center">
                         <div className="text-2xl font-black text-slate-200">
-                            {data ? Object.keys(data).length : "-"}
+                            {(countersData || data) ? Object.keys(countersData || data!).length : "-"}
                         </div>
                         <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Total</div>
                     </div>
                     <div className="h-10 w-[1px] bg-slate-700" />
-                    <div className="text-center">
+                    <div
+                        className={cn(
+                            "text-center cursor-pointer hover:bg-slate-700/50 rounded-lg p-1 transition-all",
+                            filters?.severity === "CRITICAL" && "bg-blue-500/10 border border-blue-500/30"
+                        )}
+                        onClick={() => {
+                            if (onFilterChange && filters) {
+                                onFilterChange({
+                                    ...filters,
+                                    severity: filters.severity === "CRITICAL" ? "ALL" : "CRITICAL"
+                                });
+                            }
+                        }}
+                    >
                         <div className="text-2xl font-black text-red-500 animate-pulse">
-                            {data
-                                ? Object.entries(data).filter(
+                            {(countersData || data)
+                                ? Object.entries(countersData || data!).filter(
                                     ([_, value]) => value.severity === "CRITICAL",
                                 ).length
                                 : "-"}
@@ -182,8 +198,8 @@ const EventPanel = ({
                     <div className="h-10 w-[1px] bg-slate-700" />
                     <div className="text-center">
                         <div className="text-2xl font-black text-green-500">
-                            {data
-                                ? Object.entries(data).filter(
+                            {(countersData || data)
+                                ? Object.entries(countersData || data!).filter(
                                     ([_, value]) => value.severity === "RESOLVED",
                                 ).length
                                 : "-"}

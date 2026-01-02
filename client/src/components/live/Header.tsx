@@ -13,11 +13,12 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
 import { US_STATES } from "@/data/constants";
+import { FilterState } from "./EventPanel";
 
-const Header = ({ connected, city, setCity }: { connected: boolean; city: string; setCity: (city: string) => void }) => {
+const Header = ({ connected, city, setCity, filters }: { connected: boolean; city: string; setCity: (city: string) => void; filters?: FilterState }) => {
     const [time, setTime] = useState("");
 
-    const selectedState = US_STATES.find(s => s.code === city) || US_STATES[4]; // Default to CA
+    const selectedState = US_STATES.find(s => s.code === (filters?.stateCode || city)) || US_STATES[4]; // Default to CA
 
     useEffect(() => {
         const updateTime = () => {
@@ -76,22 +77,20 @@ const Header = ({ connected, city, setCity }: { connected: boolean; city: string
                             {time}
                         </span>
                         <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">
-                            {tzName} — {selectedState.name}
+                            {tzName} — {filters?.city !== "ALL" ? `${filters?.city}, ` : ""}{selectedState.name}
                         </span>
                     </div>
                     <div className="h-8 w-[1px] bg-slate-700" />
-                    <Select defaultValue={city} onValueChange={setCity}>
-                        <SelectTrigger className="h-[36px] w-[180px] rounded-lg border-slate-700 bg-slate-800 text-xs font-bold uppercase tracking-wider text-slate-200 hover:border-blue-500/50 transition-all focus:ring-1 focus:ring-blue-500/50">
-                            <SelectValue placeholder="Select State" />
-                        </SelectTrigger>
-                        <SelectContent className="max-h-[300px] border-slate-700 bg-slate-900 text-slate-200">
-                            {US_STATES.map((state) => (
-                                <SelectItem key={state.code} value={state.code} className="text-xs font-bold uppercase tracking-wider focus:bg-blue-600/20 focus:text-blue-400">
-                                    {state.name}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
+
+                    <div className="flex flex-col items-end px-2">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-none mb-1">Supervised Sector</span>
+                        <div className="flex items-center space-x-2">
+                            <span className="text-xs font-black text-blue-400 uppercase tracking-tight">
+                                {filters?.city !== "ALL" ? `${filters?.city}, ` : ""}{selectedState.name}
+                            </span>
+                            <div className="h-2 w-2 rounded-full bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

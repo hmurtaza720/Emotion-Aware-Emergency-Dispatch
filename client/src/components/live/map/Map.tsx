@@ -25,58 +25,106 @@ interface MapProps {
         lat: number;
     };
     pins: MapPin[];
+    zoom: number;
 }
 
-const Map: React.FC<MapProps> = ({ center, pins }) => {
-    const mapContainer = useRef(null);
-    const map = useRef<L.Map | null>(null);
+const Map: React.FC<MapProps> = ({ center, pins, zoom }) => {
+    const mapContainer = useRef<HTMLDivElement>(null);
+    const mapInstance = useRef<L.Map | null>(null);
+    const [mapReady, setMapReady] = useState(false);
 
-    const [zoom] = useState(17);
-
+    // Initial Map Setup
     useEffect(() => {
-        if (!map.current) {
-            //@ts-expect-error trust me bro
-            map.current = new L.Map(mapContainer.current, {
-                center: L.latLng(center.lat, center.lng),
-                zoom: zoom,
-                dragging: true,
-                scrollWheelZoom: true,
-                doubleClickZoom: true,
-                touchZoom: true,
-                boxZoom: true,
-                keyboard: false,
-            });
+        if (!mapContainer.current || mapInstance.current) return;
 
-            // Use OpenStreetMap standard tiles (Free, no API key needed)
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map.current);
+        // Create map instance
+        const m = L.map(mapContainer.current, {
+            zoomControl: true,
+            dragging: true,
+            scrollWheelZoom: true,
+            doubleClickZoom: true,
+            touchZoom: true,
+            boxZoom: true,
+            keyboard: false,
+        });
+
+        // Use OpenStreetMap standard tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(m);
+
+        // Set initial view immediately
+        const lat = !isNaN(center.lat) ? center.lat : 39.8283;
+        const lng = !isNaN(center.lng) ? center.lng : -98.5795;
+        const z = !isNaN(zoom) ? zoom : 4;
+
+        m.setView([lat, lng], z);
+
+        // Assign to ref for cleanup and updates
+        mapInstance.current = m;
+
+        // Mark as ready after a tick to ensure DOM is settled
+        const timer = setTimeout(() => {
+            if (mapInstance.current) {
+                mapInstance.current.invalidateSize();
+                setMapReady(true);
+            }
+        }, 300); // 300ms buffer for layout stability
+
+        return () => {
+            clearTimeout(timer);
+            if (mapInstance.current) {
+                mapInstance.current.remove();
+                mapInstance.current = null;
+                setMapReady(false);
+            }
+        };
+    }, []);
+
+    // Handle View Updates
+    useEffect(() => {
+        if (!mapReady || !mapInstance.current) return;
+
+        const lat = typeof center.lat === 'number' && !isNaN(center.lat) ? center.lat : null;
+        const lng = typeof center.lng === 'number' && !isNaN(center.lng) ? center.lng : null;
+        const z = typeof zoom === 'number' && !isNaN(zoom) ? zoom : null;
+
+        if (lat !== null && lng !== null && z !== null) {
+            // Small timeout to ensure layout stability before animation
+            const timer = setTimeout(() => {
+                if (mapInstance.current) {
+                    mapInstance.current.invalidateSize();
+                    mapInstance.current.flyTo([lat, lng], z, {
+                        animate: true,
+                        duration: 1
+                    });
+                }
+            }, 50);
+            return () => clearTimeout(timer);
         }
+    }, [mapReady, center.lat, center.lng, zoom]);
 
-        // Update map center when center prop changes
-        map.current.flyTo(
-            [center.lat, center.lng],
-            map.current.getZoom(),
-            {
-                animate: true,
-                duration: 1,
-            },
-        );
+    // Handle Pin Updates
+    useEffect(() => {
+        if (!mapReady || !mapInstance.current) return;
 
         // Clear existing markers
-        map.current.eachLayer((layer) => {
+        mapInstance.current.eachLayer((layer) => {
             if (layer instanceof L.Marker) {
-                map.current!.removeLayer(layer);
+                mapInstance.current!.removeLayer(layer);
             }
         });
 
         // Add pins to the map
         pins.forEach((pin) => {
-            L.marker(pin.coordinates, { icon: Pin })
-                .addTo(map.current!)
-                .bindPopup(pin.popupHtml);
+            const [plat, plng] = pin.coordinates;
+            if (!isNaN(plat) && !isNaN(plng)) {
+                L.marker(pin.coordinates, { icon: Pin })
+                    .addTo(mapInstance.current!)
+                    .bindPopup(pin.popupHtml);
+            }
         });
-    }, [center.lng, center.lat, zoom, pins]);
+    }, [mapReady, pins]);
 
     return (
         <div className={styles.mapWrap}>
