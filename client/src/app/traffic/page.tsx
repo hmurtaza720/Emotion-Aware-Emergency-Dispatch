@@ -39,110 +39,136 @@ const TrafficPage = () => {
     };
 
     return (
-        <div className="flex h-full flex-col overflow-hidden text-slate-200 font-sans selection:bg-blue-500/30">
+        <div className="flex h-full flex-col space-y-1 text-slate-200 selection:bg-blue-500/30">
             {/* Header */}
-            <header className="m-4 flex h-16 items-center rounded-2xl border border-slate-800 bg-slate-900/50 px-6 backdrop-blur shadow-lg">
-                <h1 className="text-xl font-bold tracking-tight text-white">Traffic Control</h1>
-                <div className="ml-auto flex items-center space-x-4">
-                    <div className="flex items-center space-x-2 text-sm text-slate-400">
-                        <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-                        <span>{calls.length} Active Calls</span>
+            <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900/50 shadow-xl">
+                <header className="flex h-16 items-center px-6 backdrop-blur">
+                    <h1 className="text-xl font-bold uppercase tracking-wider text-blue-400">Traffic Control</h1>
+                    <div className="ml-auto flex items-center space-x-4">
+                        <div className="flex items-center space-x-2 text-xs font-mono text-slate-500">
+                            <span>LIVE FEED</span>
+                            <div className="h-4 w-4 rounded-full bg-green-500/20 p-1">
+                                <div className="h-full w-full rounded-full bg-green-500 animate-pulse" />
+                            </div>
+                            <span className="font-bold text-slate-300 ml-1">{calls.length} Active</span>
+                        </div>
                     </div>
-                </div>
-            </header>
+                </header>
+            </div>
 
-            <div className="flex flex-1 overflow-hidden">
+            <div className="flex flex-1 space-x-1 overflow-hidden">
                 {/* Main Content Area (Table) */}
-                <div className="flex-1 overflow-y-auto p-6">
-                    <div className="rounded-xl border border-slate-800 bg-slate-900/40 shadow-xl overflow-hidden">
-                        <table className="w-full text-left text-sm">
-                            <thead className="bg-slate-900/80 text-xs uppercase text-slate-500 font-bold tracking-wider">
-                                <tr>
-                                    <th className="px-6 py-4">Caller Name</th>
-                                    <th className="px-6 py-4">Status</th>
-                                    <th className="px-6 py-4">Chatting With</th>
-                                    <th className="px-6 py-4">Time Initiated</th>
-                                    <th className="px-6 py-4 text-right">Actions</th>
+                <div className="flex-1 overflow-y-auto rounded-xl border border-slate-800 bg-slate-900/40 shadow-xl scrollbar-thin scrollbar-track-slate-900 scrollbar-thumb-blue-800/80 hover:scrollbar-thumb-blue-800">
+                    <table className="w-full text-left text-sm">
+                        <thead className="bg-slate-900/95 text-[10px] uppercase font-bold tracking-widest text-slate-500 sticky top-0 z-10 backdrop-blur-md shadow-sm border-b border-slate-800">
+                            <tr>
+                                <th className="px-6 py-4">Caller Name</th>
+                                <th className="px-6 py-4">Location</th>
+                                <th className="px-6 py-4">Status</th>
+                                <th className="px-6 py-4">Chatting With</th>
+                                <th className="px-6 py-4">Time Initiated</th>
+                                <th className="px-6 py-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-800/50">
+                            {calls.map((call) => (
+                                <tr
+                                    key={call.id}
+                                    onClick={() => setSelectedCallId(call.id)}
+                                    className={cn(
+                                        "group cursor-pointer transition-all duration-200 hover:bg-slate-800 border-l-4",
+                                        selectedCallId === call.id
+                                            ? "bg-slate-800/80 border-l-blue-500 shadow-[inset_0_0_20px_rgba(59,130,246,0.05)]"
+                                            : call.status === "Connected" ? "border-l-green-500 hover:border-l-green-400" : "border-l-slate-700 hover:border-l-slate-600"
+                                    )}
+                                >
+                                    {/* Name */}
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center space-x-3">
+                                            <div className={cn(
+                                                "flex h-8 w-8 items-center justify-center rounded-lg font-bold text-xs transition-colors",
+                                                selectedCallId === call.id ? "bg-blue-500 text-white" : "bg-slate-800 text-slate-400 group-hover:bg-slate-700 group-hover:text-slate-200"
+                                            )}>
+                                                {call.name.charAt(0)}
+                                            </div>
+                                            <span className={cn(
+                                                "font-bold uppercase tracking-wide text-xs",
+                                                selectedCallId === call.id ? "text-blue-400" : "text-slate-300 group-hover:text-white"
+                                            )}>
+                                                {call.name}
+                                            </span>
+                                        </div>
+                                    </td>
+
+                                    {/* Location */}
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center space-x-2 text-slate-300">
+                                            <span className="text-xs font-bold uppercase tracking-wide">{call.location_name}</span>
+                                        </div>
+                                    </td>
+
+                                    {/* Status */}
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center space-x-2">
+                                            <div className={cn(
+                                                "h-1.5 w-1.5 rounded-full",
+                                                call.status === "Connected" ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)] animate-pulse" : "bg-slate-600"
+                                            )} />
+                                            <span className={cn(
+                                                "text-[10px] uppercase font-bold tracking-wider",
+                                                call.status === "Connected" ? "text-green-400" : "text-slate-500"
+                                            )}>
+                                                {call.status}
+                                            </span>
+                                        </div>
+                                    </td>
+
+                                    {/* Chatting With */}
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center space-x-2 text-slate-400 group-hover:text-slate-300 transition-colors">
+                                            {call.responder_type === "AI" ? (
+                                                <Bot size={14} className="text-purple-400" />
+                                            ) : (
+                                                <User size={14} className="text-orange-400" />
+                                            )}
+                                            <span className="text-xs font-medium">{call.agent_name || "Unknown"}</span>
+                                        </div>
+                                    </td>
+
+                                    {/* Time */}
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center space-x-2 text-slate-500 group-hover:text-slate-400">
+                                            <Clock size={14} />
+                                            <span className="font-mono text-xs">{formatTime(call.time)}</span>
+                                        </div>
+                                    </td>
+
+
+                                    {/* Actions */}
+                                    <td className="px-6 py-4 text-right">
+                                        <Link
+                                            href={`/live?callId=${call.id}`}
+                                            className={cn(
+                                                "inline-flex items-center px-3 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all shadow-lg",
+                                                selectedCallId === call.id
+                                                    ? "bg-blue-600 hover:bg-blue-500 text-white shadow-blue-900/20"
+                                                    : "bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white border border-slate-700"
+                                            )}
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
+                                            <Monitor size={12} className="mr-1.5" />
+                                            Supervise
+                                        </Link>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody className="divide-y divide-slate-800">
-                                {calls.map((call) => (
-                                    <tr
-                                        key={call.id}
-                                        onClick={() => setSelectedCallId(call.id)}
-                                        className={cn(
-                                            "group cursor-pointer transition-colors hover:bg-slate-800/50",
-                                            selectedCallId === call.id ? "bg-slate-800/80" : ""
-                                        )}
-                                    >
-                                        {/* Name */}
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center space-x-3">
-                                                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500/20 text-blue-400 font-bold">
-                                                    {call.name.charAt(0)}
-                                                </div>
-                                                <span className="font-medium text-slate-200">{call.name}</span>
-                                            </div>
-                                        </td>
-
-                                        {/* Status */}
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center space-x-2">
-                                                <div className={cn(
-                                                    "h-2 w-2 rounded-full",
-                                                    call.status === "Connected" ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]" : "bg-slate-600"
-                                                )} />
-                                                <span className={cn(
-                                                    "font-medium",
-                                                    call.status === "Connected" ? "text-green-400" : "text-slate-500"
-                                                )}>
-                                                    {call.status}
-                                                </span>
-                                            </div>
-                                        </td>
-
-                                        {/* Chatting With */}
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center space-x-2 text-slate-300">
-                                                {call.responder_type === "AI" ? (
-                                                    <Bot size={16} className="text-purple-400" />
-                                                ) : (
-                                                    <User size={16} className="text-orange-400" />
-                                                )}
-                                                <span>{call.agent_name || "Unknown"}</span>
-                                            </div>
-                                        </td>
-
-                                        {/* Time */}
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center space-x-2 text-slate-400">
-                                                <Clock size={16} />
-                                                <span className="font-mono">{formatTime(call.time)}</span>
-                                            </div>
-                                        </td>
-
-
-                                        {/* Actions */}
-                                        <td className="px-6 py-4 text-right">
-                                            <Link
-                                                href={`/live?callId=${call.id}`}
-                                                className="inline-flex items-center px-3 py-1.5 rounded-md bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-colors shadow-lg shadow-blue-900/20"
-                                                onClick={(e) => e.stopPropagation()}
-                                            >
-                                                <Monitor size={14} className="mr-1.5" />
-                                                Supervise
-                                            </Link>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
 
                 {/* Details Sidebar (Right) */}
                 {selectedCall && (
-                    <div className="m-4 ml-0 w-80 flex flex-col rounded-2xl border border-slate-800 bg-slate-900/80 p-6 shadow-2xl backdrop-blur-md animate-in slide-in-from-right-10 duration-200 relative">
+                    <div className="w-80 flex flex-col rounded-2xl border border-slate-800 bg-slate-900/80 p-6 shadow-2xl backdrop-blur-md animate-in slide-in-from-right-10 duration-200 relative">
                         {/* Locked view: Close button removed */}
 
                         <h2 className="text-lg font-bold text-white mb-1">Call Details</h2>
