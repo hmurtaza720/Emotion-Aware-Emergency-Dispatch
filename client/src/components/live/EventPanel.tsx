@@ -1,10 +1,27 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Call } from "@/app/live/page";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { AlertCircle, AlertTriangle, Search, ShieldCheck } from "lucide-react";
+import { AlertCircle, AlertTriangle, Filter, Search, ShieldCheck } from "lucide-react";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { US_STATES, EMOTIONS, EMERGENCY_TYPES } from "@/data/constants";
+
+export interface FilterState {
+    stateCode: string;
+    city: string;
+    emotion: string;
+    type: string;
+}
 
 interface EventPanelProps {
     data: Record<string, Call> | undefined;
@@ -12,6 +29,8 @@ interface EventPanelProps {
     handleSelect: (id: string) => void;
     title?: string;
     showCounters?: boolean;
+    filters?: FilterState;
+    onFilterChange?: (filters: FilterState) => void;
 }
 
 const EventPanel = ({
@@ -19,9 +38,12 @@ const EventPanel = ({
     selectedId,
     handleSelect,
     title = "Emergencies",
-    showCounters = true
+    showCounters = true,
+    filters,
+    onFilterChange
 }: EventPanelProps) => {
     const [search, setSearch] = useState("");
+    const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.currentTarget.value);
@@ -41,14 +63,102 @@ const EventPanel = ({
                 )}
             </div>
 
-            <div className="mb-6 px-2">
-                <Input
-                    className="w-full border-slate-700 bg-slate-800 text-slate-200 placeholder:text-slate-500 focus-visible:ring-blue-500"
-                    placeholder="Refine Sector Search..."
-                    startIcon={Search}
-                    onChange={handleChange}
-                />
+            <div className="mb-4 px-2 flex items-center space-x-2">
+                <div className="relative flex-1">
+                    <Input
+                        className="w-full border-slate-700 bg-slate-800 text-slate-200 placeholder:text-slate-500 focus-visible:ring-blue-500 rounded-lg pr-10"
+                        placeholder="Refine Sector Search..."
+                        startIcon={Search}
+                        onChange={handleChange}
+                    />
+                </div>
+                {filters && (
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        className={cn(
+                            "h-10 w-10 border-slate-700 bg-slate-800 text-slate-400 hover:text-white transition-all",
+                            isFiltersOpen && "border-blue-500 text-blue-400 bg-blue-500/10"
+                        )}
+                        onClick={() => setIsFiltersOpen(!isFiltersOpen)}
+                    >
+                        <Filter size={18} />
+                    </Button>
+                )}
             </div>
+
+            {/* Collapsible Filters */}
+            {filters && onFilterChange && isFiltersOpen && (
+                <div className="mb-6 px-2 space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="grid grid-cols-2 gap-2">
+                        {/* State Select */}
+                        <div className="space-y-1">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">State</label>
+                            <Select value={filters.stateCode} onValueChange={(val) => onFilterChange({ ...filters, stateCode: val, city: "ALL" })}>
+                                <SelectTrigger className="h-8 border-slate-700 bg-slate-800 text-[10px] uppercase font-bold text-slate-300">
+                                    <SelectValue placeholder="State" />
+                                </SelectTrigger>
+                                <SelectContent className="border-slate-700 bg-slate-900 text-slate-200">
+                                    {US_STATES.map(s => (
+                                        <SelectItem key={s.code} value={s.code} className="text-[10px] uppercase font-bold">{s.name}</SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        {/* City Select */}
+                        <div className="space-y-1">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">City</label>
+                            <Select value={filters.city} onValueChange={(val) => onFilterChange({ ...filters, city: val })}>
+                                <SelectTrigger className="h-8 border-slate-700 bg-slate-800 text-[10px] uppercase font-bold text-slate-300">
+                                    <SelectValue placeholder="City" />
+                                </SelectTrigger>
+                                <SelectContent className="border-slate-700 bg-slate-900 text-slate-200">
+                                    <SelectItem value="ALL" className="text-[10px] uppercase font-bold">All Cities</SelectItem>
+                                    {US_STATES.find(s => s.code === filters.stateCode)?.cities.map(c => (
+                                        <SelectItem key={c} value={c} className="text-[10px] uppercase font-bold">{c}</SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2">
+                        {/* Emotion Select */}
+                        <div className="space-y-1">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Emotion</label>
+                            <Select value={filters.emotion} onValueChange={(val) => onFilterChange({ ...filters, emotion: val })}>
+                                <SelectTrigger className="h-8 border-slate-700 bg-slate-800 text-[10px] uppercase font-bold text-slate-300">
+                                    <SelectValue placeholder="Emotion" />
+                                </SelectTrigger>
+                                <SelectContent className="border-slate-700 bg-slate-900 text-slate-200">
+                                    <SelectItem value="ALL" className="text-[10px] uppercase font-bold">All Emotions</SelectItem>
+                                    {EMOTIONS.map(e => (
+                                        <SelectItem key={e} value={e} className="text-[10px] uppercase font-bold">{e}</SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        {/* Type Select */}
+                        <div className="space-y-1">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Type</label>
+                            <Select value={filters.type} onValueChange={(val) => onFilterChange({ ...filters, type: val })}>
+                                <SelectTrigger className="h-8 border-slate-700 bg-slate-800 text-[10px] uppercase font-bold text-slate-300">
+                                    <SelectValue placeholder="Type" />
+                                </SelectTrigger>
+                                <SelectContent className="border-slate-700 bg-slate-900 text-slate-200">
+                                    <SelectItem value="ALL" className="text-[10px] uppercase font-bold">All Types</SelectItem>
+                                    {EMERGENCY_TYPES.map(t => (
+                                        <SelectItem key={t} value={t} className="text-[10px] uppercase font-bold">{t}</SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+                    <Separator className="bg-slate-800 mt-2" />
+                </div>
+            )}
 
             {showCounters && (
                 <div className="mb-6 flex justify-between rounded-lg border border-slate-700 bg-slate-800/50 p-4 mx-2">
@@ -83,7 +193,7 @@ const EventPanel = ({
                 </div>
             )}
 
-            <div className="h-[calc(100vh-320px)] space-y-3 overflow-y-auto px-1 scrollbar-thin scrollbar-track-slate-900 scrollbar-thumb-slate-700">
+            <div className="h-[calc(100vh-320px)] space-y-3 overflow-y-auto px-1 scrollbar-thin scrollbar-track-slate-900 scrollbar-thumb-blue-800/80 hover:scrollbar-thumb-blue-800">
                 {data &&
                     Object.entries(data)
                         .filter(([_, emergency]) =>

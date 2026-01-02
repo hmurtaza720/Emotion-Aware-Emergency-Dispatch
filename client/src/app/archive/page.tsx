@@ -3,7 +3,9 @@
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import EventPanel from "@/components/live/EventPanel";
-import Header, { US_STATES } from "@/components/live/Header";
+import Header from "@/components/live/Header";
+import { FilterState } from "@/components/live/EventPanel";
+import { US_STATES } from "@/data/constants";
 import TranscriptPanel from "@/components/live/TranscriptPanel";
 import { ChevronRight, ChevronLeft, Info, BrainCircuit, Siren, FireExtinguisher, Ambulance } from "lucide-react";
 import EmotionCard from "@/components/live/EmotionCard";
@@ -89,7 +91,13 @@ const Page = () => {
     const [data, setData] = useState<Record<string, Call>>(ARCHIVE_MESSAGES);
     const [selectedId, setSelectedId] = useState<string | undefined>();
     const [resolvedIds, setResolvedIds] = useState<string[]>([]);
-    const [city, setCity] = useState("CA");
+    const [city, setCity] = useState("ALL");
+    const [filters, setFilters] = useState<FilterState>({
+        stateCode: "ALL",
+        city: "ALL",
+        emotion: "ALL",
+        type: "ALL"
+    });
     const [isOverlayOpen, setIsOverlayOpen] = useState(true);
     const { toast } = useToast();
 
@@ -99,24 +107,58 @@ const Page = () => {
     });
 
     const filteredData = Object.entries(data).reduce((acc, [key, call]) => {
-        if (key === "live_session_1") {
-            acc[key] = call;
-            return acc;
-        }
+        // 1. Text Search (Local Search in EventPanel) - handled by EventPanel filter prop passing if needed,
+        // but EventPanel handles its own internal search state for the list.
+        // Wait, EventPanel maps over the 'data' passed to it.
+        // So this reduction should handle the shared filters (State, City, Emotion, Type).
 
         let match = true;
-        const loc = call.location_name || "";
 
-        const stateInfo = US_STATES.find(s => s.code === city);
-        if (stateInfo) {
-            match = loc.includes(` ${stateInfo.code}`) ||
-                loc.includes(`, ${stateInfo.code}`) ||
-                loc.toLowerCase().includes(stateInfo.name.toLowerCase());
+        // State Filter
+        if (filters.stateCode !== "ALL") {
+            const loc = call.location_name || "";
+            const stateInfo = US_STATES.find(s => s.code === filters.stateCode);
+            if (stateInfo) {
+                const stateMatch = loc.includes(` ${stateInfo.code}`) ||
+                    loc.includes(`, ${stateInfo.code}`) ||
+                    loc.toLowerCase().includes(stateInfo.name.toLowerCase());
+                if (!stateMatch) match = false;
+            }
+        }
+
+        // City Filter
+        if (match && filters.city !== "ALL") {
+            const loc = call.location_name?.toLowerCase() || "";
+            if (!loc.includes(filters.city.toLowerCase())) match = false;
+        }
+
+        // Emotion Filter
+        if (match && filters.emotion !== "ALL") {
+            const hasEmotion = call.emotions?.some(e => e.emotion === filters.emotion);
+            if (!hasEmotion) match = false;
+        }
+
+        // Type Filter
+        if (match && filters.type !== "ALL") {
+            const typeMatch = (call.type?.toLowerCase() === filters.type.toLowerCase()) ||
+                (call.title?.toLowerCase().includes(filters.type.toLowerCase()));
+            if (!typeMatch) match = false;
         }
 
         if (match) acc[key] = call;
         return acc;
     }, {} as Record<string, Call>);
+
+    const handleFilterChange = (newFilters: FilterState) => {
+        setFilters(newFilters);
+        setCity(newFilters.stateCode);
+    };
+
+    // Override setCity from Header to also update filters
+    const handleHeaderCityChange = (newCity: string) => {
+        setCity(newCity);
+        setFilters(prev => ({ ...prev, stateCode: newCity, city: "ALL" }));
+    };
 
     useEffect(() => {
         const firstCallWithCoords = Object.entries(filteredData).find(([_, c]) => c.location_coords)?.[1];
@@ -239,7 +281,7 @@ const Page = () => {
     return (
         <div className="flex h-full flex-col space-y-1 selection:bg-blue-500/30">
             <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900 shadow-xl">
-                <Header connected={connected} city={city} setCity={setCity} />
+                <Header connected={connected} city={city} setCity={handleHeaderCityChange} />
             </div>
 
             <div className="flex flex-1 space-x-1 overflow-hidden">
@@ -251,6 +293,8 @@ const Page = () => {
                         handleSelect={handleSelect}
                         title="Archive"
                         showCounters={false}
+                        filters={filters}
+                        onFilterChange={handleFilterChange}
                     />
                 </div>
 

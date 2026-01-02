@@ -27,9 +27,9 @@ const ChatInterface = ({ call }: ChatInterfaceProps) => {
     }, [call]);
 
     return (
-        <ScrollArea className="mx-auto flex h-[calc(100dvh-340px)] flex-col bg-slate-950">
+        <ScrollArea className="mx-auto flex h-full flex-col bg-slate-950">
             <div
-                className="flex-1 space-y-4 overflow-y-auto p-4 pb-5"
+                className="flex-1 space-y-4 overflow-y-auto p-4 pb-12 pt-6"
                 ref={ref}
             >
                 {call?.transcript.map((message, index) => {

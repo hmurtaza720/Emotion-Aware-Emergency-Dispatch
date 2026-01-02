@@ -233,7 +233,7 @@ const Page = () => {
     const [data, setData] = useState<Record<string, Call>>(MESSAGES);
     const [selectedId, setSelectedId] = useState<string | undefined>();
     const [resolvedIds, setResolvedIds] = useState<string[]>([]);
-    const [city, setCity] = useState("CA");
+    const [city, setCity] = useState("ALL");
     const [isOverlayOpen, setIsOverlayOpen] = useState(true);
     const { toast } = useToast();
 
@@ -257,11 +257,16 @@ const Page = () => {
         // For now, let's assume filtering logic based on common substrings or the ID logic provided
         // The user wanted: "set the map according to dropdown on the top right corner plus the emergencies will appear according to the cities on the dropdown"
 
+        if (city === "ALL") {
+            acc[key] = call;
+            return acc;
+        }
+
         let match = true;
         const loc = call.location_name || ""; // Safe guard against undefined
 
         const stateInfo = US_STATES.find(s => s.code === city);
-        if (stateInfo) {
+        if (stateInfo && city !== "ALL") {
             match = loc.includes(` ${stateInfo.code}`) ||
                 loc.includes(`, ${stateInfo.code}`) ||
                 loc.toLowerCase().includes(stateInfo.name.toLowerCase());

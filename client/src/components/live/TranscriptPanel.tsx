@@ -135,28 +135,30 @@ const TranscriptPanel = ({
                 )}
 
                 {/* 7. Critical Action Button (Bottom) */}
-                <div className="pt-2">
-                    {transferred ? (
-                        <Button
-                            variant={"outline"}
-                            className="pointer-events-none w-full h-12 space-x-2 border-slate-700 bg-slate-800 text-slate-500 font-bold uppercase tracking-widest"
-                        >
-                            <HeadsetIcon size={18} /> <p>Transfer Complete</p>
-                        </Button>
-                    ) : loading ? (
-                        <Button className="w-full h-12 bg-slate-800 text-blue-400 gap-2 font-bold uppercase tracking-widest border border-blue-500/20">
-                            <Loader2Icon className="animate-spin" size={18} />
-                            <p>Connecting...</p>
-                        </Button>
-                    ) : (
-                        <Button
-                            onClick={() => doTransfer(call.id)}
-                            className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold uppercase tracking-widest shadow-xl hover:from-blue-500 hover:to-indigo-500 transition-all transform active:scale-95"
-                        >
-                            <ArrowLeftRightIcon size={18} /> <p className="ml-2">Transfer to Human</p>
-                        </Button>
-                    )}
-                </div>
+                {mode === "live" && (
+                    <div className="pt-2">
+                        {transferred ? (
+                            <Button
+                                variant={"outline"}
+                                className="pointer-events-none w-full h-12 space-x-2 border-slate-700 bg-slate-800 text-slate-500 font-bold uppercase tracking-widest"
+                            >
+                                <HeadsetIcon size={18} /> <p>Transfer Complete</p>
+                            </Button>
+                        ) : loading ? (
+                            <Button className="w-full h-12 bg-slate-800 text-blue-400 gap-2 font-bold uppercase tracking-widest border border-blue-500/20">
+                                <Loader2Icon className="animate-spin" size={18} />
+                                <p>Connecting...</p>
+                            </Button>
+                        ) : (
+                            <Button
+                                onClick={() => doTransfer(call.id)}
+                                className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold uppercase tracking-widest shadow-xl hover:from-blue-500 hover:to-indigo-500 transition-all transform active:scale-95"
+                            >
+                                <ArrowLeftRightIcon size={18} /> <p className="ml-2">Transfer to Human</p>
+                            </Button>
+                        )}
+                    </div>
+                )}
             </div>
         </div>
     );
