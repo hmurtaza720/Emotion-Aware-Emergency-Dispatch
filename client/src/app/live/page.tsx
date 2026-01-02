@@ -6,6 +6,8 @@ import EventPanel from "@/components/live/EventPanel";
 import Header from "@/components/live/Header";
 import { FilterState } from "@/components/live/EventPanel";
 import { US_STATES, CITY_COORDS } from "@/data/constants";
+import { Call } from "@/data/types";
+import { MESSAGES } from "@/data/mock_data";
 import TranscriptPanel from "@/components/live/TranscriptPanel";
 import { ChevronRight, ChevronLeft, Info, BrainCircuit, Siren, FireExtinguisher, Ambulance } from "lucide-react";
 import EmotionCard from "@/components/live/EmotionCard";
@@ -29,32 +31,6 @@ interface ServerMessage {
     location?: [number, number];
 }
 
-export type Call = {
-    emotions?: {
-        emotion: string;
-        intensity: number;
-    }[];
-    id: string;
-    location_name: string;
-    location_coords?: {
-        lat: number;
-        lng: number;
-    };
-    street_view?: string; // base 64
-    name: string;
-    phone: string;
-    recommendation: string;
-    severity?: "CRITICAL" | "MODERATE" | "RESOLVED";
-    summary: string;
-    time: string; // ISO Date String
-    title?: string;
-    transcript: {
-        role: "assistant" | "user" | "agent";
-        content: string;
-    }[];
-    type: string;
-};
-
 export interface CallProps {
     call?: Call;
     selectedId: string | undefined;
@@ -67,77 +43,6 @@ const getWsUrl = () => {
 };
 
 let wss: WebSocket | null = null;
-
-const MESSAGES: Record<string, Call> = {
-    // "1234": {
-    //     emotions: [
-    //         { emotion: "Concern", intensity: 0.7 },
-    //         { emotion: "Frustration", intensity: 0.3 },
-    //     ],
-    //     id: "1234",
-    //     location_name: "1234 Oak Street, Springfield",
-    //     location_coords: {
-    //         lat: 37.867989,
-    //         lng: -122.271507,
-    //     },
-    //     name: "John Doe",
-    //     phone: "555-123-4567",
-    //     recommendation: "Monitor situation and provide updates",
-    //     severity: "MODERATE",
-    //     summary:
-    //         "Power outage reported in Springfield area. Estimated restoration by 5:00 PM.",
-    //     time: "2023-07-15T14:15:00Z",
-    //     title: "Power Outage Report",
-    //     transcript: [
-    //         {
-    //             role: "user",
-    //             content:
-    //                 "Hello, I need to report a power outage in my neighborhood.",
-    //         },
-    //         {
-    //             role: "assistant",
-    //             content:
-    //                 "Hello! I'm sorry to hear that. Can you provide your address?",
-    //         },
-    //         {
-    //             role: "user",
-    //             content: "It's 1234 Oak Street, Springfield.",
-    //         },
-    //         {
-    //             role: "assistant",
-    //             content: "Thank you. When did the outage start?",
-    //         },
-    //         {
-    //             role: "user",
-    //             content: "About 30 minutes ago, around 2:15 PM.",
-    //         },
-    //         {
-    //             role: "assistant",
-    //             content:
-    //                 "I've found a reported outage in your area. Crews are working on it.",
-    //         },
-    //         {
-    //             role: "user",
-    //             content: "Any estimate on when power will be restored?",
-    //         },
-    //         {
-    //             role: "assistant",
-    //             content:
-    //                 "We estimate power will be restored by 5:00 PM. For updates, call 555-123-4567.",
-    //         },
-    //         {
-    //             role: "user",
-    //             content: "Thanks for your help.",
-    //         },
-    //         {
-    //             role: "assistant",
-    //             content:
-    //                 "You're welcome. Stay safe, and contact us if you need further assistance.",
-    //         },
-    //     ],
-    //     type: "Power Outage",
-    // },
-};
 
 const emptyCall: Call = {
     emotions: [],
@@ -157,6 +62,9 @@ const emptyCall: Call = {
     title: "",
     transcript: [],
     type: "",
+    status: "Disconnected",
+    responder_type: "AI",
+    agent_name: "Unknown"
 };
 
 const Page = () => {
