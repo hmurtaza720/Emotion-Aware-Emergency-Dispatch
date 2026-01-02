@@ -1,229 +1,147 @@
 "use client";
 
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import FadeIn from "react-fade-in";
+import React from "react";
+import Sidebar from "@/components/live/Sidebar";
+import { MESSAGES } from "@/data/mock_data";
+import { ARCHIVE_MESSAGES } from "@/data/archiveMessages";
+import { Activity, Phone, User, Bot, Siren, Archive as ArchiveIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
-    const styles = {
-        container: "max-w-4xl mx-auto px-4 py-8",
-        heading:
-            "text-3xl md:text-4xl font-semibold font-helvetica-neue text-white mb-4",
-        subheading: "text-lg md:text-xl font-inter text-gray-300",
-        span: "text-[#69D2FF]",
-        tealsubheading: "text-[#69D2FF] text-md font-semibold",
+    const activeCalls = Object.values(MESSAGES);
+    const archivedCalls = Object.values(ARCHIVE_MESSAGES);
+
+    const stats = {
+        totalReceived: activeCalls.length + archivedCalls.length,
+        aiHandled: activeCalls.filter(c => c.responder_type === 'AI').length,
+        humanHandled: activeCalls.filter(c => c.responder_type === 'Human').length,
+        criticalActive: activeCalls.filter(c => c.severity === 'CRITICAL').length,
+        resolvedArchived: archivedCalls.length
     };
 
-    return (
-        <div>
-            <nav
-                className="flex items-center justify-between bg-white p-4 shadow-sm"
-                style={{ position: "sticky", top: "0", zIndex: 1000 }}
-            >
-                <div className="flex items-center">
-                    <img src="../dispatchLogo.png" alt="" />
-                </div>
-                <div className="space-x-4">
-                    <a href="#" className="font-medium text-blue-600">
-                        Home
-                    </a>
-                    <a href="#" className="font-medium text-gray-600">
-                        Features
-                    </a>
-                    <a href="#" className="font-medium text-gray-600">
-                        About us
-                    </a>
-                </div>
+    const StatCard = ({ title, value, icon: Icon, color, subtext }: { title: string, value: number, icon: any, color: string, subtext: string }) => (
+        <div className="relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl transition-all hover:bg-slate-900/80 hover:scale-[1.02] group">
+            <div className={cn("absolute -right-6 -top-6 h-24 w-24 rounded-full opacity-10 blur-xl transition-all group-hover:opacity-20", color)} />
+            <div className="flex items-start justify-between">
                 <div>
-                    <Button variant="outline" className="mr-2">
-                        Log in
-                    </Button>
-                    <Button
-                        style={{
-                            backgroundColor: "#0075FF",
-                            padding: "12px",
-                        }}
-                    >
-                        Try now
-                    </Button>
+                    <h3 className="text-xs font-bold uppercase tracking-widest text-slate-500">{title}</h3>
+                    <div className="mt-2 flex items-baseline space-x-2">
+                        <span className="text-4xl font-bold text-white tracking-tight">{value}</span>
+                        <span className="text-xs font-medium text-slate-400">{subtext}</span>
+                    </div>
                 </div>
-            </nav>
-            {/* hero */}
-            <div className="flex min-h-screen flex-col bg-white">
-                <main
-                    className="flex flex-grow flex-col md:flex-row"
-                    style={{ position: "relative" }}
-                >
-                    <div className="flex w-full flex-col justify-center px-9 md:w-2/5">
-                        <FadeIn>
-                            <Button
-                                variant="outline"
-                                className="mb-6 self-start"
-                            >
-                                <span>Try it out</span>
-                                <ArrowRight className="ml-2 h-4 w-4" />
-                            </Button>
-                            <h1 className="mb-4 text-5xl font-bold">
-                                The AI dispatcher eliminating 911 wait times
-                            </h1>
-                            <p className="mb-8 text-xl text-gray-600">
-                                Human-in-the-loop emergency response system
-                            </p>
-                            <div className="space-x-4">
-                                <Link href="/live">
-                                    <Button
-                                        variant="outline"
-                                        style={{
-                                            fontSize: "22px",
-                                            padding: "24px 22px",
-                                        }}
-                                    >
-                                        Try demo
-                                    </Button>
-                                </Link>
-                                <Link href="/live">
-                                    <Button
-                                        style={{
-                                            backgroundColor: "#0075FF",
-                                            fontSize: "22px",
-                                            padding: "24px 22px",
-                                        }}
-                                    >
-                                        Start now
-                                    </Button>
-                                </Link>
+                <div className={cn("rounded-xl p-3 bg-slate-950/50 border border-slate-800", color.replace("bg-", "text-"))}>
+                    <Icon size={24} />
+                </div>
+            </div>
+            <div className="mt-4 h-1 w-full rounded-full bg-slate-800">
+                <div className={cn("h-full rounded-full transition-all duration-1000 ease-out w-[70%]", color)} />
+            </div>
+        </div>
+    );
+
+    return (
+        <div className="flex h-screen w-full bg-slate-950 text-slate-200 selection:bg-blue-500/30 font-sans">
+            {/* Layout Wrapper to match other pages */}
+            <div className="flex h-full w-full p-2">
+                <Sidebar />
+
+                <div className="flex flex-1 flex-col space-y-1 ml-1 overflow-hidden">
+                    {/* Header */}
+                    <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900/50 shadow-xl shrink-0">
+                        <header className="flex h-16 items-center px-6 backdrop-blur">
+                            <h1 className="text-xl font-bold uppercase tracking-wider text-blue-400">Command Dashboard</h1>
+                            <div className="ml-auto flex items-center space-x-4">
+                                <span className="text-xs font-mono text-slate-500">{new Date().toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
                             </div>
-                        </FadeIn>
+                        </header>
                     </div>
-                    <FadeIn
-                        className="flex h-full w-full items-center justify-center md:w-3/5"
-                        transitionDuration={1000}
-                    >
-                        {/* <div className="flex h-full w-full items-center justify-center md:w-3/5"> */}
-                        <img src="../dispatcherHero.png" alt="" />
-                        {/* </div>{" "} */}
-                    </FadeIn>
-                </main>
-            </div>
-            {/* problem */}
-            <div
-                style={{
-                    backgroundImage: "url('/dispatchProblem.png')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    width: "100%",
-                    height: "100vh",
-                    backgroundColor: "#1E1E1E",
-                    padding: "22px 0",
-                }}
-            >
-                <div
-                    className={styles.container}
-                    style={{ width: "50%", marginLeft: "600px" }}
-                >
-                    <h1 className={styles.heading}>
-                        82% of 911 Call Centers are
-                        <span className={styles.span}> Understaffed</span>
-                    </h1>
-                    <p className={styles.subheading}>
-                        According to Axios, the majority of Americans do not
-                        have access to emergency services that should be
-                        guaranteed to them.
-                    </p>
-                </div>
-            </div>
-            {/* features */}
 
-            <div
-                style={{
-                    height: "120vh",
-                    width: "100vw",
-                    backgroundColor: "#1E1E1E",
-                    alignContent: "center",
-                    justifyContent: "center",
-                }}
-            >
-                <hr
-                    style={{
-                        border: "1px solid #3B3B3B",
-                        width: "100%",
-                        marginBottom: "56px",
-                    }}
-                />
-                <p
-                    className={styles.tealsubheading}
-                    style={{ textAlign: "center" }}
-                >
-                    THE SOLUTION
-                </p>
-                <h1 className={styles.heading} style={{ textAlign: "center" }}>
-                    We offer personalized support that everyone deserves.
-                </h1>{" "}
-                <FadeIn>
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            gap: "12px",
-                            padding: "56px",
-                        }}
-                    >
-                        <img src="/action.png" style={{ width: "100%" }} />
+                    {/* Main Content */}
+                    <div className="flex-1 overflow-y-auto rounded-xl border border-slate-800 bg-slate-900/20 p-8 shadow-inner">
+                        <div className="mb-8">
+                            <h2 className="text-2xl font-bold text-white mb-2">System Overview</h2>
+                            <p className="text-slate-400">Real-time metrics for emergency dispatch operations.</p>
+                        </div>
 
-                        <img src="/communicate.png" style={{ width: "100%" }} />
-                        <img src="/moderate.png" style={{ width: "100%" }} />
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <StatCard
+                                title="Total Calls Received"
+                                value={stats.totalReceived}
+                                icon={Phone}
+                                color="bg-blue-500"
+                                subtext="All time"
+                            />
+
+                            <StatCard
+                                title="Active Critical"
+                                value={stats.criticalActive}
+                                icon={Siren}
+                                color="bg-red-600"
+                                subtext="Requires Immediate Action"
+                            />
+
+                            <StatCard
+                                title="Resolved & Archived"
+                                value={stats.resolvedArchived}
+                                icon={ArchiveIcon}
+                                color="bg-purple-600"
+                                subtext="Stored in database"
+                            />
+
+                            <StatCard
+                                title="AI Handled"
+                                value={stats.aiHandled}
+                                icon={Bot}
+                                color="bg-indigo-500"
+                                subtext="Autonomous Dispatch"
+                            />
+
+                            <StatCard
+                                title="Human Operated"
+                                value={stats.humanHandled}
+                                icon={User}
+                                color="bg-orange-500"
+                                subtext="Manual Intervention"
+                            />
+
+                            <StatCard
+                                title="System Status"
+                                value={98}
+                                icon={Activity}
+                                color="bg-green-500"
+                                subtext="% Uptime"
+                            />
+                        </div>
+
+                        {/* Placeholder for future charts or lists */}
+                        <div className="mt-8 rounded-xl border border-slate-800 bg-slate-900/40 p-6">
+                            <div className="flex items-center justify-between mb-6">
+                                <h3 className="font-bold text-white">Recent Activity</h3>
+                                <button className="text-xs text-blue-400 hover:text-blue-300">View All Log</button>
+                            </div>
+                            <div className="space-y-4">
+                                {activeCalls.slice(0, 3).map((call) => (
+                                    <div key={call.id} className="flex items-center justify-between p-4 rounded-lg bg-slate-950/50 border border-slate-800/50">
+                                        <div className="flex items-center space-x-4">
+                                            <div className={cn("h-2 w-2 rounded-full", call.status === "Connected" ? "bg-green-500 animate-pulse" : "bg-slate-500")} />
+                                            <div>
+                                                <p className="font-medium text-slate-200">{call.title || "Emergency Call"}</p>
+                                                <p className="text-xs text-slate-500">{call.location_name}</p>
+                                            </div>
+                                        </div>
+                                        <span className={cn(
+                                            "text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded",
+                                            call.severity === "CRITICAL" ? "bg-red-500/10 text-red-500" : "bg-slate-800 text-slate-400"
+                                        )}>
+                                            {call.severity || "MODERATE"}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
                     </div>
-                </FadeIn>
-            </div>
-            {/* ending */}
-            <div
-                className={styles.container}
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "12px",
-                    alignContent: "center",
-                    justifyContent: "center",
-                }}
-            >
-                <h1
-                    className={styles.heading}
-                    style={{ color: "black", textAlign: "center" }}
-                >
-                    Start personalizing your emergency response system. Start
-                    with Dispatch.
-                </h1>
-                <div
-                    className="space-x-4"
-                    style={{
-                        display: "flex",
-                        alignContent: "center",
-                        justifyContent: "center",
-                    }}
-                >
-                    <Link href="/live">
-                        <Button
-                            variant="outline"
-                            style={{
-                                fontSize: "22px",
-                                padding: "24px 22px",
-                            }}
-                        >
-                            Try demo
-                        </Button>
-                    </Link>
-                    <Link href="/live">
-                        <Button
-                            style={{
-                                backgroundColor: "#0075FF",
-                                fontSize: "22px",
-                                padding: "24px 22px",
-                            }}
-                        >
-                            Start now
-                        </Button>
-                    </Link>
                 </div>
             </div>
         </div>
