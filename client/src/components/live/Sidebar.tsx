@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
-    Headset,
     HeartPulseIcon,
     Home,
     Radio,
@@ -47,12 +46,6 @@ const Sidebar = () => {
 
     return (
         <div className="relative flex h-full w-16 flex-col items-center rounded-xl border border-slate-700/50 bg-slate-950 pt-4 pb-8 shadow-2xl z-50 mr-1">
-            <div className="flex-center aspect-square flex-col rounded-full p-2 hover:bg-slate-800 transition-colors cursor-pointer">
-                <Link href="/dashboard">
-                    <Headset className="m-auto text-blue-400" size={24} />
-                </Link>
-                <Separator className="mx-3 my-4 w-6 bg-slate-700 p-[1px]" />
-            </div>
             <div className="flex flex-col space-y-6 text-slate-400">
                 <Link
                     href="/dashboard"
