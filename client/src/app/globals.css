@@ -69,6 +69,11 @@
 
     body {
         @apply bg-background text-foreground;
+        height: 100%;
+    }
+
+    html {
+        height: 100%;
     }
 
     /* DARK BLUE SCROLLBARS */
@@ -82,7 +87,8 @@
     }
 
     ::-webkit-scrollbar-thumb {
-        background: rgba(30, 58, 138, 0.6); /* blue-900 with opacity */
+        background: rgba(30, 58, 138, 0.6);
+        /* blue-900 with opacity */
         border-radius: 10px;
         border: 2px solid transparent;
         background-clip: content-box;

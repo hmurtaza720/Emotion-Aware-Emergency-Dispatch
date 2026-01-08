@@ -26,12 +26,14 @@ interface MapProps {
     };
     pins: MapPin[];
     zoom: number;
+    selectedCoordinates?: [number, number];
 }
 
-const Map: React.FC<MapProps> = ({ center, pins, zoom }) => {
+const Map: React.FC<MapProps> = ({ center, pins, zoom, selectedCoordinates }) => {
     const mapContainer = useRef<HTMLDivElement>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const [mapReady, setMapReady] = useState(false);
+    const [pois, setPois] = useState<any[]>([]);
 
     // Initial Map Setup
     useEffect(() => {
@@ -104,13 +106,13 @@ const Map: React.FC<MapProps> = ({ center, pins, zoom }) => {
         }
     }, [mapReady, center.lat, center.lng, zoom]);
 
-    // Handle Pin Updates
+    // Handle Pin Updates & Range Circle
     useEffect(() => {
         if (!mapReady || !mapInstance.current) return;
 
-        // Clear existing markers
+        // Clear existing layers
         mapInstance.current.eachLayer((layer) => {
-            if (layer instanceof L.Marker) {
+            if (layer instanceof L.Marker || layer instanceof L.Circle || layer instanceof L.CircleMarker) {
                 mapInstance.current!.removeLayer(layer);
             }
         });
@@ -124,11 +126,95 @@ const Map: React.FC<MapProps> = ({ center, pins, zoom }) => {
                     .bindPopup(pin.popupHtml);
             }
         });
-    }, [mapReady, pins]);
+
+        // Add Range Circle & POIs if selected
+        if (selectedCoordinates) {
+            const [lat, lng] = selectedCoordinates;
+
+            // 1. Draw Range Circle
+            L.circle([lat, lng], {
+                color: 'rgba(59, 130, 246, 0.5)', // Blue-500
+                fillColor: 'rgba(59, 130, 246, 0.1)',
+                fillOpacity: 0.3,
+                radius: 1200 // 1.2km radius
+            }).addTo(mapInstance.current);
+
+            // 2. Render POIs
+            pois.forEach(poi => {
+                let color = '#64748b'; // default slate-500
+                if (poi.tags.amenity === 'fuel') color = '#f97316'; // orange-500
+                if (poi.tags.amenity === 'hospital') color = '#ef4444'; // red-500
+                if (poi.tags.amenity === 'police') color = '#3b82f6'; // blue-500
+                if (poi.tags.shop) color = '#10b981'; // green-500
+
+                L.circleMarker([poi.lat, poi.lon], {
+                    radius: 4,
+                    fillColor: color,
+                    color: '#fff',
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                })
+                    .bindPopup(`<b>${poi.tags.name || "Unknown"}</b><br/>${poi.tags.amenity || poi.tags.shop}`)
+                    .addTo(mapInstance.current!);
+            });
+        }
+
+    }, [mapReady, pins, selectedCoordinates, pois]);
+
+    // Fetch POIs when selected location changes
+    useEffect(() => {
+        if (!selectedCoordinates) {
+            setPois([]);
+            return;
+        }
+
+        const [lat, lng] = selectedCoordinates;
+
+        // Debounce fetching
+        const fetchPOIs = async () => {
+            const query = `
+                [out:json];
+                (
+                  node["amenity"="fuel"](around:1200,${lat},${lng});
+                  node["amenity"="hospital"](around:1200,${lat},${lng});
+                  node["amenity"="police"](around:1200,${lat},${lng});
+                  node["shop"="supermarket"](around:1200,${lat},${lng});
+                  node["shop"="convenience"](around:1200,${lat},${lng});
+                );
+                out;
+            `;
+            const url = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`;
+
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                setPois(data.elements);
+            } catch (err) {
+                console.error("Failed to fetch POIs:", err);
+            }
+        };
+
+        // Small delay to prevent spamming while panning/selecting rapidly
+        const timeoutId = setTimeout(fetchPOIs, 500);
+        return () => clearTimeout(timeoutId);
+
+    }, [selectedCoordinates]);
 
     return (
         <div className={styles.mapWrap}>
             <div ref={mapContainer} className={styles.map} />
+            {selectedCoordinates && pois.length > 0 && (
+                <div className="absolute bottom-4 left-4 bg-slate-900/90 border border-slate-700 p-2 rounded-lg text-[10px] text-slate-300 z-[1000] shadow-xl backdrop-blur-sm">
+                    <p className="font-bold mb-1 border-b border-slate-700 pb-1">Nearby Support</p>
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-red-500" /> Hospital</div>
+                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-blue-500" /> Police</div>
+                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-orange-500" /> Fuel Station</div>
+                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-green-500" /> Store</div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

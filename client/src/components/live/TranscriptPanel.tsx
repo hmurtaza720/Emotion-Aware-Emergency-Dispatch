@@ -3,34 +3,31 @@
 import { useState } from "react";
 import { CallProps } from "@/app/live/page";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 import {
     ArrowLeftRightIcon,
-    CheckCircle2Icon,
     HeadsetIcon,
     Loader2Icon,
-    Ambulance,
-    FireExtinguisher,
-    Siren,
-    Info,
     History,
     Play,
-    Pause,
     Volume2,
 } from "lucide-react";
 
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
-import { ScrollArea } from "../ui/scroll-area";
-import { useToast } from "@/components/ui/use-toast";
 import ChatInterface from "./ChatInterface";
-import EmotionCard from "./EmotionCard";
 
 interface TranscriptPanelProps extends CallProps {
     handleTransfer: (id: string) => void;
     handleResolve: (id: string) => void;
     mode?: "live" | "archive";
+    toggleMute?: () => void;
+    toggleHold?: () => void;
+    handleHangup?: () => void;
+    isMuted?: boolean;
+    isOnHold?: boolean;
 }
+
+import { Mic, MicOff, Pause, PhoneOff } from "lucide-react"; // Import new icons
 
 const TranscriptPanel = ({
     call,
@@ -38,15 +35,14 @@ const TranscriptPanel = ({
     handleTransfer,
     handleResolve,
     mode = "live",
+    isManualMode = false,
+    toggleMute,
+    toggleHold,
+    handleHangup,
+    isMuted = false,
+    isOnHold = false,
 }: TranscriptPanelProps) => {
-    const [transferred, setTransferred] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [clicked, setClicked] = useState<number>(1);
-    const { toast } = useToast();
-
-    const emotions = call?.emotions?.sort((a, b) =>
-        a.intensity < b.intensity ? 1 : -1,
-    );
 
     if (!call) {
         return (
@@ -58,26 +54,27 @@ const TranscriptPanel = ({
 
     const doTransfer = (id: string) => {
         handleTransfer(id);
-        setLoading(true);
-
-        setTimeout(() => {
-            setTransferred(true);
-            setLoading(false);
-        }, 1000);
     };
 
     return (
-        <div className={cn("flex flex-col h-full bg-slate-900", transferred && "brightness-90")}>
+        <div className={cn("flex flex-col h-full bg-slate-900", isManualMode && "border-2 border-red-500/50")}>
             {/* 1. Header & Live Connection Status */}
             <div className="flex items-center justify-between px-4 py-3 bg-slate-950/50">
                 <div className="flex items-center space-x-2">
                     <History size={16} className="text-blue-400" />
                     <p className="text-xs font-bold uppercase tracking-widest text-slate-300">Action Sidebar</p>
                 </div>
-                <div className="flex items-center space-x-2 rounded-full bg-green-500/10 px-2 py-0.5 border border-green-500/20">
-                    <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-[10px] font-bold text-green-500 uppercase">Live Feed</span>
-                </div>
+                {isManualMode ? (
+                    <div className="flex items-center space-x-2 rounded-full bg-red-500/10 px-2 py-0.5 border border-red-500/20">
+                        <div className="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse" />
+                        <span className="text-[10px] font-bold text-red-500 uppercase">ON AIR</span>
+                    </div>
+                ) : (
+                    <div className="flex items-center space-x-2 rounded-full bg-green-500/10 px-2 py-0.5 border border-green-500/20">
+                        <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
+                        <span className="text-[10px] font-bold text-green-500 uppercase">Live Feed</span>
+                    </div>
+                )}
             </div>
             <Separator className="bg-slate-800" />
 
@@ -87,10 +84,10 @@ const TranscriptPanel = ({
                     <div className="flex items-center justify-between bg-slate-900/80 px-4 py-2">
                         <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Voice Log Transcript</p>
                         <div className="flex items-center space-x-1.5">
-                            {transferred ? (
-                                <div className="flex items-center space-x-1 text-blue-400">
+                            {isManualMode ? (
+                                <div className="flex items-center space-x-1 text-red-400">
                                     <HeadsetIcon size={10} />
-                                    <span className="text-[9px] font-bold uppercase">Human Opt</span>
+                                    <span className="text-[9px] font-bold uppercase">Manual Override</span>
                                 </div>
                             ) : (
                                 <div className="flex items-center space-x-1 text-green-400">
@@ -136,14 +133,40 @@ const TranscriptPanel = ({
 
                 {/* 7. Critical Action Button (Bottom) */}
                 {mode === "live" && (
-                    <div className="pt-2">
-                        {transferred ? (
-                            <Button
-                                variant={"outline"}
-                                className="pointer-events-none w-full h-12 space-x-2 border-slate-700 bg-slate-800 text-slate-500 font-bold uppercase tracking-widest"
-                            >
-                                <HeadsetIcon size={18} /> <p>Transfer Complete</p>
-                            </Button>
+                    <div className="space-y-3 pt-2">
+                        {isManualMode ? (
+                            <>
+                                <div className="flex space-x-2">
+                                    <Button
+                                        onClick={toggleMute}
+                                        variant="outline"
+                                        className={cn(
+                                            "flex-1 h-10 border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold uppercase tracking-wider text-[10px]",
+                                            isMuted && "bg-amber-500/20 border-amber-500/50 text-amber-500 hover:bg-amber-500/30"
+                                        )}
+                                    >
+                                        {isMuted ? <MicOff size={14} className="mr-2" /> : <Mic size={14} className="mr-2" />}
+                                        {isMuted ? "Unmute Mic" : "Mute Mic"}
+                                    </Button>
+                                    <Button
+                                        onClick={toggleHold}
+                                        variant="outline"
+                                        className={cn(
+                                            "flex-1 h-10 border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold uppercase tracking-wider text-[10px]",
+                                            isOnHold && "bg-blue-500/20 border-blue-500/50 text-blue-500 hover:bg-blue-500/30"
+                                        )}
+                                    >
+                                        <Pause size={14} className="mr-2" />
+                                        {isOnHold ? "Resume Call" : "Hold Call"}
+                                    </Button>
+                                </div>
+                                <Button
+                                    onClick={() => handleHangup && handleHangup()}
+                                    className="w-full h-12 bg-red-600 hover:bg-red-700 text-white font-bold uppercase tracking-widest shadow-xl animate-pulse"
+                                >
+                                    <PhoneOff size={18} className="mr-2" /> End Live Call
+                                </Button>
+                            </>
                         ) : loading ? (
                             <Button className="w-full h-12 bg-slate-800 text-blue-400 gap-2 font-bold uppercase tracking-widest border border-blue-500/20">
                                 <Loader2Icon className="animate-spin" size={18} />

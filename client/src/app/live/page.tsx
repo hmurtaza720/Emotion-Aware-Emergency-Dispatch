@@ -23,12 +23,16 @@ const Map = dynamic(() => import("@/components/live/map/Map"), {
 });
 
 interface ServerMessage {
-    event: "db_response" | "ai_response";
+    event: "db_response" | "ai_response" | "incoming_call" | "audio_relay";
     data?: Record<string, Call>;
     text?: string;
     user_text?: string;
     emotion?: string;
     location?: [number, number];
+    phone?: string;
+    location_manual?: string;
+    timestamp?: string;
+    chunk?: string;
 }
 
 export interface CallProps {
@@ -37,9 +41,8 @@ export interface CallProps {
 }
 
 const getWsUrl = () => {
-    if (typeof window === "undefined") return "ws://127.0.0.1:8000/ws/call";
-    const host = window.location.hostname;
-    return `ws://${host}:8000/ws/call`;
+    // Explicitly use 127.0.0.1 to avoid Windows IPv6 resolution issues with localhost
+    return "ws://127.0.0.1:8000/ws/call";
 };
 
 let wss: WebSocket | null = null;
@@ -83,9 +86,27 @@ const Page = () => {
     const [isOverlayOpen, setIsOverlayOpen] = useState(true);
     const { toast } = useToast();
 
+    // WebSocket Ref
+    const wsRef = React.useRef<WebSocket | null>(null);
+    const reconnectTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+    // Manual Reconnect Function
+    const forceReconnect = () => {
+        if (wsRef.current) {
+            wsRef.current.close();
+            wsRef.current = null;
+        }
+        if (reconnectTimeoutRef.current) {
+            clearTimeout(reconnectTimeoutRef.current);
+            reconnectTimeoutRef.current = null;
+        }
+        setConnected(false);
+        toast({ title: "Reconnecting...", description: "Attempting to reach server." });
+        connectWs();
+    };
+
     // Filter data based on selected city
     const filteredData = Object.entries(data).reduce((acc, [key, call]) => {
-        // ALWAYS include the live session call so user sees it!
         if (key === "live_session_1") {
             acc[key] = call;
             return acc;
@@ -93,7 +114,6 @@ const Page = () => {
 
         let match = true;
 
-        // State Filter
         if (filters.stateCode !== "ALL") {
             const loc = call.location_name || "";
             const stateInfo = US_STATES.find(s => s.code === filters.stateCode);
@@ -105,26 +125,22 @@ const Page = () => {
             }
         }
 
-        // City Filter
         if (match && filters.city !== "ALL") {
             const loc = call.location_name?.toLowerCase() || "";
             if (!loc.includes(filters.city.toLowerCase())) match = false;
         }
 
-        // Emotion Filter
         if (match && filters.emotion !== "ALL") {
             const hasEmotion = call.emotions?.some(e => e.emotion === filters.emotion);
             if (!hasEmotion) match = false;
         }
 
-        // Type Filter
         if (match && filters.type !== "ALL") {
             const typeMatch = (call.type?.toLowerCase() === filters.type.toLowerCase()) ||
                 (call.title?.toLowerCase().includes(filters.type.toLowerCase()));
             if (!typeMatch) match = false;
         }
 
-        // Severity Filter
         if (match && filters.severity !== "ALL") {
             if (call.severity !== filters.severity) match = false;
         }
@@ -133,9 +149,7 @@ const Page = () => {
         return acc;
     }, {} as Record<string, Call>);
 
-    // Derived Map State
     const { center, zoom } = useMemo(() => {
-        // 1. Priority: Selected Call
         if (selectedId && data[selectedId]) {
             const call = data[selectedId];
             if (call.location_coords) {
@@ -143,7 +157,6 @@ const Page = () => {
             }
         }
 
-        // 2. City Filter (Find first call in that city if possible)
         if (filters.city !== "ALL") {
             const firstCallInCity = Object.values(filteredData).find(c =>
                 c.location_name?.toLowerCase().includes(filters.city.toLowerCase()) && c.location_coords
@@ -151,14 +164,11 @@ const Page = () => {
             if (firstCallInCity) {
                 return { center: firstCallInCity.location_coords!, zoom: 10 };
             }
-
-            // Fallback: Check hardcoded city coordinates
             if (CITY_COORDS[filters.city]) {
                 return { center: CITY_COORDS[filters.city], zoom: 10 };
             }
         }
 
-        // 3. State/National Fallback
         const stateObj = US_STATES.find(s => s.code === filters.stateCode);
         if (stateObj && stateObj.coords) {
             return {
@@ -167,7 +177,6 @@ const Page = () => {
             };
         }
 
-        // Default Fallback (US Center)
         return { center: { lat: 39.8283, lng: -98.5795 }, zoom: 4 };
     }, [filters.stateCode, filters.city, selectedId, data, filteredData]);
 
@@ -177,7 +186,6 @@ const Page = () => {
         setCity(newFilters.stateCode);
     };
 
-    // Override setCity from Header to also update filters
     const handleHeaderCityChange = (newCity: string) => {
         setCity(newCity);
         setFilters(prev => ({ ...prev, stateCode: newCity, city: "ALL", severity: "ALL" }));
@@ -204,30 +212,126 @@ const Page = () => {
         });
     };
 
-    const handleTransfer = (id: string) => {
-        console.log("transfer: ", id);
+    const [isManualMode, setIsManualMode] = useState(false);
+    const [isMuted, setIsMuted] = useState(false);
+    const [isOnHold, setIsOnHold] = useState(false);
+    const mediaRecorderRef = React.useRef<MediaRecorder | null>(null);
 
-        if (wss) {
-            wss.send(
-                JSON.stringify({
-                    event: "transfer",
-                    id: id,
-                }),
-            );
-        } else {
-            console.error("WebSocket is not connected");
+    const startStreaming = async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const mediaRecorder = new MediaRecorder(stream);
+            mediaRecorderRef.current = mediaRecorder;
+
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data.size > 0 && wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        const base64data = (reader.result as string).split(',')[1];
+                        wsRef.current!.send(JSON.stringify({
+                            event: "audio_relay",
+                            chunk: base64data
+                        }));
+                    };
+                    reader.readAsDataURL(event.data);
+                }
+            };
+
+            mediaRecorder.start(250); // 250ms chunks
+        } catch (err) {
+            console.error("Error accessing microphone:", err);
+            toast({ title: "Microphone Error", description: "Could not access microphone." });
         }
     };
 
-    useEffect(() => {
-        if (!selectedId) return;
+    const stopStreaming = () => {
+        if (mediaRecorderRef.current) {
+            mediaRecorderRef.current.stop();
+            mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
+            mediaRecorderRef.current = null;
+        }
+    };
 
-        if (!data[selectedId]?.location_coords) return;
+    const toggleMute = () => {
+        if (mediaRecorderRef.current && mediaRecorderRef.current.stream) {
+            mediaRecorderRef.current.stream.getAudioTracks().forEach(track => {
+                track.enabled = isMuted; // If currently muted (true), enable track (true)
+            });
+            setIsMuted(!isMuted);
+            toast({
+                title: isMuted ? "Microphone Unmuted" : "Microphone Muted",
+                description: isMuted ? "Caller can hear you." : "Caller cannot hear you."
+            });
+        }
+    };
 
-        setCenter(
-            data[selectedId].location_coords as { lat: number; lng: number }, // TS being lame, so type-cast
-        );
-    }, [selectedId, data]);
+    const toggleHold = () => {
+        setIsOnHold(!isOnHold);
+        // In a real app, send "hold" event to server
+        if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+            wsRef.current.send(JSON.stringify({
+                event: "hold_toggle",
+                active: !isOnHold
+            }));
+        }
+        toast({
+            title: !isOnHold ? "Call Placed on Hold" : "Call Resumed",
+            description: !isOnHold ? "Music on hold active." : "You are live again."
+        });
+    };
+
+    const handleTransfer = (id: string) => {
+        const newState = !isManualMode;
+        setIsManualMode(newState);
+
+        // Reset states on toggle
+        setIsMuted(false);
+        setIsOnHold(false);
+
+        if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+            wsRef.current.send(JSON.stringify({
+                event: "manual_mode_toggle",
+                active: newState
+            }));
+        }
+
+        if (newState) {
+            startStreaming();
+            toast({ title: "Manual Mode Active", description: "You are now live with the caller." });
+        } else {
+            stopStreaming();
+            toast({ title: "AI Resumed", description: "Returned to automated dispatch." });
+        }
+    };
+
+    const handleHangup = () => {
+        stopStreaming();
+        setIsManualMode(false);
+        setIsMuted(false);
+        setIsOnHold(false);
+
+        if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+            wsRef.current.send(JSON.stringify({
+                event: "hangup"
+            }));
+        }
+
+        // Update local state to disconnected
+        if (selectedId && data[selectedId]) {
+            setData(prev => ({
+                ...prev,
+                [selectedId]: {
+                    ...prev[selectedId],
+                    status: "Disconnected",
+                    severity: "RESOLVED"
+                }
+            }));
+        }
+
+        toast({ title: "Call Ended", description: "Disconnected from caller.", variant: "destructive" });
+    };
+
+    // Removed redundant useEffect causing 'setCenter' error - useMemo handles this logic.
 
     // Sync state dropdown with selected call location
     useEffect(() => {
@@ -247,142 +351,153 @@ const Page = () => {
         }
     }, [selectedId, data, city]);
 
-    useEffect(() => {
-        // Initialize WS
-        if (!wss) {
-            wss = new WebSocket(getWsUrl());
+    // WebSocket Connection Logic
+    const connectWs = () => {
+        if (wsRef.current && (wsRef.current.readyState === WebSocket.OPEN || wsRef.current.readyState === WebSocket.CONNECTING)) {
+            return;
         }
 
-        wss.onopen = () => {
-            console.log("WebSocket connection established");
+        const url = getWsUrl();
+        console.log("Connecting to WebSocket:", url);
+        const socket = new WebSocket(url);
+        wsRef.current = socket;
+
+        socket.onopen = () => {
+            console.log("WebSocket connected");
             setConnected(true);
+            // toast({ title: "System Online", description: "Connected to Server" });
+            socket.send(JSON.stringify({ event: "get_db" }));
+        };
 
-            wss!.send(
-                JSON.stringify({
-                    event: "get_db",
-                }),
-            );
+        socket.onmessage = (event: MessageEvent) => {
+            const message = JSON.parse(event.data) as ServerMessage;
 
-            wss!.onmessage = (event: MessageEvent) => {
-                const message = JSON.parse(event.data) as ServerMessage;
+            if (message.event === "ai_response") {
+                console.log("Received AI response", message);
+                setData(prevData => {
+                    const liveCallId = "live_session_1";
+                    const currentCall = prevData[liveCallId] || {
+                        ...emptyCall,
+                        id: liveCallId,
+                        title: "Live Incoming Call",
+                        name: "Caller (Unknown)",
+                        severity: "CRITICAL",
+                        location_name: "Detecting...",
+                        type: "Emergency",
+                        time: new Date().toISOString(),
+                        transcript: []
+                    };
 
-                if (message.event === "ai_response") {
-                    console.log("Received AI response", message);
+                    const newEntries = [];
+                    if (message.user_text) newEntries.push({ role: "user" as const, content: message.user_text });
+                    if (message.text) newEntries.push({ role: "assistant" as const, content: message.text });
 
-                    setData(prevData => {
-                        const liveCallId = "live_session_1";
-                        const currentCall = prevData[liveCallId] || {
-                            ...emptyCall,
-                            id: liveCallId,
-                            title: "Live Incoming Call",
-                            name: "Caller (Unknown)",
-                            severity: "CRITICAL",
-                            location_name: "Detecting...",
-                            type: "Emergency",
-                            time: new Date().toISOString(),
-                            transcript: []
-                        };
+                    const newTranscript = [...currentCall.transcript, ...newEntries];
 
-                        // Append new message to transcript
-
-
-                        // We assume the user input is handled or we just show AI response for now.
-                        // Actually my backend sends the AI response. 
-                        // To show user input, we might need to handle loopback or just show AI text.
-                        // For this demo, let's just append AI text.
-                        // Build new transcript entries
-                        const newEntries = [];
-
-                        // 1. Add User Message
-                        if (message.user_text) {
-                            newEntries.push({
-                                role: "user" as const,
-                                content: message.user_text
-                            });
-                        }
-
-                        // 2. Add AI Message
-                        if (message.text) {
-                            newEntries.push({
-                                role: "assistant" as const,
-                                content: message.text
-                            });
-                        }
-
-                        // 3. Update Transcript
-                        const newTranscript = [
-                            ...currentCall.transcript,
-                            ...newEntries
+                    let newEmotions = currentCall.emotions || [];
+                    if (message.emotion) {
+                        let intensity = 0.5;
+                        if (message.emotion === "Panic" || message.emotion === "Fear") intensity = 0.9;
+                        if (message.emotion === "Calm" || message.emotion === "Neutral") intensity = 0.2;
+                        newEmotions = [
+                            { emotion: message.emotion, intensity: intensity },
+                            { emotion: "Confidence", intensity: 1.0 - intensity }
                         ];
-
-                        // 4. Update Emotions (Format correctly as object array with INTENSITY 0-100)
-                        let newEmotions = currentCall.emotions || [];
-                        if (message.emotion) {
-                            // Map the emotion to an intensity (Mock logic for variety)
-                            // "Panic" -> High Intensity, "Calm" -> Low Intensity
-                            let intensity = 0.5;
-                            if (message.emotion === "Panic" || message.emotion === "Fear") intensity = 0.9;
-                            if (message.emotion === "Calm" || message.emotion === "Neutral") intensity = 0.2;
-
-                            // We push TWO emotions because TranscriptPanel expects [0] and [1]
-                            newEmotions = [
-                                { emotion: message.emotion, intensity: intensity },
-                                { emotion: "Confidence", intensity: 1.0 - intensity } // Dummy secondary emotion
-                            ];
-                        }
-
-                        // 5. Update Location
-                        let newLocation = currentCall.location_coords;
-                        let newLocationName = currentCall.location_name;
-                        if (message.location && Array.isArray(message.location)) {
-                            newLocation = {
-                                lat: message.location[0],
-                                lng: message.location[1]
-                            };
-                            newLocationName = "Detected Location";
-                        }
-
-
-                        return {
-                            ...prevData,
-                            [liveCallId]: {
-                                ...currentCall,
-                                transcript: newTranscript,
-                                emotions: newEmotions,
-                                location_coords: newLocation,
-                                location_name: newLocationName
-                            }
-                        };
-                    });
-
-                    // Auto-select the live call so the user sees it
-                    if (selectedId !== "live_session_1") {
-                        setSelectedId("live_session_1");
                     }
 
-                } else if (message.data) {
-                    // Handle bulk data if we ever send it
-                    setData(message.data);
+                    let newLocation = currentCall.location_coords;
+                    let newLocationName = currentCall.location_name;
+                    if (message.location && Array.isArray(message.location)) {
+                        newLocation = { lat: message.location[0], lng: message.location[1] };
+                        newLocationName = "Detected Location";
+                    }
+
+                    return {
+                        ...prevData,
+                        [liveCallId]: {
+                            ...currentCall,
+                            transcript: newTranscript,
+                            emotions: newEmotions,
+                            location_coords: newLocation,
+                            location_name: newLocationName
+                        }
+                    };
+                });
+
+                if (selectedId !== "live_session_1") {
+                    setSelectedId("live_session_1");
                 }
-            };
-
-            if (wss) {
-                wss.onclose = (event) => {
-                    console.log("Closing websocket", event.code, event.reason);
-                    setConnected(false);
-                };
-
-                wss.onerror = (error) => {
-                    console.error("WebSocket Error:", error);
-                };
+            } else if (message.event === "incoming_call") {
+                console.log("Incoming Call Received:", message);
+                setData(prevData => {
+                    const liveCallId = "live_session_1";
+                    return {
+                        ...prevData,
+                        [liveCallId]: {
+                            ...emptyCall,
+                            id: liveCallId,
+                            title: "Incoming 911 Call",
+                            name: `Caller ${(message as any).phone || "Unknown"}`,
+                            severity: "CRITICAL",
+                            location_name: (message as any).location_manual,
+                            type: "Emergency",
+                            time: (message as any).timestamp || new Date().toISOString(),
+                            transcript: [{ role: "assistant", content: "911 dispatch connected. Tracking location..." }],
+                            status: "Connected",
+                            responder_type: "AI Agent"
+                        }
+                    };
+                });
+                setSelectedId("live_session_1");
+                toast({
+                    title: "Incoming Emergency Call",
+                    description: `Call from ${(message as any).location_manual}`,
+                    variant: "destructive"
+                });
+            } else if (message.data) {
+                setData(message.data);
+            } else if (message.event === "audio_relay" && (message as any).chunk) {
+                try {
+                    const audio = new Audio("data:audio/webm;base64," + (message as any).chunk);
+                    audio.play().catch(e => console.error("Audio Playback Error:", e));
+                } catch (e) {
+                    console.error("Audio Init Error:", e);
+                }
             }
+        };
+
+        socket.onclose = () => {
+            console.log("WebSocket Disconnected. Reconnecting in 3s...");
+            setConnected(false);
+            wsRef.current = null;
+            reconnectTimeoutRef.current = setTimeout(connectWs, 3000);
+        };
+
+        socket.onerror = (error) => {
+            console.error("WebSocket Error:", error);
+            socket.close(); // Force close to trigger simple reconnect logic
+        };
+    };
+
+    useEffect(() => {
+        connectWs();
+        return () => {
+            if (wsRef.current) wsRef.current.close();
+            if (reconnectTimeoutRef.current) clearTimeout(reconnectTimeoutRef.current);
         };
     }, []);
 
     return (
         <div className="flex h-full flex-col space-y-1 selection:bg-blue-500/30">
-            <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900 shadow-xl">
+            <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900 shadow-xl flex justify-between items-center pr-4">
                 <Header connected={connected} city={city} setCity={handleHeaderCityChange} filters={filters} />
+                <div className="flex space-x-2">
+                    {!connected && (
+                        <Button onClick={forceReconnect} variant="outline" size="sm" className="h-8 text-[10px] bg-red-900/20 text-red-500 border-red-900/50">
+                            Reconnect
+                        </Button>
+                    )}
+                </div>
             </div>
 
             <div className="flex flex-1 space-x-1 overflow-hidden">
@@ -403,6 +518,11 @@ const Page = () => {
                     <Map
                         center={center}
                         zoom={zoom}
+                        selectedCoordinates={
+                            selectedId && data[selectedId]?.location_coords
+                                ? [data[selectedId].location_coords?.lat!, data[selectedId].location_coords?.lng!]
+                                : undefined
+                        }
                         pins={
                             Object.entries(filteredData)
                                 .filter(
@@ -554,6 +674,12 @@ const Page = () => {
                         selectedId={selectedId || undefined}
                         handleTransfer={handleTransfer}
                         handleResolve={handleResolve} // Passing resolve handler to unified sidebar
+                        isManualMode={isManualMode}
+                        toggleMute={toggleMute}
+                        toggleHold={toggleHold}
+                        isMuted={isMuted}
+                        isOnHold={isOnHold}
+                        handleHangup={handleHangup}
                     />
                 </div>
             </div>
