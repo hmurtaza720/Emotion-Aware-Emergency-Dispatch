@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CallProps } from "@/app/live/page";
+import { CallProps } from "@/data/types";
 import { cn } from "@/lib/utils";
 import {
     ArrowLeftRightIcon,
@@ -10,6 +10,10 @@ import {
     History,
     Play,
     Volume2,
+    Phone,
+    ExternalLink,
+    ChevronLeft,
+    ChevronRight,
 } from "lucide-react";
 
 import { Button } from "../ui/button";
@@ -18,13 +22,18 @@ import ChatInterface from "./ChatInterface";
 
 interface TranscriptPanelProps extends CallProps {
     handleTransfer: (id: string) => void;
-    handleResolve: (id: string) => void;
+    handleResolve: (id: string, dispatchType?: string) => void;
     mode?: "live" | "archive";
     toggleMute?: () => void;
     toggleHold?: () => void;
     handleHangup?: () => void;
     isMuted?: boolean;
     isOnHold?: boolean;
+    relatedCalls?: { id: string; title: string; time: string }[];
+    onSelectRelatedCall?: (id: string) => void;
+    isManualMode?: boolean;
+    isMapOverlayOpen?: boolean;
+    onToggleMapOverlay?: () => void;
 }
 
 import { Mic, MicOff, Pause, PhoneOff } from "lucide-react"; // Import new icons
@@ -41,6 +50,10 @@ const TranscriptPanel = ({
     handleHangup,
     isMuted = false,
     isOnHold = false,
+    relatedCalls = [],
+    onSelectRelatedCall,
+    isMapOverlayOpen,
+    onToggleMapOverlay,
 }: TranscriptPanelProps) => {
     const [loading, setLoading] = useState(false);
 
@@ -52,6 +65,7 @@ const TranscriptPanel = ({
         );
     }
 
+    // Main Transfer Logic - Updates backend state via WebSocket
     const doTransfer = (id: string) => {
         handleTransfer(id);
     };
@@ -61,6 +75,15 @@ const TranscriptPanel = ({
             {/* 1. Header & Live Connection Status */}
             <div className="flex items-center justify-between px-4 py-3 bg-slate-950/50">
                 <div className="flex items-center space-x-2">
+                    {onToggleMapOverlay && (
+                        <button
+                            onClick={onToggleMapOverlay}
+                            title={isMapOverlayOpen ? "Collapse Map Details" : "Expand Map Details"}
+                            className="flex h-5 w-5 items-center justify-center rounded-sm bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white transition-colors border border-slate-700 mr-1"
+                        >
+                            {isMapOverlayOpen ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+                        </button>
+                    )}
                     <History size={16} className="text-blue-400" />
                     <p className="text-xs font-bold uppercase tracking-widest text-slate-300">Action Sidebar</p>
                 </div>
@@ -70,10 +93,12 @@ const TranscriptPanel = ({
                         <span className="text-[10px] font-bold text-red-500 uppercase">ON AIR</span>
                     </div>
                 ) : (
-                    <div className="flex items-center space-x-2 rounded-full bg-green-500/10 px-2 py-0.5 border border-green-500/20">
-                        <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
-                        <span className="text-[10px] font-bold text-green-500 uppercase">Live Feed</span>
-                    </div>
+                    mode === "live" && (
+                        <div className="flex items-center space-x-2 rounded-full bg-green-500/10 px-2 py-0.5 border border-green-500/20">
+                            <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
+                            <span className="text-[10px] font-bold text-green-500 uppercase">Live Feed</span>
+                        </div>
+                    )
                 )}
             </div>
             <Separator className="bg-slate-800" />
@@ -90,10 +115,12 @@ const TranscriptPanel = ({
                                     <span className="text-[9px] font-bold uppercase">Manual Override</span>
                                 </div>
                             ) : (
-                                <div className="flex items-center space-x-1 text-green-400">
-                                    <div className="h-1 w-1 rounded-full bg-green-500 animate-pulse" />
-                                    <span className="text-[9px] font-bold uppercase">AI Active</span>
-                                </div>
+                                mode === "live" && (
+                                    <div className="flex items-center space-x-1 text-green-400">
+                                        <div className="h-1 w-1 rounded-full bg-green-500 animate-pulse" />
+                                        <span className="text-[9px] font-bold uppercase">AI Active</span>
+                                    </div>
+                                )
                             )}
                         </div>
                     </div>
@@ -102,34 +129,39 @@ const TranscriptPanel = ({
                     </div>
                 </div>
 
-                {/* 6. Call Recording (Archive Mode Only) */}
-                {mode === "archive" && (
-                    <div className="pt-2 space-y-2">
-                        <div className="flex items-center justify-between pb-1">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 flex items-center gap-1.5">
-                                <Volume2 size={12} className="text-blue-400" /> Call Recording
-                            </label>
-                            <span className="text-[10px] font-mono text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">0:12 / 0:45</span>
+                {/* Related Calls Section (Archive Mode Only) */}
+                {mode === "archive" && relatedCalls && relatedCalls.length > 0 && (
+                    <div className="space-y-2 rounded-xl border border-amber-500/20 bg-amber-950/10 p-3">
+                        <div className="flex items-center space-x-2">
+                            <Phone size={12} className="text-amber-400" />
+                            <p className="text-[10px] font-bold uppercase tracking-widest text-amber-400">
+                                Related Calls ({relatedCalls.length})
+                            </p>
                         </div>
-                        <div className="flex items-center space-x-3 rounded-xl bg-slate-950/60 p-3 border border-slate-800 group hover:border-blue-500/30 transition-colors">
-                            <button className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-blue-600/10 text-blue-400 hover:bg-blue-600 hover:text-white transition-all shadow-lg active:scale-90">
-                                <Play size={18} fill="currentColor" />
-                            </button>
-                            <div className="flex-1 space-y-1">
-                                <div className="h-1.5 w-full rounded-full bg-slate-800 relative overflow-hidden group-hover:bg-slate-700 transition-colors">
-                                    <div className="absolute top-0 left-0 h-full w-[35%] bg-gradient-to-r from-blue-500 to-indigo-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
-                                </div>
-                                <div className="flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <div className="flex gap-2">
-                                        {[1, 2, 3, 4, 5, 6, 7].map(i => (
-                                            <div key={i} className={cn("w-0.5 rounded-full bg-blue-500/40", i < 4 ? "h-2" : "h-1")} />
-                                        ))}
+                        <p className="text-[10px] text-slate-400 italic">Same caller has other calls on record:</p>
+                        <div className="space-y-1.5">
+                            {relatedCalls.map((rc) => (
+                                <button
+                                    key={rc.id}
+                                    onClick={() => onSelectRelatedCall?.(rc.id)}
+                                    className="w-full flex items-center justify-between rounded-lg border border-slate-700/50 bg-slate-800/50 px-3 py-2 text-left hover:bg-slate-700/50 hover:border-amber-500/30 transition-all group"
+                                >
+                                    <div>
+                                        <p className="text-[11px] font-semibold text-slate-200 group-hover:text-amber-300 transition-colors">{rc.title}</p>
+                                        <p className="text-[9px] text-slate-500 font-mono">
+                                            {new Date(rc.time).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                        </p>
                                     </div>
-                                </div>
-                            </div>
+                                    <ExternalLink size={12} className="text-slate-500 group-hover:text-amber-400 transition-colors" />
+                                </button>
+                            ))}
                         </div>
                     </div>
                 )}
+
+                {/* 6. Call Recording (Archive Mode Only) */}
+                {/* 6. Call Recording (Archive Mode Only) - REMOVED per user request */}
+                {/* Audio player UI removed locally */}
 
                 {/* 7. Critical Action Button (Bottom) */}
                 {mode === "live" && (
@@ -164,6 +196,7 @@ const TranscriptPanel = ({
                                     onClick={() => handleHangup && handleHangup()}
                                     className="w-full h-12 bg-red-600 hover:bg-red-700 text-white font-bold uppercase tracking-widest shadow-xl animate-pulse"
                                 >
+                                    {/* Critical Hangup Button (Manual Mode Only) */}
                                     <PhoneOff size={18} className="mr-2" /> End Live Call
                                 </Button>
                             </>
